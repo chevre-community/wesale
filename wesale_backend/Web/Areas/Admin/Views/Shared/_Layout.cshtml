@@ -1,0 +1,204 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService _authorizationService
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Cargo website" name="description" />
+    <meta content="" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Plugin css -->
+    @RenderSection("plugin_styles", required: false)
+
+    <!-- App css -->
+    <link href="~/admin/metrica/assets/css/bootstrap.min.css" asp-append-version="true" rel="stylesheet" type="text/css" />
+    <link href="~/admin/metrica/assets/css/icons.min.css" asp-append-version="true" rel="stylesheet" type="text/css" />
+    <link href="~/admin/metrica/assets/css/app.min.css" asp-append-version="true" rel="stylesheet" type="text/css" />
+    <link href="~/admin/custom/css/site.css" asp-append-version="true" rel="stylesheet" type="text/css" />
+
+    <!-- Custom css -->
+    @RenderSection("styles", required: false)
+</head>
+
+<body id="body">
+    <!-- leftbar-tab-menu -->
+    <div class="leftbar-tab-menu">
+        <div class="main-icon-menu">
+            <div class="main-icon-menu-body">
+                <div class="position-reletive h-100" data-simplebar style="overflow-x: hidden;">
+                    <ul class="nav nav-tabs" role="tablist" id="tab-menu">
+
+                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Home" data-bs-trigger="hover">
+                            <a href="#Home" class="nav-link">
+                                <i class="ti ti-smart-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="User Management" data-bs-trigger="hover">
+                            <a href="#UserManagement" class="nav-link">
+                                <i class="ti ti-users menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Core" data-bs-trigger="hover">
+                            <a href="#Core" class="nav-link">
+                                <i class="ti ti-flare menu-icon"></i>
+                            </a>
+                        </li>
+                    </ul><!--end nav-->
+                </div><!--end /div-->
+            </div><!--end main-icon-menu-body-->
+        </div>
+        <!--end main-icon-menu-->
+
+        <div class="main-menu-inner">
+
+            <div class="menu-body navbar-vertical tab-content" data-simplebar>
+                <div class="d-flex justify-content-center mb-4">
+                    <img class="admin-logo" src="~/common/assets/logo.svg" asp-append-version="true" />
+                </div>
+
+                <div id="Home" class="main-icon-menu-pane tab-pane" role="tabpanel" aria-labelledby="dasboard-tab">
+                    <div class="title-box">
+                        <h6 class="menu-title">Home</h6>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link">Home</a>
+                        </li>
+                    </ul><!--end nav-->
+                </div>
+
+                <div id="UserManagement" class="main-icon-menu-pane tab-pane" role="tabpanel" aria-labelledby="dasboard-tab">
+                    <div class="title-box">
+                        <h6 class="menu-title">User Management</h6>
+                    </div>
+
+                    @if ((await _authorizationService.AuthorizeAsync(User, "UserListPolicy")).Succeeded)
+                    {
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a asp-controller="user" asp-action="list" asp-area="admin" class="nav-link">Users</a>
+                            </li>
+                        </ul><!--end nav-->
+                    }
+
+                    @if ((await _authorizationService.AuthorizeAsync(User, "RoleListPolicy")).Succeeded)
+                    {
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a asp-controller="role" asp-action="list" asp-area="admin" class="nav-link">Roles</a>
+                            </li>
+                        </ul><!--end nav-->
+                    }
+
+                    @if ((await _authorizationService.AuthorizeAsync(User, "UserActivationListPolicy")).Succeeded)
+                    {
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a asp-controller="useractivation" asp-action="list" asp-area="admin" class="nav-link">User activations</a>
+                            </li>
+                        </ul><!--end nav-->
+                    }
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-controller="userrestore" asp-action="list" asp-area="admin" class="nav-link">User restores</a>
+                        </li>
+                    </ul><!--end nav-->
+                </div>
+
+
+                <div id="Core" class="main-icon-menu-pane tab-pane" role="tabpanel" aria-labelledby="dasboard-tab">
+                    <div class="title-box">
+                        <h6 class="menu-title">Core</h6>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="notifyevent" class="nav-link">Notify events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="notification" class="nav-link">Notifications</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="sms" class="nav-link">Sms Panel</a>
+                        </li>
+                    </ul><!--end nav-->
+                </div>
+            </div>
+            <!--end menu-body-->
+        </div><!-- end main-menu-inner-->
+    </div>
+    <!-- end leftbar-tab-menu-->
+    <!-- Top Bar Start -->
+    <div class="topbar">
+        <!-- Navbar -->
+        <nav class="navbar-custom" id="navbar-custom">
+            <ul class="list-unstyled topbar-nav float-end mb-0">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <span class="d-none d-md-block fw-semibold font-12">
+                                    Admin <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" asp-controller="account" asp-action="logout" asp-area="admin"><i class="ti ti-power font-16 me-1 align-text-bottom"></i>Logout</a>
+                    </div>
+                </li><!--end topbar-profile-->
+            </ul><!--end topbar-nav-->
+
+            <ul class="list-unstyled topbar-nav mb-0">
+                <li>
+                    <button class="nav-link button-menu-mobile nav-icon" id="togglemenu">
+                        <i class="ti ti-menu-2"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <!-- end navbar-->
+    </div>
+    <!-- Top Bar End -->
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+            <div class="container-fluid">
+
+                @RenderBody()
+
+            </div><!-- container -->
+            <!--Start Footer-->
+            <!-- Footer Start -->
+            <footer class="footer text-center text-sm-start">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script> Chevre <span class="text-muted d-none d-sm-inline-block float-end">
+                </span>
+            </footer>
+            <!-- end Footer -->
+            <!--end footer-->
+        </div>
+        <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+    <!-- Javascript  -->
+    <!-- Plugin Js -->
+
+    @RenderSection("plugin_scripts", required: false)
+
+    <!-- App js -->
+    <script src="~/admin/metrica/assets/js/app.js" asp-append-version="true"></script>
+
+    <!-- Custom Js -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

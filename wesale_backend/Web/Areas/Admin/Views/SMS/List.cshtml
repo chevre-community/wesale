@@ -1,0 +1,118 @@
+﻿@using Web.Areas.Admin.ViewModels.SMS
+@using Core.Services.ActionResultMessage.Configuration
+@using Core.Constants.Notification.SMS
+@model SmsListViewModel
+
+@{
+    ViewData["Title"] = "SMS Panel";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Sms Panel</h4>
+        </div>
+        <!--end page-title-box-->
+    </div>
+    <!--end col-->
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-3">
+        <div class="card report-card">
+            <div class="card-body">
+                <div class="row d-flex justify-content-center">
+                    <div class="col">
+                        <p class="text-dark mb-1 fw-semibold">SMS units</p>
+                        <h4 class="my-1">@Model.Units</h4>
+                        <p class="mb-0 text-truncate text-muted">
+                            <span class="text-success">
+                                <i class="mdi mdi-checkbox-marked-circle-outline me-1"></i>
+                            </span>
+                            @Model.Units sms remain
+                        </p>
+                    </div>
+                    <div class="col-auto align-self-center">
+                        <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md  rounded-circle">
+                            <i data-feather="send" class="align-self-center text-muted icon-sm"></i>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!--end col-->
+</div><!--end row-->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="users-table" class="table table-striped mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">Phone Number</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">Response Message</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1 text-center" style="pointer-events: none;">Action Date</span>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowCounter = 0;
+                                foreach (var smsOperationResult in Model.SmsOperationResults)
+                                {
+                                    rowCounter++;
+                                    <tr>
+                                        <td>
+                                            @rowCounter
+                                        </td>
+                                        @if (smsOperationResult.Type == SmsType.Individual)
+                                        {
+                                            <td>@smsOperationResult.SerializedIndividualRequest.Body.Msisdn</td>
+                                            <td>@smsOperationResult.ResponseMessage</td>
+                                            <td>@smsOperationResult.CreatedAt</td>
+                                        }
+                                        else if (smsOperationResult.Type == SmsType.Bulk)
+                                        {
+                                            <td>@Html.DisplayName(SmsType.Bulk.ToString())</td>
+                                            <td>@smsOperationResult.ResponseMessage</td>
+                                            <td>@smsOperationResult.CreatedAt</td>
+                                        }
+                                        <td class="d-flex align-items-center">
+                                            <a asp-controller="sms" asp-action="details" asp-area="admin" asp-route-id="@smsOperationResult.Id" class="mr-4">
+                                                <i class="las la-info text-secondary font-18"></i>
+                                            </a>
+                                            @if (smsOperationResult.Type == SmsType.Individual)
+                                            {
+                                                <a class="mr-4 btn btn-info" asp-controller="sms" asp-action="detailedreport" asp-area="admin" asp-route-taskId="@smsOperationResult.SerializedIndividualResponse.Body.TaskId">
+                                                    Detailed report
+                                                </a>
+                                            }
+                                            else if (smsOperationResult.Type == SmsType.Bulk)
+                                            {
+                                                <a class="mr-4 btn btn-info" asp-controller="sms" asp-action="detailedreport" asp-area="admin" asp-route-taskId="@smsOperationResult.SerializedBulkResponse.Body.TaskId">
+                                                    Detailed report
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div><!--end /tableresponsive-->
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!-- end col -->
+</div>

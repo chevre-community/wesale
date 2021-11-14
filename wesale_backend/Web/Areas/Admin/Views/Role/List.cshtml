@@ -1,0 +1,89 @@
+﻿@using Web.Areas.Admin.ViewModels.UserManagement.Role
+@using Microsoft.AspNetCore.Authorization
+
+@model RoleListViewModel
+@inject IAuthorizationService _authorizationService
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Roles</h4>
+        </div>
+        <!--end page-title-box-->
+    </div>
+    <!--end col-->
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row justify-content-between">
+                    <div class="col-3">
+                        <div class="hide-phone app-search">
+                            <form id="search-form" asp-route="admin-role-search" method="GET">
+                                @Html.TextBox("q", "", new { @class = "form-control top-search", @type = "search", @placeholder = "Type text..." })
+                                <button type="submit"><i class="ti ti-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    @if ((await _authorizationService.AuthorizeAsync(User, "RoleCreatePolicy")).Succeeded)
+                    {
+                        <div class="col-2">
+                            <a asp-controller="role" asp-action="create" asp-area="admin" type="button" class="btn btn-primary">
+                                + New Role
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="roles-table" class="table table-striped mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.Roles.GetEnumerator().Current.Name)</span>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowCounter = 0;
+                                foreach (var role in Model.Roles)
+                                {
+                                    rowCounter++;
+
+                                    <tr>
+                                        <td>
+                                            @rowCounter
+                                        </td>
+                                        <td>@role.Name</td>
+                                        <td>
+                                            @if ((await _authorizationService.AuthorizeAsync(User, "RoleEditPolicy")).Succeeded)
+                                            {
+                                                <a asp-controller="role" asp-action="edit" asp-area="admin" asp-route-id="@role.Id" class="mr-2"><i class="las la-pen text-secondary font-18"></i></a>
+                                            }
+                                            @if ((await _authorizationService.AuthorizeAsync(User, "RoleDeletePolicy")).Succeeded)
+                                            {
+                                                <a asp-controller="role" asp-action="delete" asp-area="admin" asp-route-id="@role.Id" onclick="return confirm('Are you sure to delete?')" class="mr-2"><i class="las la-trash-alt text-danger font-22"></i></a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div><!--end /tableresponsive-->
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!-- end col -->
+</div>

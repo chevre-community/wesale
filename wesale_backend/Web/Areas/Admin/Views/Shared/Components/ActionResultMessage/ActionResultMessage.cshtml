@@ -1,0 +1,21 @@
+﻿@using Core.Services.ActionResultMessage.Configuration
+@using Core.Constants.ActionResultMessage
+@model ActionResultMessage
+
+@if (Model != null)
+{
+    if (Model.ActionResultMessageType == ActionResultMessageType.Success)
+    {
+        <div class="alert alert-success">
+            @Html.Raw(Model.Content)
+        </div>
+    }
+    else if (Model.ActionResultMessageType == ActionResultMessageType.Error)
+    {
+        <div class="alert alert-danger">
+            @Html.Raw(Model.Content)
+        </div>
+    }
+}
+
+

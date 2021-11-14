@@ -1,0 +1,64 @@
+﻿@using Web.Areas.Admin.ViewModels.SMS
+@model SmsDetailsViewModel
+
+@{
+    ViewData["Title"] = "Sms Panel";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="smspanel" asp-action="list" asp-area="admin">Sms</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Sms details</h4>
+        </div><!--end page-title-box-->
+    </div><!--end col-->
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ActionDate"></label>
+                            <input readonly class="form-control" asp-for="ActionDate">
+                            <span asp-validation-for="ActionDate" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="RequestBody"></label>
+                            <textarea readonly class="form-control" asp-for="RequestBody" rows="10"></textarea>
+                            <span asp-validation-for="RequestBody" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="ResponseBody"></label>
+                            <textarea readonly class="form-control" asp-for="ResponseBody" rows="10"></textarea>
+                            <span asp-validation-for="ResponseBody" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+

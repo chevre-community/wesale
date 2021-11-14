@@ -1,0 +1,12 @@
+﻿.leftbar-tab-menu .main-icon-menu, .leftbar-tab-menu .main-icon-menu .main-icon-menu-body .nav.nav-tabs .nav-link {
+    background-color: #3F8CFF;
+}
+
+.admin-logo {
+    width: 110px;
+    object-fit: cover;
+}
+
+.text-underline{
+    text-decoration: underline !important;
+}

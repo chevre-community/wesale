@@ -1,0 +1,77 @@
+﻿@using Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
+@model NotifyEventListViewModel
+
+@{
+    ViewData["Title"] = "Notify Events";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Notify Events</h4>
+        </div>
+        <!--end page-title-box-->
+    </div>
+    <!--end col-->
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="users-table" class="table table-striped mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.NotifyEvents.GetEnumerator().Current.Label)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.NotifyEvents.GetEnumerator().Current.NotifyFor)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1 text-center" style="pointer-events: none;">@Html.DisplayNameFor(x => x.NotifyEvents.GetEnumerator().Current.EmailEnabled)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1 text-center" style="pointer-events: none;">@Html.DisplayNameFor(x => x.NotifyEvents.GetEnumerator().Current.SMSEnabled)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.NotifyEvents.GetEnumerator().Current.IsActive)</span>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowCounter = 0;
+                                foreach (var notifyEvent in Model.NotifyEvents)
+                                {
+                                    rowCounter++;
+
+                                    <tr>
+                                        <td>
+                                            @rowCounter
+                                        </td>
+                                        <td>@notifyEvent.Label</td>
+                                        <td>@notifyEvent.NotifyFor</td>
+                                        <td>@await Component.InvokeAsync("BooleanResult", new { result = notifyEvent.EmailEnabled })</td>
+                                        <td>@await Component.InvokeAsync("BooleanResult", new { result = notifyEvent.SMSEnabled })</td>
+                                        <td>@await Component.InvokeAsync("BooleanResult", new { result = notifyEvent.IsActive })</td>
+                                        <td>
+                                            <a asp-controller="notifyevent" asp-action="update" asp-area="admin" asp-route-id="@notifyEvent.Id" class="mr-2"><i class="las la-pen text-secondary font-18"></i></a>
+                                            <a asp-controller="notifyevent" asp-action="details" asp-area="admin" asp-route-id="@notifyEvent.Id"><i class="fas fa-external-link-square-alt text-secondary font-18"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div><!--end /tableresponsive-->
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!-- end col -->
+</div>

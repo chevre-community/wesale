@@ -1,0 +1,145 @@
+﻿@using Web.Areas.Admin.ViewModels.UserManagement.Role
+@using Core.Constants.User
+@model RoleEditViewModel
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+
+@section plugin_styles{
+    <link href="~/admin/metrica/assets/plugins/select/selectr.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="role" asp-action="list" asp-area="admin">Roles</a></li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Edit role</h4>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" asp-controller="role" asp-action="edit" asp-area="admin" id="role-edit">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label asp-for="Name"></label>
+                                <input class="form-control" asp-for="Name">
+                                <span asp-validation-for="Name" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Role permissions</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <span asp-validation-for="Permissions" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="bg-light p-3">
+                            <div class="row pb-1">
+                                @for (int permissonIndex = 0; permissonIndex < Model.Permissions.Count; permissonIndex++)
+                                {
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">
+                                                    @Model.Permissions[permissonIndex].Name
+                                                </h4>
+                                                <p class="text-muted mb-0">
+                                                    @Model.Permissions[permissonIndex].Info
+                                                </p>
+                                                <span asp-validation-for="Permissions[permissonIndex].Key" class="invalid-feedback" style="display:block"></span>
+                                            </div>
+                                            <!--end of card-header -->
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-check form-switch form-switch-success">
+                                                            <input form="role-edit" class="form-check-input" asp-for="@Model.Permissions[permissonIndex].IsSelected">
+                                                            <input form="role-edit" type="hidden" asp-for="@Model.Permissions[permissonIndex].Key" />
+                                                            <input form="role-edit" type="hidden" asp-for="@Model.Permissions[permissonIndex].Name" />
+                                                            <input form="role-edit" type="hidden" asp-for="@Model.Permissions[permissonIndex].Info" />
+                                                            <label class="form-check-label" asp-for="@Model.Permissions[permissonIndex].Key">Enable/Disable</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end of card-body -->
+                                        </div>
+                                    </div>
+                                }
+                            </div><!--end project-list-left-->
+                        </div><!--end /div-->
+                    </div>
+                    <!--end col-->
+                </div><!--end row-->
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div><!--end col-->
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary" type="submit" form="role-edit">Save</button>
+                    <a asp-controller="role" asp-action="list" asp-area="admin" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section plugin_scripts{
+    <script src="~/admin/metrica/assets/plugins/select/selectr.min.js" asp-append-version="true"></script>
+}
+
+
+@section scripts{
+    <script src="~/admin/metrica/assets/pages/UserManagement/User/Edit.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,231 @@
+﻿@using Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
+@using Core.Constants.Notification
+@model NotifyEventUpdateViewModel
+
+@{
+    ViewData["Title"] = "Notify events";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="notifyevent" asp-action="list" asp-area="admin">Notify events</a></li>
+                    <li class="breadcrumb-item active">Update</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Update notify event</h4>
+        </div><!--end page-title-box-->
+    </div><!--end col-->
+</div>
+
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-@TempData["message_type"]">
+        @TempData["message"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" asp-controller="notifyevent" asp-action="update" asp-area="admin" id="form-edit">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="card-body border mb-3">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-check form-switch form-switch-success">
+                                        <input asp-for="IsActive" class="form-check-input">
+                                        <label asp-for="IsActive" class="form-check-label"></label>
+                                        <span asp-validation-for="IsActive" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label asp-for="Label"></label>
+                                <input class="form-control" asp-for="Label">
+                                <span asp-validation-for="Label" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Label"></label>
+                                <select disabled class="form-select" asp-for="NotifyFor" asp-items="Html.GetEnumSelectList<NotifyIdentifier>()"></select>
+                                <span asp-validation-for="Label" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                Sms configuration for Notification
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body border mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-check form-switch form-switch-success">
+                                    <input asp-for="SMSEnabled" class="form-check-input" form="form-edit">
+                                    <label asp-for="SMSEnabled" class="form-check-label"></label>
+                                    <span asp-validation-for="SMSEnabled" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="SMSText_AZ"></label>
+                            <textarea class="form-control" asp-for="SMSText_AZ" form="form-edit"></textarea>
+                            <span asp-validation-for="SMSText_AZ" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="SMSText_RU"></label>
+                            <textarea class="form-control" asp-for="SMSText_RU" form="form-edit"></textarea>
+                            <span asp-validation-for="SMSText_RU" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="SMSText_EN"></label>
+                            <textarea class="form-control" asp-for="SMSText_EN" form="form-edit"></textarea>
+                            <span asp-validation-for="SMSText_EN" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                Email configuration for Notification
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body border mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-check form-switch form-switch-success">
+                                    <input asp-for="EmailEnabled" class="form-check-input" form="form-edit">
+                                    <label asp-for="EmailEnabled" class="form-check-label"></label>
+                                    <span asp-validation-for="EmailEnabled" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="EmailText_AZ"></label>
+                            <input class="form-control" asp-for="EmailSubject_AZ" form="form-edit">
+                            <span asp-validation-for="EmailSubject_AZ" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="EmailSubject_RU"></label>
+                            <input class="form-control" asp-for="EmailSubject_RU" form="form-edit">
+                            <span asp-validation-for="EmailSubject_RU" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="EmailSubject_EN"></label>
+                            <input class="form-control" asp-for="EmailSubject_EN" form="form-edit">
+                            <span asp-validation-for="EmailSubject_EN" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="EmailText_AZ"></label>
+                            <textarea class="form-control" asp-for="EmailText_AZ" form="form-edit"></textarea>
+                            <span asp-validation-for="EmailText_AZ" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="EmailText_RU"></label>
+                            <textarea class="form-control" asp-for="EmailText_RU" form="form-edit"></textarea>
+                            <span asp-validation-for="EmailText_RU" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="EmailText_EN"></label>
+                            <textarea class="form-control" asp-for="EmailText_EN" form="form-edit"></textarea>
+                            <span asp-validation-for="EmailText_EN" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary" type="submit" form="form-edit">Save</button>
+                    <a asp-controller="notifyevent" asp-action="list" asp-area="admin" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/common/plugins/ckeditor/ckeditor.js" asp-append-version="true"></script>
+
+    <script>
+        const contents = ["#EmailText_AZ", "#EmailText_RU", "#EmailText_EN"];
+
+        for (const content of contents) {
+            ClassicEditor
+                .create(document.querySelector(content), {
+                    viewportTopOffset: 50,
+                    toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'link'],
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+    </script>
+}
+

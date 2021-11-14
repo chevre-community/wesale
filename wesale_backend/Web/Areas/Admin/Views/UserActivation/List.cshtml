@@ -1,0 +1,86 @@
+﻿@using Web.Areas.Admin.ViewModels.UserManagement.UserActivation
+@model UserActivationListViewModel
+
+@{
+    ViewData["Title"] = "User activations";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">User activations</h4>
+        </div>
+        <!--end page-title-box-->
+    </div>
+    <!--end col-->
+</div>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-@TempData["message_type"]">
+        @TempData["message"]
+    </div>
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="navbars-table" class="table table-striped mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.UserActivations.GetEnumerator().Current.Email)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.UserActivations.GetEnumerator().Current.EmailConfirmed)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.UserActivations.GetEnumerator().Current.MailSent)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.UserActivations.GetEnumerator().Current.ActivationLink)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.UserActivations.GetEnumerator().Current.UpdatedAt)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.UserActivations.GetEnumerator().Current.CreatedAt)</span>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowCounter = 0;
+                                foreach (var userActivation in Model.UserActivations)
+                                {
+                                    rowCounter++;
+
+                                    <tr>
+                                        <td>
+                                            @rowCounter
+                                        </td>
+                                        <td>@userActivation.Email</td>
+                                        <td>@await Component.InvokeAsync("BooleanResult", new { result = userActivation.EmailConfirmed })</td>
+                                        <td>@await Component.InvokeAsync("BooleanResult", new { result = userActivation.MailSent })</td>
+                                        <td>@(userActivation.ActivationLink.Substring(0, Math.Min(20, userActivation.ActivationLink.Length)) + "...")</td>
+                                        <td>@userActivation.UpdatedAt</td>
+                                        <td>@userActivation.CreatedAt</td>
+                                        <td>
+                                            <a asp-controller="useractivation" asp-action="details" asp-area="admin" asp-route-id="@userActivation.Id" class="mr-2">
+                                                <i class="las la-info text-secondary font-18"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div><!--end /tableresponsive-->
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div> <!-- end col -->
+</div>
