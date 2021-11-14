@@ -1,0 +1,38 @@
+.filter-form-tabs {
+  display: grid;
+  grid-template-columns: rem(180) 1fr;
+  grid-gap: rem(8);
+  align-items: center;
+
+  .nav-tabs {
+    border: none;
+    border-radius: rem(8);
+    border: 0.5px solid rgba(255, 255, 255, 0.73);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: hidden;
+    height: rem(48);
+  }
+
+  .nav-link {
+    width: 100%;
+    height: 100%;
+    padding: rem(12) 0;
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: rem(24);
+    letter-spacing: 0.02em;
+    border-radius: 0 !important;
+    color: $ntr-light-05;
+    border: none !important;
+
+    &:hover {
+      color: $primary-blue;
+    }
+
+    &.selected {
+      background-color: $white;
+      color: $ntr-dark-01;
+    }
+  }
+}

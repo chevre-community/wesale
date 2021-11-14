@@ -1,0 +1,33 @@
+.g-link {
+  @include font-size(15, 500);
+  color: $primary-black;
+  line-height: rem(24);
+  @include transition();
+
+  @include action-css() {
+    color: $primary-blue;
+  }
+
+  &__blue {
+    @include font-size(14, 600);
+    color: $primary-blue;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    @include transition();
+
+    &:disabled,
+    &.disabled,
+    [disabled] {
+      border-color: currentColor;
+      color: $ntr-light-01;
+
+      svg path {
+        stroke: currentColor;
+      }
+    }
+
+    @include action-css() {
+      color: $ntr-blue-01;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@each $key, $gap in $gaps {
+  @each $dirKey, $dir in $dist {
+    .m#{$dirKey}-#{$key} {
+      @if $dir == "top-bottom" {
+        margin-top: rem($gap);
+        margin-bottom: rem($gap);
+      } @else if $dir == "left-right" {
+        margin-left: rem($gap);
+        margin-right: rem($gap);
+      } @else {
+        margin-#{$dir}: rem($gap);
+      }
+    }
+  }
+}

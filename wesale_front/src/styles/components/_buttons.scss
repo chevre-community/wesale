@@ -1,0 +1,171 @@
+.g-btn {
+  border: none;
+  outline: none;
+  @include advancedRem(padding, (6));
+  cursor: pointer;
+
+  &--block {
+    width: 100%;
+    display: block;
+  }
+
+  &--inline-block {
+    display: inline-block;
+  }
+
+  &__with-icon {
+    @include flex-center();
+    @include advancedRem(padding, (4 16));
+    background: $ntr-light-04;
+    color: $primary-grey;
+    border-radius: rem(100);
+    cursor: pointer;
+
+    span {
+      margin-left: rem(10);
+      @include font-size(14, 500);
+      line-height: rem(24);
+    }
+  }
+
+  &-blue {
+    border-radius: rem(12);
+    @include advancedRem(padding, (11 18));
+    @extend .btn-base-css;
+    @include transition();
+    background-color: $shade-blue;
+    color: $primary-blue;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-blue;
+      color: $white;
+    }
+  }
+
+  &-mint {
+    border-radius: rem(12);
+    @include advancedRem(padding, (11 18));
+    color: $primary-green;
+    @extend .btn-base-css;
+    @include transition();
+    background-color: $primary-mint;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover {
+      background-color: $primary-green;
+      color: $white;
+    }
+  }
+
+  &__icon {
+    padding: rem(8);
+  }
+
+  &-primary {
+    background-color: $primary-blue;
+    color: $white;
+    @extend .btn-base-css;
+    @include transition();
+    @include disabled-btn();
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-blue-hover;
+    }
+  }
+
+  &-secondary {
+    @extend .btn-base-css;
+    background-color: $white;
+    border: rem(1) solid $ntr-light-06;
+    color: $primary-black;
+    @include disabled-btn();
+    cursor: pointer;
+
+    &:hover {
+      border-color: $primary-blue;
+      color: $primary-blue;
+    }
+  }
+
+  &-upload {
+    @include flex-center();
+    @include advancedRem(padding, (12 24));
+    border: rem(1) solid $ntr-light-02;
+    background-color: $white;
+    @extend .btn-base-css;
+    @include disabled-btn();
+    cursor: pointer;
+
+    span {
+      margin-left: rem(17);
+    }
+
+    &:hover {
+      color: $primary-blue;
+      border-color: currentColor;
+    }
+
+    svg {
+      max-width: rem(20);
+    }
+  }
+
+  &-arrow {
+    background: $primary-blue;
+    box-shadow: 0px 2px 25px rgba(17, 20, 45, 0.09);
+    border-radius: 50%;
+    @include transition();
+    border: none;
+    @include box(40);
+    @include flex-center();
+    color: $white;
+
+    &:hover {
+      background-color: $primary-blue-hover;
+    }
+  }
+
+  &-count {
+    @include box(48);
+    border-radius: 50%;
+    @include flex-center();
+    background-color: $ntr-light-04;
+    border: none;
+    @include transition();
+
+    &:hover {
+      background-color: $ntr-light-03;
+    }
+  }
+}
+
+.btn-save-search {
+  border: none;
+  background-color: transparent;
+  color: $primary-blue;
+  @include flex-center();
+  @include font-size(14, 600);
+  line-height: rem(24);
+
+  @include transition();
+
+  &:hover {
+    color: $primary-blue-hover;
+
+    svg path {
+      stroke: $primary-blue-hover;
+    }
+  }
+
+  svg {
+    margin-right: rem(6);
+
+    path {
+      @include transition();
+      stroke: $primary-blue;
+    }
+  }
+}

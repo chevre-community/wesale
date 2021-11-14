@@ -1,0 +1,32 @@
+._404-page {
+  margin-top: rem(40);
+  @include flex-center(column);
+  text-align: center;
+
+  &-img {
+    margin-bottom: rem(56);
+
+    img {
+      width: rem(450);
+    }
+  }
+
+  &-title {
+    @include font-size(24, 700);
+    line-height: 1;
+    color: $black;
+    margin-bottom: rem(16);
+  }
+
+  &-subtitle {
+    @include font-size(16, 600);
+    line-height: 1.5;
+    color: $black;
+    margin-bottom: rem(56);
+  }
+
+  &-btn {
+    @include font-size(14, 600);
+    letter-spacing: 0.02em;
+  }
+}

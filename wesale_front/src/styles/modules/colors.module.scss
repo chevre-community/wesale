@@ -1,0 +1,25 @@
+@use "../utilities/_variables" as *;
+
+:export {
+  primary-black: $primary-black;
+  primary-blue: $primary-blue;
+  primary-blue-hover: $primary-blue-hover;
+  primary-sky-blue: $primary-sky-blue;
+  primary-grey: $primary-grey;
+  secondary-error: $secondary-error;
+  secondary-green: $secondary-green;
+  secondary-blue: $secondary-blue;
+  secondary-grey: $secondary-grey;
+  ntr-dark-01: $ntr-dark-01;
+  ntr-dark-02: $ntr-dark-02;
+  ntr-dark-03: $ntr-dark-03;
+  ntr-dark-04: $ntr-dark-04;
+  ntr-light-01: $ntr-light-01;
+  ntr-light-03: $ntr-light-03;
+  ntr-light-04: $ntr-light-04;
+  ntr-light-05: $ntr-light-05;
+  ntr-light-06: $ntr-light-06;
+  shade-linear-blue: $shade-linear-blue;
+  shade-blue: $shade-blue;
+  white: $white;
+}

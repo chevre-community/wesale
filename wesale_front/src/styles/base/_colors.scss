@@ -1,0 +1,29 @@
+/* Colors */
+
+@each $key, $color in $colors {
+  .text-#{$key} {
+    color: $color;
+  }
+
+  .border-#{$key} {
+    border: 1px solid $color;
+  }
+
+  .hover-#{$key} {
+    @include transition();
+
+    &:hover {
+      color: $color !important;
+    }
+  }
+
+  .bg-#{$key} {
+    background: $color;
+  }
+
+  .bg-#{$key}--before::before {
+    background: $color;
+  }
+}
+
+/* Colors */

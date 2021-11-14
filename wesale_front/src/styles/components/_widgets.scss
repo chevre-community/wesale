@@ -1,0 +1,31 @@
+.widget {
+  border-radius: rem(36);
+  @include advancedRem(padding, (6 12));
+  @include font-size(12, 500);
+  line-height: rem(16);
+  letter-spacing: 0.02em;
+  @include flex-center();
+
+  &-grid {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    grid-gap: rem(12);
+  }
+
+  &.with-icon {
+    svg {
+      margin-right: rem(10);
+    }
+  }
+
+  &--mint {
+    background-color: $primary-light-green;
+    color: $primary-green;
+  }
+
+  &--white {
+    background-color: $white;
+    color: $primary-black;
+  }
+}

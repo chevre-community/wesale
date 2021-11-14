@@ -1,0 +1,72 @@
+.banner-section {
+  margin: 0 rem(-80);
+  position: relative;
+  border-radius: rem(8);
+  overflow: hidden;
+  height: rem(340);
+  margin-bottom: rem(15);
+
+  @include pseudo() {
+    @include arrange(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(3, 3, 3, 0.45), rgba(3, 3, 3, 0.45));
+    z-index: 1;
+    opacity: 0.8;
+  }
+
+  &-cover {
+    position: absolute;
+    @include arrange(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+  }
+
+  &-wrapper {
+    @include flex-center();
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  &-tabs {
+    display: flex;
+    align-items: center;
+    grid-gap: rem(12);
+    margin-bottom: rem(20);
+  }
+
+  &-form {
+    padding: rem(8);
+    background-color: $white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: rem(12);
+  }
+
+  &-container {
+    width: 100%;
+    max-width: rem(960);
+  }
+
+  &-tab-btn {
+    @include font-size(28, 700);
+    letter-spacing: 0.02em;
+    color: $white;
+    border: none;
+    border-radius: rem(8);
+    background-color: rgba(69, 68, 68, 0.65);
+    padding: rem(8);
+    line-height: normal;
+
+    &.active {
+      background-color: $white;
+      color: $primary-blue;
+      @include flex-center();
+    }
+  }
+
+  .filter-form-grid__item:nth-child(2) {
+    min-width: rem(180);
+  }
+}

@@ -1,0 +1,37 @@
+.search-page {
+  &-select {
+    width: rem(180);
+    margin-right: rem(24);
+  }
+
+  &-tabs {
+    display: flex;
+    align-items: stretch;
+    border-radius: rem(12);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: rem(40);
+    overflow: hidden;
+  }
+
+  &-tab-btn {
+    a {
+      background-color: $white;
+    }
+
+    &.active {
+      a {
+        background-color: $primary-blue;
+        color: #fefefe;
+      }
+    }
+
+    a {
+      height: 100%;
+      @include flex-center();
+      @include advancedRem(padding, (10 16));
+      @include font-size(14, 600);
+      line-height: rem(20);
+      color: $primary-black;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.details-page {
+  $this: &;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: 1fr rem(310);
+    grid-gap: rem(20);
+    margin-top: rem(24);
+  }
+
+  &__with-dot {
+    @include flex-center();
+
+    & + #{$this}__with-dot {
+      margin-left: rem(16);
+      padding-left: rem(16);
+    }
+
+    svg {
+      max-width: rem(14);
+      margin-right: rem(10);
+    }
+  }
+
+  &__swipers {
+    &--widgets {
+      position: absolute;
+      top: rem(16);
+      left: rem(16);
+      display: flex;
+      align-items: center;
+      grid-gap: rem(12);
+      z-index: 3;
+    }
+
+    &--next,
+    &--prev {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+    }
+
+    &--next {
+      right: rem(-16);
+    }
+
+    &--prev {
+      left: rem(-16);
+    }
+  }
+}

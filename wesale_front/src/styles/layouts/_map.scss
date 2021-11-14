@@ -1,0 +1,104 @@
+.map {
+  &-marker {
+    cursor: pointer;
+  }
+
+  &-page {
+    width: calc(100% + #{rem(80 * 2)});
+    margin-left: rem(-80);
+
+    .search-page-tabs {
+      position: absolute;
+      top: rem(42);
+      right: rem(82);
+      z-index: 3;
+    }
+
+    &-wrapper {
+      position: relative;
+    }
+
+    &-detail {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -100%;
+      width: rem(400);
+      height: 100%;
+      @include advancedRem(padding, (24 24 125));
+      z-index: 3;
+      background-color: $white;
+      @include transition(all, 1s, ease-in-out);
+      overflow-y: auto;
+      scrollbar-color: $primary-blue-hover transparent;
+      scrollbar-width: thin;
+
+      &.open {
+        left: 0;
+      }
+
+      &::-webkit-scrollbar {
+        width: rem(5);
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $primary-blue-hover;
+      }
+
+      .product-card {
+        box-shadow: none;
+
+        a {
+          display: none;
+        }
+
+        &__body {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+
+      .g-btn-secondary {
+        margin-top: rem(45);
+      }
+
+      .close-details {
+        font-size: rem(16);
+        line-height: rem(1);
+        background-color: transparent;
+        padding: rem(12);
+        margin-right: rem(-12);
+        margin-bottom: rem(12);
+        border: none;
+      }
+    }
+  }
+}
+
+.mapboxgl {
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.mapboxgl-ctrl {
+  border-radius: rem(100) !important;
+  background: $white;
+  overflow: hidden;
+  box-shadow: none !important;
+
+  &-icon {
+    width: rem(40) !important;
+    height: rem(44) !important;
+  }
+
+  &-bottom-right,
+  &-bottom-left {
+    display: none !important;
+  }
+}

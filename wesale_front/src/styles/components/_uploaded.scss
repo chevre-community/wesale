@@ -1,0 +1,60 @@
+.uploaded-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(#{rem(150)}, 1fr));
+  grid-gap: rem(20);
+}
+
+.uploaded-image {
+  $this: &;
+  position: relative;
+  border-radius: rem(8);
+
+  &.--main {
+    border: rem(4) solid $primary-blue;
+    border-radius: rem(12);
+
+    #{$this}__main {
+      display: flex;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: rem(8);
+  }
+
+  &__remove {
+    position: absolute;
+    @include box(24);
+    top: rem(8);
+    right: rem(8);
+    background-color: $white;
+    border: none;
+    border-radius: 50%;
+    @include flex-center();
+
+    svg {
+      max-width: rem(8);
+    }
+  }
+
+  &__main {
+    position: absolute;
+    bottom: rem(-15);
+    left: 50%;
+    transform: translateX(-50%);
+    height: rem(30);
+    width: max-content;
+    border-radius: rem(36);
+    @include advancedRem(padding, (4 12));
+    background-color: $primary-blue;
+    color: $white;
+    @include font-size(12, 500);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    @include flex-center();
+    display: none;
+  }
+}

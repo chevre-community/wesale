@@ -1,0 +1,39 @@
+.design-section {
+  margin-top: rem(80);
+}
+
+.g-section {
+  & + .g-section {
+    margin-top: rem(48);
+  }
+
+  &-tabs {
+    display: flex;
+    align-items: center;
+    grid-gap: rem(4);
+  }
+
+  &-tab {
+    border: none;
+    background-color: transparent;
+    color: $primary-grey;
+    @include font-size(14, 500);
+    @include advancedRem(padding, (6 12));
+    line-height: rem(20);
+
+    &.active {
+      background-color: $primary-grey;
+      color: $white;
+      border-radius: rem(36);
+    }
+  }
+
+  &-cards {
+    @include grid-repeated-cols(310, 20, "minmax", _);
+    margin: rem(24) 0;
+  }
+
+  &-wrapper {
+    @include flex-center(column);
+  }
+}

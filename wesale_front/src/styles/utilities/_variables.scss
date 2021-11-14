@@ -1,0 +1,335 @@
+$font-family: "Montserrat";
+$font-types: (
+  "Bold": 700,
+  "Regular": 400,
+  "SemiBold": 600,
+  "ExtraBold": 900,
+  "Medium": 500,
+  "Light": 300,
+);
+
+$font: (
+  "title__lg--regular": (
+    "size": 28,
+    "weight": 400,
+    "line-height": 39,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 32,
+      "line-height": 32,
+    ),
+  ),
+  "title__lg--bold": (
+    "size": 28,
+    "weight": 700,
+    "line-height": 39,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 32,
+      "line-height": 32,
+    ),
+  ),
+  "title__md--bold": (
+    "size": 24,
+    "weight": 700,
+    "line-height": 38,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 24,
+      "line-height": 28,
+    ),
+  ),
+  "title__md--semibold": (
+    "size": 24,
+    "weight": 600,
+    "line-height": 38,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 24,
+      "line-height": 28,
+    ),
+  ),
+  "title__md--regular": (
+    "size": 24,
+    "weight": 400,
+    "line-height": 38,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 24,
+      "line-height": 28,
+    ),
+  ),
+  "title__sm--medium": (
+    "size": 20,
+    "weight": 500,
+    "line-height": 32,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 20,
+      "line-height": 30,
+    ),
+  ),
+  "title__sm--bold": (
+    "size": 20,
+    "weight": 700,
+    "line-height": 32,
+    "spacing": 0.02em,
+    "transform": none,
+    "mobile": (
+      "size": 20,
+      "line-height": 30,
+    ),
+  ),
+  "subtitle--bold": (
+    "size": 20,
+    "weight": 600,
+    "line-height": 30,
+    "spacing": normal,
+    "transform": none,
+    "mobile": (
+      "size": 18,
+      "line-height": 27,
+    ),
+  ),
+  "text__lg--regular": (
+    "size": 18,
+    "weight": 400,
+    "line-height": 25,
+    "spacing": normal,
+    "transform": 0.02em,
+    // "mobile": (
+    //   "size": 15,
+    //   "line-height": 24,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  ),
+  "text__lg--semibold": (
+    "size": 18,
+    "weight": 600,
+    "line-height": 25,
+    "spacing": normal,
+    "transform": 0.02em,
+    // "mobile": (
+    //   "size": 15,
+    //   "line-height": 24,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  ),
+  "text__md--regular": (
+    "size": 15,
+    "weight": 400,
+    "line-height": 25,
+    "spacing": normal,
+    "transform": 0.02em,
+    "mobile": (
+      "size": 15,
+      "line-height": 24,
+    ),
+  ),
+  "text__md--bold": (
+    "size": 15,
+    "weight": 700,
+    "line-height": 25,
+    "spacing": normal,
+    "transform": 0.02em,
+  ),
+  "text__md--semibold": (
+    "size": 15,
+    "weight": 600,
+    "line-height": 25,
+    "spacing": normal,
+    "transform": 0.02em,
+  ),
+  "text__sm--regular": (
+    "size": 15,
+    "weight": 400,
+    "line-height": 24,
+    "spacing": normal,
+    "transform": none,
+  ),
+  "text__sm--medium": (
+    "size": 15,
+    "weight": 500,
+    "line-height": 24,
+    "spacing": normal,
+    "transform": none,
+  ),
+  "text__sm--bold": (
+    "size": 15,
+    "weight": 600,
+    "line-height": 24,
+    "spacing": normal,
+    "transform": none,
+  ),
+  "text__xs--medium": (
+    "size": 13,
+    "weight": 500,
+    "line-height": 18,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
+  "caption__lg--regular": (
+    "size": 14,
+    "weight": 400,
+    "line-height": 18,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
+  "caption__lg--semibold": (
+    "size": 14,
+    "weight": 600,
+    "line-height": 18,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
+  "caption__md--medium": (
+    "size": 12,
+    "weight": 500,
+    "line-height": 16,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
+  "btn__text": (
+    "size": 14,
+    "weight": 500,
+    "line-height": 24,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
+);
+
+$colors: (
+  "primary-black": #11142d,
+  "primary-blue": #3f8cff,
+  "primary-sky-blue": #bad6ff,
+  "primary-grey": #434343,
+  "primary-green": #1aa049,
+  "primary-light-green": #e9f8ef,
+  "primary-mint": #23b9571a,
+  "primary-blue-hover": #72abff,
+  "secondary-error": #ed292a,
+  "secondary-green": #23b957,
+  "secondary-blue": #135ac5,
+  "secondary-grey": #7c7d89,
+  "ntr-dark-01": #343434,
+  "ntr-dark-02": #898f96,
+  "ntr-dark-03": #9697af,
+  "ntr-dark-04": #9fa1c2,
+  "ntr-light-01": #c4cdd5,
+  "ntr-light-02": #dfe3e8,
+  "ntr-light-03": #eeeef3,
+  "ntr-light-04": #f6f6f9,
+  "ntr-light-05": #e4e4e4,
+  "ntr-light-06": #7a7b92,
+  "ntr-light-07": #f7f7f7,
+  "ntr-blue-01": #1b6be2,
+  "shade-blue": #dbe9fe,
+  "shade-linear-blue": linear-gradient(180deg, #3d8afe 0%, #1166e7 100%),
+  "white": #fff,
+  "black": #000,
+);
+
+$primary-black: map-get($colors, "primary-black");
+$primary-blue: map-get($colors, "primary-blue");
+$primary-mint: map-get($colors, "primary-mint");
+$primary-green: map-get($colors, "primary-green");
+$primary-light-green: map-get($colors, "primary-light-green");
+$primary-blue-hover: map-get($colors, "primary-blue-hover");
+$primary-sky-blue: map-get($colors, "primary-sky-blue");
+$primary-grey: map-get($colors, "primary-grey");
+$secondary-error: map-get($colors, "secondary-error");
+$secondary-green: map-get($colors, "secondary-green");
+$secondary-blue: map-get($colors, "secondary-blue");
+$secondary-grey: map-get($colors, "secondary-grey");
+$ntr-dark-01: map-get($colors, "ntr-dark-01");
+$ntr-dark-02: map-get($colors, "ntr-dark-02");
+$ntr-dark-03: map-get($colors, "ntr-dark-03");
+$ntr-dark-04: map-get($colors, "ntr-dark-04");
+$ntr-light-01: map-get($colors, "ntr-light-01");
+$ntr-light-02: map-get($colors, "ntr-light-02");
+$ntr-light-03: map-get($colors, "ntr-light-03");
+$ntr-light-04: map-get($colors, "ntr-light-04");
+$ntr-light-05: map-get($colors, "ntr-light-05");
+$ntr-light-06: map-get($colors, "ntr-light-06");
+$ntr-light-07: map-get($colors, "ntr-light-07");
+$ntr-blue-01: map-get($colors, "ntr-blue-01");
+$shade-linear-blue: map-get($colors, "shade-linear-blue");
+$shade-blue: map-get($colors, "shade-blue");
+$white: map-get($colors, "white");
+$black: map-get($colors, "black");
+
+$gaps: (
+  "xxs": 4,
+  "xs": 8,
+  "sm": 16,
+  "md": 28,
+  "xl": 75,
+);
+
+$dist: (
+  "t": "top",
+  "l": "left",
+  "b": "bottom",
+  "r": "right",
+  "y": "top-bottom",
+  "x": "left-right",
+);
+
+$offset: 80;
+$offset-md: 200;
+$offset-lg: 320;
+
+$radius-20: 20;
+
+$break-points: (
+  "sm": 468,
+  "md": 768,
+  "lg": 1024,
+  "xl": 1200,
+  "xxl": 1440,
+);
+
+$desktop-width: map-get($break-points, "lg");
+$tablet-width: map-get($break-points, "md");
+$mobile-width: map-get($break-points, "sm");
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 12px !default;
+
+$screen-xxs: 320px;
+$screen-xs: 480px;
+$screen-sm: 568px;
+$screen-ms: 640px;
+$screen-md: 768px;
+$screen-def: 1024px;
+$screen-lg: 1280px;
+$screen-xl: 1366px;
+$screen-xxl: 1440px;
+$screen-mg: 1560px;
+$screen-xmg: 1668px;
+$screen-hd: 1920px;
+$screen-2k: 2048px;
+$screen-4k: 3840px;
+
+$_screens-map: (
+  xxs: $screen-xxs,
+  xs: $screen-xs,
+  sm: $screen-sm,
+  ms: $screen-ms,
+  md: $screen-md,
+  def: $screen-def,
+  lg: $screen-lg,
+  xl: $screen-xl,
+  xxl: $screen-xxl,
+  mg: $screen-mg,
+  xmg: $screen-xmg,
+  hd: $screen-hd,
+);
+
+$z-index-sticky: 1020;
+$z-index-menu: $z-index-sticky + 3;
+$z-index-form: $z-index-sticky - 1;

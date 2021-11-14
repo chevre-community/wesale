@@ -1,0 +1,61 @@
+.g-nav {
+  padding: rem(16) 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 2px -5px 40px rgba(96, 96, 96, 0.1);
+  position: sticky;
+  z-index: 1020;
+  top: 0;
+
+  &__grid {
+    @include justify-between();
+
+    &--main,
+    &--side {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    margin-right: rem(24);
+
+    $links: &;
+
+    &--item {
+      @include flex-center();
+
+      a {
+        display: block;
+        color: $primary-black;
+        @include font-size(14, 500);
+        letter-spacing: 0.02em;
+        line-height: 1.6;
+        padding: rem(12);
+        @include transition();
+
+        @include action-css() {
+          color: $primary-blue;
+        }
+      }
+
+      & + #{$links}--item {
+        margin-left: rem(12);
+      }
+    }
+  }
+
+  &__brand {
+    position: relative;
+    margin-right: rem(32);
+    margin-top: rem(5);
+
+    img {
+      max-width: rem(90);
+    }
+  }
+}

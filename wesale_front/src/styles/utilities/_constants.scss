@@ -1,0 +1,81 @@
+.hidden {
+  @include visually-hidden();
+}
+
+.with-gap-16 {
+  & + .with-gap-16 {
+    margin-left: rem(16);
+  }
+}
+
+.g-transition {
+  @include transition();
+}
+
+.disabled,
+.swiper-button-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.g-fade-relative {
+  position: relative;
+}
+
+._flex-center {
+  @include flex-center();
+}
+
+.flex-center-between {
+  @extend ._flex-center;
+  justify-content: space-between;
+}
+
+._flex-end {
+  @include justify-end();
+}
+
+.w-content {
+  width: max-content !important;
+}
+
+@include breakpoint-max($desktop-width) {
+  /* lg-something means this condition will work if screen size is smaller than given width */
+  /* lg-md-something this condition will work if screen size is greater than given width */
+
+  .lg-hidden {
+    display: none !important;
+  }
+
+  ._lg-ms-auto {
+    margin-left: auto;
+  }
+
+  ._lg-align-center {
+    align-items: center;
+  }
+}
+
+@include breakpoint-min($desktop-width) {
+  .lg-m-hidden {
+    display: none !important;
+  }
+}
+
+.with-dot {
+  position: relative;
+
+  & + .with-dot {
+    margin-left: rem(6);
+    padding-left: rem(10);
+
+    @include pseudo() {
+      @include box(3);
+      border-radius: 50%;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      background-color: #11142d;
+    }
+  }
+}

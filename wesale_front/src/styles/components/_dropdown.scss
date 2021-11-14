@@ -1,0 +1,31 @@
+.g-dropdown {
+  position: relative;
+
+  .dropdown-menu {
+    // background-color: $white;
+  }
+}
+
+.dropdown-menu {
+  @include visually-hidden();
+}
+
+.dropdown-menu.show {
+  position: absolute;
+  display: block;
+  @include show-hidden();
+  width: max-content;
+  animation: fade-in 0.2s linear forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.user-dropdown {
+}

@@ -1,0 +1,61 @@
+/* Pagination */
+
+.g-pagination {
+  $this: &;
+  flex-wrap: wrap;
+
+  .page-link {
+    box-shadow: none !important;
+  }
+
+  &__item {
+    background-color: transparent;
+
+    &:not(:last-child) {
+      margin-right: rem(8);
+    }
+
+    &:disabled,
+    &.disabled,
+    [disabled] {
+      a {
+        background-color: $ntr-light-03 !important;
+        border-color: currentColor !important;
+        color: $ntr-light-01 !important;
+      }
+    }
+
+    &.active {
+      a {
+        background-color: $primary-blue;
+        color: $white;
+      }
+    }
+
+    a {
+      border: none;
+      box-shadow: none;
+      border-radius: rem(16) !important;
+      @include box(48);
+      @include flex-center();
+      background-color: $ntr-light-05;
+      color: $primary-black;
+      @extend .btn-base-css;
+      padding: rem(15);
+
+      &:hover {
+        background-color: $primary-blue-hover;
+        color: $white;
+      }
+    }
+  }
+
+  &__controller {
+    a {
+      @include advancedRem(padding, (12 16));
+      width: auto;
+    }
+  }
+}
+
+/* Pagination */

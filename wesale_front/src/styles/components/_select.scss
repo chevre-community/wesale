@@ -1,0 +1,15 @@
+.g-select {
+  position: relative;
+
+  &-dropdown {
+    animation: fadeIn 0.2s ease-in;
+  }
+
+  &-wrapper {
+    position: relative;
+  }
+
+  .css-1okebmr-indicatorSeparator {
+    display: none;
+  }
+}

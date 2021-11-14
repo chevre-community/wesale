@@ -1,0 +1,15 @@
+.g-breadcrumb {
+  &-item {
+    a {
+      @include font-size(14, 400);
+      color: $ntr-light-06;
+      line-height: rem(24);
+      letter-spacing: 0.02em;
+      @include transition();
+
+      &:hover {
+        color: $primary-blue;
+      }
+    }
+  }
+}

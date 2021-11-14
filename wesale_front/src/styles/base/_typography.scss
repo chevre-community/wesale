@@ -1,0 +1,42 @@
+// @each $type, $weight in $font-types {
+//   @font-face {
+//     font-family: $font-family;
+//     font-weight: $weight;
+//     font-style: normal;
+//     src: url("../../assets/fonts/Montserrat-#{$type}.ttf") format("truetype");
+//     // url does not have correct directory becuase of compiled css
+//     font-display: swap;
+//   }
+// }
+
+@each $key, $map in $font {
+  .g-#{$key} {
+    $size: map-get($map, "size");
+    $weight: map-get($map, "weight");
+    $transform: map-get($map, "transform");
+    $spacing: map-get($map, "spacing");
+    $line-h: map-get($map, "line-height");
+
+    display: block;
+    font-size: rem($size);
+    font-weight: $weight;
+    line-height: rem($line-h);
+    letter-spacing: $spacing;
+    text-transform: $transform;
+
+    @if map-has-key($map, "mobile") {
+      @include breakpoint-max($tablet-width) {
+        @each $key, $val in map-get($map, "mobile") {
+          @if $key == "line-height" {
+            $line-h-sm: $val !global;
+          } @else if $key == "size" {
+            $size-sm: $val !global;
+          }
+        }
+
+        line-height: rem($line-h-sm);
+        font-size: rem($size-sm);
+      }
+    }
+  }
+}
