@@ -6,16 +6,25 @@ services:
     container_name: "wesale-api"
     restart: always
     build:
-      context: .
+      context: ./wesale_backend
       dockerfile: API/Dockerfile
     ports:
       - "8080:80"
 
-  wesale-web:
-    container_name: "wesale-web"
+  wesale-web-admin:
+    container_name: "wesale-web-admin"
     restart: always
     build:
-      context: .
+      context: ./wesale_backend
       dockerfile: Web/Dockerfile
     ports:
       - "3306:80"
+
+  wesale-web-client:
+    container_name: "wesale-web-cleint"
+    restart: always
+    build:
+      context: ./wesale_frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
