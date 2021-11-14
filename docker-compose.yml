@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  wesale-api:
+    container_name: "wesale-api"
+    restart: always
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    ports:
+      - "8080:80"
+
+  wesale-web:
+    container_name: "wesale-web"
+    restart: always
+    build:
+      context: .
+      dockerfile: Web/Dockerfile
+    ports:
+      - "3306:80"
