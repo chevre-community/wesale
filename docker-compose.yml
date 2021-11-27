@@ -36,14 +36,17 @@ services:
 
   web-client:
     container_name: "web-client"
+    volumes:
+      - web-admin-data:/app/assets
     # restart: always
     build:
       context: ./wesale_frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:3000"
 
 volumes:
   pg-data:
   api-data:
   web-admin-data:
+  web-client-data:
