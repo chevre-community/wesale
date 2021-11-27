@@ -8,6 +8,7 @@
   position: sticky;
   z-index: 1020;
   top: 0;
+  height: rem($nav-height);
 
   &__grid {
     @include justify-between();

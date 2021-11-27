@@ -1,52 +1,186 @@
-.details-page {
-  $this: &;
+.details {
+  &-table {
+    @include grid-repeated-cols(400, 30, "minmax");
+    grid-row-gap: rem(24);
 
-  &-grid {
-    display: grid;
-    grid-template-columns: 1fr rem(310);
-    grid-gap: rem(20);
-    margin-top: rem(24);
-  }
-
-  &__with-dot {
-    @include flex-center();
-
-    & + #{$this}__with-dot {
-      margin-left: rem(16);
-      padding-left: rem(16);
-    }
-
-    svg {
-      max-width: rem(14);
-      margin-right: rem(10);
-    }
-  }
-
-  &__swipers {
-    &--widgets {
-      position: absolute;
-      top: rem(16);
-      left: rem(16);
+    &__cell {
       display: flex;
       align-items: center;
       grid-gap: rem(12);
-      z-index: 3;
+
+      &--title,
+      &--info {
+        font-size: rem(15);
+        letter-spacing: 0.02em;
+        line-height: 1.7;
+      }
+
+      &--title {
+        font-weight: 400;
+        color: $ntr-dark-02;
+      }
+
+      &--divider {
+        flex: 1;
+        align-self: flex-end;
+        background-color: $ntr-light-02;
+        height: rem(1);
+        position: relative;
+        bottom: rem(6);
+        opacity: 0.5;
+      }
+
+      &--info {
+        font-weight: 600;
+        color: $primary-black;
+      }
+    }
+  }
+
+  &-page {
+    $this: &;
+
+    &-grid {
+      display: grid;
+      grid-template-columns: 1fr rem(310);
+      grid-gap: rem(20);
+      margin-top: rem(24);
     }
 
-    &--next,
-    &--prev {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
+    &__with-dot {
+      @include flex-center();
+
+      & + #{$this}__with-dot {
+        margin-left: rem(16);
+        padding-left: rem(16);
+      }
+
+      svg {
+        max-width: rem(14);
+        margin-right: rem(10);
+      }
     }
 
-    &--next {
-      right: rem(-16);
+    &__swipers {
+      &--widgets {
+        position: absolute;
+        top: rem(16);
+        left: rem(16);
+        display: flex;
+        align-items: center;
+        grid-gap: rem(12);
+        z-index: 3;
+      }
+
+      &--next,
+      &--prev {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+      }
+
+      &--next {
+        right: rem(-16);
+      }
+
+      &--prev {
+        left: rem(-16);
+      }
     }
 
-    &--prev {
-      left: rem(-16);
+    &__info {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      grid-column-gap: rem(48);
+      grid-row-gap: rem(24);
+      margin: rem(32) 0;
+
+      &--item {
+        display: flex;
+        align-items: center;
+
+        &-icon {
+          @include box(48);
+          border-radius: 50%;
+          background-color: $ntr-light-04;
+          @include flex-center();
+          margin-right: rem(10);
+        }
+      }
+    }
+
+    &__section {
+      & + #{$this}__section {
+        margin-top: rem(48);
+      }
+
+      &-title {
+        @include font-size(24, 600);
+        color: $primary-grey;
+        line-height: rem(20);
+        margin-bottom: rem(16);
+      }
+    }
+
+    &__widgets {
+      display: flex;
+      grid-gap: rem(21);
+      margin-top: rem(32);
+
+      @include breakpoint-max(576) {
+        flex-wrap: wrap;
+      }
+
+      &-title {
+        flex-shrink: 0;
+        @include font-size(15, 400);
+        letter-spacing: 0.02em;
+        color: $ntr-dark-01;
+      }
+    }
+
+    &__description {
+      max-width: rem(800);
+      height: auto;
+      overflow: auto;
+      @include transition();
+
+      &.has-more {
+        height: rem(180);
+        overflow: hidden;
+
+        @include pseudo() {
+          width: 100%;
+          height: rem(100);
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+        }
+      }
+
+      * {
+        @include font-size(15, 400);
+        line-height: rem(26);
+        letter-spacing: 0.02em;
+        color: $black;
+      }
+
+      ul {
+        li {
+          padding-left: rem(10);
+
+          @include pseudo() {
+            width: rem(6);
+            height: rem(1);
+            background-color: $black;
+            left: 0;
+            top: rem(13);
+          }
+        }
+      }
     }
   }
 }

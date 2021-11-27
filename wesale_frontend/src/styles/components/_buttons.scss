@@ -6,7 +6,8 @@
 
   &--block {
     width: 100%;
-    display: block;
+    display: block !important;
+    text-align: center;
   }
 
   &--inline-block {
@@ -70,9 +71,11 @@
     @include transition();
     @include disabled-btn();
     cursor: pointer;
+    display: inline-flex;
 
     &:hover {
       background-color: $primary-blue-hover;
+      color: $white;
     }
   }
 
@@ -139,6 +142,46 @@
     &:hover {
       background-color: $ntr-light-03;
     }
+  }
+
+  &-reset {
+    padding: rem(4);
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+  }
+
+  &-text {
+    width: max-content;
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+
+  &-green {
+    background-color: $secondary-green;
+    color: $white;
+    @extend .btn-base-css;
+    @include transition();
+    @include disabled-btn();
+    cursor: pointer;
+    display: inline-flex;
+    border: 1px solid $secondary-green;
+
+    &:hover {
+      background-color: transparentize($secondary-green, 0.2);
+      color: $white;
+    }
+  }
+
+  &-auth-provider {
+    padding: rem(10);
+    border-radius: rem(6);
+    @include box(44);
+    @include flex-center();
+    border: none;
+    outline: none;
   }
 }
 

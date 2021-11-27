@@ -1,1 +1,79 @@
-.g-modal {}
+.g-modal {
+  .modal-md {
+    max-width: rem(512);
+  }
+
+  .modal {
+    &-header,
+    &-body,
+    &-footer {
+      border: none;
+      padding: 0;
+    }
+
+    &-backdrop {
+      &.show {
+        opacity: 0.3;
+      }
+    }
+  }
+
+  &-title {
+    @include font-size(20, 700);
+    line-height: 1.6;
+    color: $primary-black;
+    letter-spacing: 0.02em;
+    text-align: center;
+    width: 100%;
+  }
+
+  &-header {
+    @include advancedRem(padding, (0 32));
+    margin-bottom: rem(24);
+  }
+
+  .btn-close {
+    position: absolute;
+    top: rem(26);
+    right: rem(30);
+    opacity: 0.9;
+    padding: rem(5) !important;
+    background-size: rem(12);
+    box-shadow: none !important;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  .modal-content {
+    border: none;
+    border-radius: rem(20);
+    background-color: $white;
+    @include advancedRem(padding, (16 24));
+  }
+}
+
+.modal-form {
+  &-wrapper {
+    padding: 0 rem(32);
+
+    .auth-providers {
+      @include flex-center();
+      grid-gap: rem(30);
+      margin-bottom: rem(24);
+    }
+  }
+}
+
+.provider-google {
+  background-color: #4285f4;
+}
+
+.provider-facebook {
+  background-color: #3b5998;
+}
+
+.provider-apple {
+  background-color: #11142d;
+}

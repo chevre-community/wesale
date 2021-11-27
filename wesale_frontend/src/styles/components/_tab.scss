@@ -36,3 +36,41 @@
     }
   }
 }
+
+.section-tabs {
+  border-bottom: rem(1) solid $ntr-light-02;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  grid-column-gap: rem(40);
+  grid-row-gap: rem(8);
+  margin-bottom: rem(40);
+}
+
+.section-tab {
+  position: relative;
+  padding: rem(9) 0;
+  @include font-size(15, 400);
+  letter-spacing: 0.02em;
+  color: $ntr-dark-02;
+  line-height: 1.7;
+  background-color: transparent;
+  border: none;
+  @include transition();
+
+  &:hover {
+    color: $primary-blue;
+  }
+
+  &.active {
+    color: $ntr-dark-01;
+
+    @include pseudo() {
+      bottom: 0;
+      width: 100%;
+      height: rem(2);
+      background-color: $primary-blue;
+      border-radius: rem(24);
+    }
+  }
+}

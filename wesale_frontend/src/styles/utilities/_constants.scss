@@ -29,6 +29,7 @@
 .flex-center-between {
   @extend ._flex-center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 ._flex-end {
@@ -63,7 +64,16 @@
 }
 
 .with-dot {
+  $this: &;
   position: relative;
+
+  &--grey {
+    + #{$this}--grey {
+      @include pseudo() {
+        background-color: $ntr-dark-02 !important;
+      }
+    }
+  }
 
   & + .with-dot {
     margin-left: rem(6);
@@ -77,5 +87,16 @@
       transform: translateY(-50%);
       background-color: #11142d;
     }
+  }
+}
+
+.circle-icon {
+  @include box(48);
+  border-radius: 50%;
+  @include flex-center();
+  font-size: rem(15);
+
+  svg {
+    max-width: rem(18);
   }
 }

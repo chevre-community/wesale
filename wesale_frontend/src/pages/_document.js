@@ -25,7 +25,6 @@ class MyDocument extends Document {
 						href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
 						rel="stylesheet"
 					/>
-					<title>Coming soon</title>
 				</Head>
 				<body>
 					<Main />

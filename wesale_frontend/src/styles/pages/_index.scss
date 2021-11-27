@@ -52,7 +52,7 @@
   &-tab-btn {
     @include font-size(28, 700);
     letter-spacing: 0.02em;
-    color: $white;
+    color: $white !important;
     border: none;
     border-radius: rem(8);
     background-color: rgba(69, 68, 68, 0.65);
@@ -61,7 +61,7 @@
 
     &.active {
       background-color: $white;
-      color: $primary-blue;
+      color: $primary-blue !important;
       @include flex-center();
     }
   }
@@ -69,4 +69,11 @@
   .filter-form-grid__item:nth-child(2) {
     min-width: rem(180);
   }
+}
+
+.privacy-policy {
+  max-width: rem(960);
+  width: 100%;
+  @include font-size(16, 400);
+  line-height: 160%;
 }

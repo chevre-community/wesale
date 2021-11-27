@@ -13,11 +13,12 @@
     "^react-select/(.*)$",
     "^react-bootstrap/(.*)$",
     "^next/(.*)$",
-    "^swiper",
+    "^next-seo",
     "^@/components",
     "^@/lib/(.*)$",
     "^@/context/(.*)$",
     "^classnames",
+    "(.css)",
     "^[./]"
   ],
   "importOrderSeparation": true,

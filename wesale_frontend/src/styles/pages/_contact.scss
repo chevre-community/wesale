@@ -1,0 +1,40 @@
+.contact {
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @include advancedRem(margin, (40 0 80));
+    grid-gap: rem(20);
+
+    &__wesale-info {
+      @include advancedRem(padding, (32 24 44));
+      background: rgba(255, 98, 9, 0.1);
+      border-radius: 16px;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+
+      &--img,
+      &--body {
+        flex: 0 0 50%;
+      }
+
+      &--img {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+
+        img {
+          max-width: rem(380);
+        }
+      }
+
+      &--body {
+        background-color: $shade-blue;
+        border-radius: rem(16);
+        @include advancedRem(padding, (24 32));
+      }
+    }
+  }
+}

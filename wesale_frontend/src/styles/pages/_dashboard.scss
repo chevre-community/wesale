@@ -1,0 +1,338 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: rem(260) 1fr;
+
+  &-sidebar {
+    position: fixed;
+    width: rem(260);
+    height: calc(100% - #{rem($nav-height)});
+    top: rem($nav-height);
+    overflow-y: auto;
+    left: 0;
+    bottom: 0;
+    background: #2c2c2c;
+    @include advancedRem(border-radius, (0 16 16 0));
+    @include advancedRem(padding, (30 0 16 16));
+    color: $white;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &-container {
+    @include advancedRem(padding, (30 30 0 30));
+  }
+
+  &-grid {
+    display: grid;
+    min-height: 100vh;
+    height: 100%;
+    grid-template-rows: rem(72) 1fr;
+  }
+
+  &-wrapper {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-column: 2/3;
+  }
+
+  &-nav {
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+      margin-bottom: rem(16);
+
+      &:hover {
+        a {
+          color: $white;
+        }
+
+        svg {
+          path {
+            stroke: $white;
+          }
+        }
+      }
+
+      a.active {
+        background-color: $white;
+        color: $primary-black;
+        @include advancedRem(border-radius, (32 0 0 32));
+
+        @include pseudo() {
+          background-color: transparent;
+          bottom: 100%;
+          right: 0;
+          height: 150%;
+          width: rem(16);
+          border-bottom-right-radius: rem(20);
+          box-shadow: 0 rem(16) 0 0 #fff;
+        }
+
+        @include pseudo(after) {
+          background-color: transparent;
+          top: 100%;
+          right: 0;
+          height: 150%;
+          width: rem(16);
+          border-top-right-radius: rem(20);
+          box-shadow: 0 rem(-16) 0 0 #fff;
+        }
+
+        svg {
+          path {
+            fill: $primary-blue;
+            stroke: $primary-blue;
+          }
+        }
+      }
+
+      &--icon {
+        width: rem(24);
+        margin-right: rem(14);
+
+        svg {
+          max-width: rem(18);
+        }
+      }
+
+      a {
+        color: $ntr-dark-02;
+        @include font-size(15, 400);
+        line-height: 1.7;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        @include transition();
+        @include advancedRem(padding, (11 18));
+
+        * {
+          @include transition();
+        }
+      }
+    }
+  }
+
+  &-cards {
+    &__grid {
+      display: grid;
+      grid-template-columns: rem(360) 1fr;
+      grid-gap: rem(30);
+      margin-bottom: rem(50);
+    }
+
+    &__stats--grid {
+      @include grid-repeated-cols(230, 20, "minmax");
+      margin-top: rem(26);
+    }
+  }
+
+  &-card {
+    &__profile {
+      background: $white;
+      box-shadow: 0px 2px 25px rgba(17, 20, 45, 0.05);
+      border-radius: rem(16);
+      display: flex;
+      flex-direction: column;
+      height: rem(165);
+
+      &--heading {
+        @include advancedRem(padding, (16 18 16));
+        display: flex;
+
+        @include pseudo() {
+          height: rem(1);
+          width: 100%;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: transparentize($ntr-light-02, $amount: 0.5);
+        }
+
+        p:nth-child(2) {
+          align-self: center;
+          margin-left: rem(16);
+        }
+      }
+
+      &--body {
+        padding: rem(16);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        flex: 1;
+      }
+
+      &--logo {
+        @include box(48);
+        border-radius: 50%;
+        width: max-content;
+        flex-shrink: 0;
+        margin-right: rem(16);
+
+        img {
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    &__stats {
+      background: $white;
+      box-shadow: 0px 2px 25px rgba(17, 20, 45, 0.05);
+      border-radius: rem(16);
+      @include advancedRem(padding, (25 16));
+      display: flex;
+      align-items: center;
+
+      &--icon {
+        @include box(48);
+        border-radius: 50%;
+        background: $shade-linear-blue;
+        display: grid;
+        place-items: center;
+        margin-right: rem(16);
+      }
+    }
+  }
+
+  .g-footer {
+    .g-container {
+      padding: 0 rem(45);
+      width: 100%;
+      max-width: 100%;
+    }
+
+    &__grid {
+      grid-column-gap: rem(30);
+
+      &--center {
+        grid-gap: rem(40);
+      }
+    }
+  }
+
+  &-user-profile {
+    max-width: rem(768);
+    width: 100%;
+  }
+
+  &-tabs {
+    .fade {
+      @include transition(all, 0.4s, ease-in-out);
+    }
+
+    .fade:not(.show) {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    .nav {
+      &-tabs {
+        border: none;
+        grid-gap: rem(13);
+      }
+
+      &-link {
+        @include advancedRem(padding, (8 18));
+        display: inline-flex;
+        @extend .btn-base-css;
+        color: $primary-black;
+        border: 1px solid transparentize($ntr-dark-05, $amount: 0.5) !important;
+        border-radius: rem(12) !important;
+
+        &.active {
+          color: $white !important;
+          background-color: $primary-blue !important;
+          border-color: $primary-blue !important;
+        }
+      }
+    }
+
+    .tab-content {
+      margin-top: rem(32);
+    }
+  }
+}
+
+.profile-form {
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: rem(30) rem(32);
+
+    &__item {
+      &--full-col {
+        grid-column: 1/3;
+      }
+    }
+  }
+
+  &__checkbox-list {
+    li {
+      & + li {
+        margin-top: rem(16);
+      }
+    }
+  }
+
+  &__info-list {
+    margin-bottom: rem(24);
+
+    p {
+      @include font-size(15, 500);
+      color: $ntr-dark-06;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: rem(16);
+      margin-bottom: rem(16);
+
+      li {
+        margin-bottom: rem(8);
+        color: $ntr-dark-06;
+        @include font-size(14, 400);
+        line-height: 150%;
+        /* identical to box height, or 21px */
+        letter-spacing: 0.03em;
+        font-feature-settings: "liga" off;
+        color: #565555;
+        padding-left: rem(22);
+
+        @include pseudo() {
+          top: rem(7);
+          left: 0;
+          @include box(7);
+          border-radius: 50%;
+          background-color: $ntr-light-01;
+        }
+      }
+    }
+  }
+
+  &__last {
+    max-width: rem(450);
+    width: 100%;
+
+    .g-form-group {
+      max-width: rem(400);
+      width: 100%;
+
+      & + .g-form-group {
+        margin-top: rem(32);
+      }
+    }
+  }
+}
+
+.no-results-found {
+  @include flex-center(column);
+  @include advancedRem(padding, (70 24));
+}

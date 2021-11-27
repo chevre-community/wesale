@@ -1,0 +1,43 @@
+.accordion-wrapper {
+  max-width: rem(850);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.faq-accordion {
+  margin-top: rem(32);
+
+  .accordion-button {
+    @include font-size(18, 600);
+    color: $primary-black !important;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+
+  .accordion-item {
+    padding: 24px !important;
+    margin-bottom: 24px !important;
+    position: static;
+    left: 0px;
+    top: 0px;
+    background: $white;
+    border: none;
+    box-shadow: 2px 5px 40px rgba(227, 230, 236, 0.85);
+    border-radius: rem(16) !important;
+  }
+
+  .accordion-body {
+    @include font-size(15, 500);
+    line-height: 1.6;
+    @include advancedRem(padding, (16 46 0 0));
+    color: $secondary-grey;
+
+    * {
+      margin-bottom: 0;
+    }
+  }
+}

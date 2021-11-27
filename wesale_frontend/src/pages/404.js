@@ -22,7 +22,7 @@ const NotFound = () => {
 				<h4 className="_404-page-subtitle">
 					Кажется, мы не можем найти страницу, которую вы ищете
 				</h4>
-				<Link href="/" passHref>
+				<Link href="/home" passHref>
 					<a className="_404-page-btn g-btn-secondary">Вернуться на главную</a>
 				</Link>
 			</div>

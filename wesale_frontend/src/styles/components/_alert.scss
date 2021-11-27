@@ -1,0 +1,73 @@
+.g-alert {
+  &-info {
+    padding: rem(16);
+    border-radius: rem(16);
+    display: flex;
+
+    &__icon {
+      flex-shrink: 0;
+      font-size: rem(24);
+    }
+
+    &--grey {
+      background-color: $ntr-light-04;
+    }
+
+    &__text {
+      margin-left: rem(14);
+      color: $black;
+      @include font-size(14, 400);
+      letter-spacing: 0.02em;
+      line-height: 1.6;
+    }
+  }
+
+  &-login {
+    background-color: $ntr-light-04;
+    border-radius: rem(8);
+    padding: rem(16);
+    max-width: rem(1060);
+    width: 100%;
+    display: flex;
+
+    &__icon {
+      flex-shrink: 0;
+      margin-right: rem(12);
+    }
+  }
+}
+
+.become-agency {
+  @include advancedRem(margin, (36 16 16 0));
+  @include advancedRem(padding, (16));
+  background-color: #4f4d4d;
+  border-radius: rem(16);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: rem(12);
+  }
+
+  &__icon {
+    @include box(48);
+    border-radius: 50%;
+    background-color: $white;
+    @include flex-center();
+
+    svg {
+      max-width: rem(18);
+    }
+  }
+
+  &__close {
+    color: #c9c9c9;
+  }
+
+  .g-btn-primary {
+    margin-top: rem(34);
+    padding: rem(15);
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -101,30 +101,30 @@ $font: (
     "size": 18,
     "weight": 400,
     "line-height": 25,
-    "spacing": normal,
-    "transform": 0.02em,
+    "transform": normal,
+    "spacing": 0.02em,
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__lg--semibold": (
     "size": 18,
     "weight": 600,
     "line-height": 25,
-    "spacing": normal,
-    "transform": 0.02em,
+    "transform": normal,
+    "spacing": 0.02em,
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__md--regular": (
     "size": 15,
     "weight": 400,
     "line-height": 25,
-    "spacing": normal,
-    "transform": 0.02em,
+    "transform": normal,
+    "spacing": 0.02em,
     "mobile": (
       "size": 15,
       "line-height": 24,
@@ -134,15 +134,15 @@ $font: (
     "size": 15,
     "weight": 700,
     "line-height": 25,
-    "spacing": normal,
-    "transform": 0.02em,
+    "transform": normal,
+    "spacing": 0.02em,
   ),
   "text__md--semibold": (
     "size": 15,
     "weight": 600,
     "line-height": 25,
-    "spacing": normal,
-    "transform": 0.02em,
+    "transform": normal,
+    "spacing": 0.02em,
   ),
   "text__sm--regular": (
     "size": 15,
@@ -154,6 +154,13 @@ $font: (
   "text__sm--medium": (
     "size": 15,
     "weight": 500,
+    "line-height": 24,
+    "spacing": normal,
+    "transform": none,
+  ),
+  "text__sm--semibold": (
+    "size": 15,
+    "weight": 600,
     "line-height": 24,
     "spacing": normal,
     "transform": none,
@@ -200,6 +207,13 @@ $font: (
     "spacing": 0.02em,
     "transform": none,
   ),
+  "btn__text--semibold": (
+    "size": 14,
+    "weight": 600,
+    "line-height": 24,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
 );
 
 $colors: (
@@ -219,6 +233,8 @@ $colors: (
   "ntr-dark-02": #898f96,
   "ntr-dark-03": #9697af,
   "ntr-dark-04": #9fa1c2,
+  "ntr-dark-05": #a4a4ad,
+  "ntr-dark-06": #464646,
   "ntr-light-01": #c4cdd5,
   "ntr-light-02": #dfe3e8,
   "ntr-light-03": #eeeef3,
@@ -226,6 +242,7 @@ $colors: (
   "ntr-light-05": #e4e4e4,
   "ntr-light-06": #7a7b92,
   "ntr-light-07": #f7f7f7,
+  "ntr-light-08": #6f6f6f,
   "ntr-blue-01": #1b6be2,
   "shade-blue": #dbe9fe,
   "shade-linear-blue": linear-gradient(180deg, #3d8afe 0%, #1166e7 100%),
@@ -249,6 +266,8 @@ $ntr-dark-01: map-get($colors, "ntr-dark-01");
 $ntr-dark-02: map-get($colors, "ntr-dark-02");
 $ntr-dark-03: map-get($colors, "ntr-dark-03");
 $ntr-dark-04: map-get($colors, "ntr-dark-04");
+$ntr-dark-05: map-get($colors, "ntr-dark-05");
+$ntr-dark-06: map-get($colors, "ntr-dark-06");
 $ntr-light-01: map-get($colors, "ntr-light-01");
 $ntr-light-02: map-get($colors, "ntr-light-02");
 $ntr-light-03: map-get($colors, "ntr-light-03");
@@ -266,7 +285,11 @@ $gaps: (
   "xxs": 4,
   "xs": 8,
   "sm": 16,
+  "md-24": 24,
   "md": 28,
+  "md-32": 32,
+  "lg-42": 42,
+  "lg": 56,
   "xl": 75,
 );
 
@@ -333,3 +356,5 @@ $_screens-map: (
 $z-index-sticky: 1020;
 $z-index-menu: $z-index-sticky + 3;
 $z-index-form: $z-index-sticky - 1;
+
+$nav-height: 72;

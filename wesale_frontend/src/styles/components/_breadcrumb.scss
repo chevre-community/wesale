@@ -6,6 +6,7 @@
       line-height: rem(24);
       letter-spacing: 0.02em;
       @include transition();
+      text-transform: capitalize;
 
       &:hover {
         color: $primary-blue;

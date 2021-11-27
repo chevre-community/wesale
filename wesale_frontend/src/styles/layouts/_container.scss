@@ -27,3 +27,9 @@
   margin: 0 auto;
   max-width: calc(100% - #{rem($offset-lg)} * 2);
 }
+
+.contact-container {
+  max-width: rem(1060);
+  width: 100%;
+  margin: rem(40) auto 0;
+}

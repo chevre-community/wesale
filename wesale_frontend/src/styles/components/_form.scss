@@ -50,8 +50,8 @@
 
   label {
     position: relative;
-    min-height: rem(22);
-    min-width: rem(22);
+    min-height: rem(18);
+    min-width: rem(18);
     height: 100%;
     cursor: pointer;
     padding-left: rem(34);
@@ -68,7 +68,7 @@
 
     @include pseudo() {
       left: 0;
-      @include box(22);
+      @include box(18);
       @include advancedRem(background-size, (12 8));
       background-color: $white;
       background-position: center;
@@ -280,6 +280,17 @@
     letter-spacing: 0.02em;
     color: $ntr-dark-03;
     opacity: 1;
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $ntr-dark-03;
+    background-color: $ntr-light-04;
+
+    &::placeholder {
+      opacity: 0.5;
+      color: $ntr-light-01;
+    }
   }
 
   &-complex {

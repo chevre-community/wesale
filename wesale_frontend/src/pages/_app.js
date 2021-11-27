@@ -1,41 +1,52 @@
-import { autoResize } from "@/lib";
-import "@/styles/main.scss";
+// Redux
+import { wrapper } from "@/app/store";
 import { SSRProvider } from "@react-aria/ssr";
-import "animate.css";
-import "bootstrap/scss/bootstrap.scss";
-import "mapbox-gl/dist/mapbox-gl.css";
 
 import { useEffect } from "react";
 
 // Next JS
+import App from "next/app";
 import { useRouter } from "next/router";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/zoom";
+import { NextSeo } from "next-seo";
 
-import { MainLayout } from "@/components";
+import { LoginModal, MainLayout, RegisterModal } from "@/components";
 import { NProgress } from "@/components";
 
 // Context
 import { MainProvider } from "@/context/providers/main-context";
 
-function MyApp({ Component, pageProps }) {
-	// const getLayout =
-	// 	Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>);
-	const getLayout = Component.getLayout || ((page) => <>{page}</>);
+import "@/styles/main.scss";
+import "animate.css";
+import "bootstrap/scss/bootstrap.scss";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/zoom";
 
-	useEffect(() => {
-		autoResize();
-	}, []);
+const MyApp = ({ Component, ...pageProps }) => {
+	const getLayout =
+		Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>);
 
 	return (
 		<SSRProvider>
+			<NextSeo title="Wesale" description="Wesale" />
 			<NProgress />
 			<MainProvider>{getLayout(<Component {...pageProps} />)}</MainProvider>
+			<LoginModal />
+			<RegisterModal />
 		</SSRProvider>
 	);
-}
+};
 
-export default MyApp;
+MyApp.getInitialProps = async (appContext) => {
+	// calls page's `getInitialProps` and fills `appProps.pageProps`
+	const appProps = await App.getInitialProps(appContext);
+
+	return { ...appProps };
+};
+
+export default wrapper.withRedux(MyApp, {
+	debug: true,
+});
