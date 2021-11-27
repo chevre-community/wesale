@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 
-import filterFormSlice from "./filter-form/filterFormSlice";
-import mockDataSlice from "./mock/mockDataSlice";
-import modalSlice from "./modal/modalSlice";
+import filterFormSlice from "./features/filter-form/filterFormSlice";
+import mockDataSlice from "./features/mock/mockDataSlice";
+import modalSlice from "./features/modal/modalSlice";
 
 export const makeStore = () =>
 	configureStore({

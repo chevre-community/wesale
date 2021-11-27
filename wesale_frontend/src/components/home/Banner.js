@@ -1,7 +1,7 @@
 import {
 	selectActiveForm,
 	toggleActiveForm,
-} from "@/app/filter-form/filterFormSlice";
+} from "@/app/features/filter-form/filterFormSlice";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";

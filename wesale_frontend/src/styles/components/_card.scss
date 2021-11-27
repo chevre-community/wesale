@@ -358,4 +358,46 @@
     overflow: hidden;
     white-space: nowrap;
   }
+
+  &__dropdown {
+    .btn {
+      box-shadow: none !important;
+    }
+
+    a {
+      @include advancedRem(padding, (4 12));
+      display: block;
+      @include font-size(14, 400);
+      line-height: rem(24);
+      color: $primary-black;
+      @include transition();
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $primary-blue;
+        background-color: transparentize($primary-blue, $amount: 0.98);
+      }
+    }
+
+    .dropdown-menu {
+      left: auto !important;
+      bottom: auto !important;
+      top: 0 !important;
+      right: 0 !important;
+      border: none;
+      border-radius: rem(8);
+      box-shadow: 0px 5px 40px rgba(17, 20, 45, 0.08);
+
+      .dropdown-item {
+        padding: 0;
+        background-color: transparent;
+
+        &:active,
+        &.active {
+          background-color: transparent;
+        }
+      }
+    }
+  }
 }

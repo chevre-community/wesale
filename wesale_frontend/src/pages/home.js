@@ -4,7 +4,7 @@ import React from "react";
 
 import { NextSeo } from "next-seo";
 
-import HomePage from "@/components/home";
+import HomePage from "@/components/home/HomePage.component";
 
 const Home = () => {
 	return (

@@ -14,7 +14,7 @@ export { default as DashboardLayout } from "@/components/layouts/DashboardLayout
  * @page {Dashboard}
  */
 
-export { default as HomePage } from "@/pages/Home";
+export { default as HomePage } from "@/components/home/HomePage.component";
 export { default as Banner } from "@/components/home/Banner";
 
 export { default as Sidebar } from "@/components/dashboard/Sidebar";

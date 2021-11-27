@@ -1,4 +1,4 @@
-import { TOGGLE_MODAL, selectIsShowing } from "@/app/modal/modalSlice";
+import { TOGGLE_MODAL, selectIsShowing } from "@/app/features/modal/modalSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 

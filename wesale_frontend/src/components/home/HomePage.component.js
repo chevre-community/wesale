@@ -1,4 +1,4 @@
-import { selectAnnouncements } from "@/app/mock/mockDataSlice";
+import { selectAnnouncements } from "@/app/features/mock/mockDataSlice";
 import { A11y, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 

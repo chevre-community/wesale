@@ -1,4 +1,4 @@
-import { toggleActiveForm } from "@/app/filter-form/filterFormSlice";
+import { toggleActiveForm } from "@/app/features/filter-form/filterFormSlice";
 
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
