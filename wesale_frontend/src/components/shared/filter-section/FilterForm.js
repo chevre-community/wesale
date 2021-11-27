@@ -1,64 +1,54 @@
-import { toggleActiveForm } from "@/app/features/filter-form/filterFormSlice";
+import React, { useState } from "react";
 
-import React from "react";
-import { Tab, Tabs } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { Tabs, Tab } from "react-bootstrap";
 
-import { Router, useRouter } from "next/router";
+import { FilterFormHome, FilterFormObject } from "@/components";
 
-import { FilterFormHome, FilterFormObject, withActiveForm } from "@/components";
+const FilterForm = () => {
+  const [key, setKey] = useState("home");
 
-const FilterForm = ({ activeForm }) => {
-	const dispatch = useDispatch();
-	const router = useRouter();
+  const options = [
+    {
+      label: "Купить",
+      value: "Купить",
+    },
+  ];
 
-	const options = [
-		{
-			label: "Купить",
-			value: "Купить",
-		},
-	];
-
-	const options2 = [
-		{
-			label: "Квартиру",
-			value: "Квартиру",
-		},
-	];
-	return (
-		<div className="filter-form-tabs">
-			<Tabs
-				id="filter-form-tabs"
-				activeKey={activeForm}
-				transition={true}
-				onSelect={(key) => {
-					router.push(`/${key}`);
-					Router.events.on("routeChangeComplete", () =>
-						dispatch(toggleActiveForm(key))
-					);
-				}}
-			>
-				<Tab.Pane eventKey="home" title="Дом">
-					<FilterFormHome
-						colors={{
-							icon: "white",
-						}}
-						options={options}
-						options2={options2}
-					/>
-				</Tab.Pane>
-				<Tab.Pane eventKey="object" title="Объект">
-					<FilterFormObject
-						colors={{
-							icon: "white",
-						}}
-						options={options}
-						options2={options2}
-					/>
-				</Tab.Pane>
-			</Tabs>
-		</div>
-	);
+  const options2 = [
+    {
+      label: "Квартиру",
+      value: "Квартиру",
+    },
+  ];
+  return (
+    <div className="filter-form-tabs">
+      <Tabs
+        id="filter-form-tabs"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
+        transition={true}
+      >
+        <Tab.Pane eventKey="home" title="Дом">
+          <FilterFormHome
+            colors={{
+              icon: "white",
+            }}
+            options={options}
+            options2={options2}
+          />
+        </Tab.Pane>
+        <Tab.Pane eventKey="profile" title="Объект">
+          <FilterFormObject
+            colors={{
+              icon: "white",
+            }}
+            options={options}
+            options2={options2}
+          />
+        </Tab.Pane>
+      </Tabs>
+    </div>
+  );
 };
 
 export default FilterForm;

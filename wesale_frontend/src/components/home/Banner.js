@@ -1,22 +1,22 @@
-import {
-	selectActiveForm,
-	toggleActiveForm,
-} from "@/app/features/filter-form/filterFormSlice";
+import { handleTabs } from "@/lib";
+import colors from "@/styles/modules/colors.module.scss";
 
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-
-import Link from "next/link";
-import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { Fa500Px } from "react-icons/fa";
 
 import { CustomImage, FilterFormHome, FilterFormObject } from "@/components";
 
-import classNames from "classnames";
+const Banner = () => {
+	useEffect(() => {
+		const tabs = [...document.querySelectorAll(".g-tab-pane")];
+		const tabBtns = [...document.querySelectorAll(".g-tab-btn")];
 
-import colors from "@/styles/modules/colors.module.scss";
+		tabBtns.forEach((btn) => {
+			handleTabs(tabs, tabBtns, btn);
+			btn.addEventListener("click", () => handleTabs(tabs, tabBtns, btn));
+		});
+	}, []);
 
-const Banner = ({ activeForm }) => {
 	const options = [
 		{
 			label: "Купить",
@@ -48,55 +48,39 @@ const Banner = ({ activeForm }) => {
 				<div className="banner-section-container">
 					<div className="banner-section-tabs">
 						<p className="g-title__lg--bold text-white">Найти</p>
-						<Link href="/home" passHref>
-							<a
-								className={classNames(
-									"banner-section-tab-btn g-tab-btn d-flex",
-									{
-										active: activeForm === "home",
-									}
-								)}
-							>
-								дом
-							</a>
-						</Link>
+						<button
+							className="banner-section-tab-btn active g-tab-btn"
+							data-target="home"
+						>
+							дом
+						</button>
 						<p className="g-title__lg--bold text-white">или</p>
-						<Link href="/object" passHref>
-							<a
-								className={classNames(
-									"banner-section-tab-btn g-tab-btn d-flex",
-									{
-										active: activeForm === "object",
-									}
-								)}
-							>
-								объект
-							</a>
-						</Link>
+						<button
+							className="banner-section-tab-btn g-tab-btn"
+							data-target="object"
+						>
+							объект
+						</button>
 					</div>
 					<div className="banner-section-form">
-						{activeForm === "home" && (
-							<div className="g-tab-pane">
-								<FilterFormHome
-									options={options}
-									options2={options2}
-									colors={{
-										iconColor: "primary-grey",
-									}}
-								/>
-							</div>
-						)}
-						{activeForm === "object" && (
-							<div className="g-tab-pane">
-								<FilterFormObject
-									options={options}
-									options2={options2}
-									colors={{
-										iconColor: "primary-grey",
-									}}
-								/>
-							</div>
-						)}
+						<div className="g-tab-pane" id="home">
+							<FilterFormHome
+								options={options}
+								options2={options2}
+								colors={{
+									iconColor: "primary-grey",
+								}}
+							/>
+						</div>
+						<div className="g-tab-pane" id="object">
+							<FilterFormObject
+								options={options}
+								options2={options2}
+								colors={{
+									iconColor: "primary-grey",
+								}}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
