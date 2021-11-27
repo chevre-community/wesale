@@ -19,6 +19,583 @@ namespace DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Core.Entities.Announcement.Announcement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsSubscribed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementPropertyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementPropertyId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementBuildings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementGardenBuilding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementBuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("AreaOfLand")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementBuildingId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementGardenBuildings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementHouseBuilding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementBuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("AreaOfLand")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("RoomCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementBuildingId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementHouseBuildings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementNewBuilding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementBuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("Floor")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FloorCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoomCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementBuildingId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementNewBuildings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementOldBuilding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementBuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("Floor")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FloorCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoomCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementBuildingId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementOldBuildings");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementContact.AnnouncementContact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WpNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementContacts");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementContact.AnnouncementContactNumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementContactId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementContactId");
+
+                    b.ToTable("AnnouncementContactNumbers");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementDeal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementDeals");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("X")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Y")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementLocations");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementGarageObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementObjectId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementGarageObjects");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementLandObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementObjectId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementLandObjects");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementPropertyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementPropertyId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementObjects");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementOfficeObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Area")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("RoomCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementObjectId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementOfficeObjects");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AnnouncementId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AnnouncementPhotos");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementProperties");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementRent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementDealId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Cost")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementDealId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementRents");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementSale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnnouncementDealId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("CostFrom")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("CostTo")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("HasCoupon")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementDealId")
+                        .IsUnique();
+
+                    b.ToTable("AnnouncementSales");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementVideo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AnnouncementId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnnouncementId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AnnouncementVideos");
+                });
+
+            modelBuilder.Entity("Core.Entities.NavbarComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("RequireAuthorization")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowOnFooter")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowOnHeader")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title_AZ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_EN")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("Title_RU")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NavbarComponents");
+                });
+
             modelBuilder.Entity("Core.Entities.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -132,20 +709,20 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("EmailSubject_AZ")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailSubject_EN")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailSubject_RU")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailText_AZ")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailText_EN")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailText_RU")
@@ -165,10 +742,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SMSText_AZ")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SMSText_EN")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SMSText_RU")
@@ -183,6 +760,76 @@ namespace DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("NotifyEvents");
+                });
+
+            modelBuilder.Entity("Core.Entities.PageSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FacebookLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstagramLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("InstagramLive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("InstagramPhotoName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoPhotoName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PageSetting");
+                });
+
+            modelBuilder.Entity("Core.Entities.PhonePrefix", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Prefix")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PhonePrefixes");
                 });
 
             modelBuilder.Entity("Core.Entities.Role", b =>
@@ -244,6 +891,46 @@ namespace DataAccess.Migrations
                     b.ToTable("SmsOperationResults");
                 });
 
+            modelBuilder.Entity("Core.Entities.Translation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContentKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content_AZ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content_EN")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("Content_RU")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("RelatedPage")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("*");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentKey")
+                        .IsUnique();
+
+                    b.ToTable("Translations");
+                });
+
             modelBuilder.Entity("Core.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -252,9 +939,26 @@ namespace DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BirthDay")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BirthMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BirthYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(190)
+                        .HasColumnType("nvarchar(190)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -266,18 +970,31 @@ namespace DataAccess.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
+
+                    b.Property<int?>("Gender")
+                        .HasMaxLength(6)
+                        .HasColumnType("int");
 
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("NewsNotificationEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -296,8 +1013,14 @@ namespace DataAccess.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("PhonePrefixId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SmsNotificationEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -318,6 +1041,8 @@ namespace DataAccess.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("PhonePrefixId");
 
                     b.ToTable("Users");
                 });
@@ -426,6 +1151,227 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Core.Entities.Announcement.Announcement", b =>
+                {
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("Announcements")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementProperty", "AnnouncementProperty")
+                        .WithOne("AnnouncementBuilding")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", "AnnouncementPropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementProperty");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementGardenBuilding", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", "AnnouncementBuilding")
+                        .WithOne("AnnouncementGardenBuilding")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementGardenBuilding", "AnnouncementBuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementBuilding");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementHouseBuilding", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", "AnnouncementBuilding")
+                        .WithOne("AnnouncementHouseBuilding")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementHouseBuilding", "AnnouncementBuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementBuilding");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementNewBuilding", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", "AnnouncementBuilding")
+                        .WithOne("AnnouncementNewBuilding")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementNewBuilding", "AnnouncementBuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementBuilding");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementOldBuilding", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", "AnnouncementBuilding")
+                        .WithOne("AnnouncementOldBuilding")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementOldBuilding", "AnnouncementBuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementBuilding");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementContact.AnnouncementContact", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.Announcement", "Announcement")
+                        .WithOne("AnnouncementContact")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementContact.AnnouncementContact", "AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Announcement");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementContact.AnnouncementContactNumber", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementContact.AnnouncementContact", "AnnouncementContact")
+                        .WithMany("AnnouncementContactNumbers")
+                        .HasForeignKey("AnnouncementContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementContact");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementDeal", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.Announcement", "Announcement")
+                        .WithOne("AnnouncementDeal")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementDeal", "AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Announcement");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementLocation", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.Announcement", "Announcement")
+                        .WithOne("AnnouncementLocation")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementLocation", "AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Announcement");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementGarageObject", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", "AnnouncementObject")
+                        .WithOne("AnnouncementGarageObject")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementObject.AnnouncementGarageObject", "AnnouncementObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementObject");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementLandObject", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", "AnnouncementObject")
+                        .WithOne("AnnouncementLandObject")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementObject.AnnouncementLandObject", "AnnouncementObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementObject");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementProperty", "AnnouncementProperty")
+                        .WithOne("AnnouncementObject")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", "AnnouncementPropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementProperty");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementOfficeObject", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", "AnnouncementObject")
+                        .WithOne("AnnouncementOfficeObject")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementObject.AnnouncementOfficeObject", "AnnouncementObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementObject");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementPhoto", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.Announcement", "Announcement")
+                        .WithMany("AnnouncementPhotos")
+                        .HasForeignKey("AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("AnnouncementPhotos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Announcement");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementProperty", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.Announcement", "Announcement")
+                        .WithOne("AnnouncementProperty")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementProperty", "AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Announcement");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementRent", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementDeal", "AnnouncementDeal")
+                        .WithOne("AnnouncementRent")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementRent", "AnnouncementDealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementDeal");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementSale", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.AnnouncementDeal", "AnnouncementDeal")
+                        .WithOne("AnnouncementSale")
+                        .HasForeignKey("Core.Entities.Announcement.AnnouncementSale", "AnnouncementDealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementDeal");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementVideo", b =>
+                {
+                    b.HasOne("Core.Entities.Announcement.Announcement", "Announcement")
+                        .WithMany("AnnouncementVideos")
+                        .HasForeignKey("AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("AnnouncementVideos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Announcement");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core.Entities.Notification", b =>
                 {
                     b.HasOne("Core.Entities.NotifyEvent", "NotifyEvent")
@@ -462,6 +1408,16 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.User", b =>
+                {
+                    b.HasOne("Core.Entities.PhonePrefix", "PhonePrefix")
+                        .WithMany("Users")
+                        .HasForeignKey("PhonePrefixId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("PhonePrefix");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -515,13 +1471,78 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Core.Entities.Announcement.Announcement", b =>
+                {
+                    b.Navigation("AnnouncementContact");
+
+                    b.Navigation("AnnouncementDeal");
+
+                    b.Navigation("AnnouncementLocation");
+
+                    b.Navigation("AnnouncementPhotos");
+
+                    b.Navigation("AnnouncementProperty");
+
+                    b.Navigation("AnnouncementVideos");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementBuilding.AnnouncementBuilding", b =>
+                {
+                    b.Navigation("AnnouncementGardenBuilding");
+
+                    b.Navigation("AnnouncementHouseBuilding");
+
+                    b.Navigation("AnnouncementNewBuilding");
+
+                    b.Navigation("AnnouncementOldBuilding");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementContact.AnnouncementContact", b =>
+                {
+                    b.Navigation("AnnouncementContactNumbers");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementDeal", b =>
+                {
+                    b.Navigation("AnnouncementRent");
+
+                    b.Navigation("AnnouncementSale");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementObject.AnnouncementObject", b =>
+                {
+                    b.Navigation("AnnouncementGarageObject");
+
+                    b.Navigation("AnnouncementLandObject");
+
+                    b.Navigation("AnnouncementOfficeObject");
+                });
+
+            modelBuilder.Entity("Core.Entities.Announcement.AnnouncementProperty", b =>
+                {
+                    b.Navigation("AnnouncementBuilding");
+
+                    b.Navigation("AnnouncementObject");
+                });
+
             modelBuilder.Entity("Core.Entities.NotifyEvent", b =>
                 {
                     b.Navigation("Notifications");
                 });
 
+            modelBuilder.Entity("Core.Entities.PhonePrefix", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Core.Entities.User", b =>
                 {
+                    b.Navigation("AnnouncementPhotos");
+
+                    b.Navigation("Announcements");
+
+                    b.Navigation("AnnouncementVideos");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("UserActivation");

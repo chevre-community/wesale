@@ -16,7 +16,7 @@ namespace Web.Areas.Admin.Controllers.CoreManagement
 {
     [Authorize(Roles = "Staff")]
     [Area("Admin")]
-    [Route("[area]/[controller]/[action]")]
+    [Route("[area]/[controller]")]
     public class NotifyEventController : Controller
     {
         private readonly INotifyEventService _notifyEventService;
@@ -29,7 +29,7 @@ namespace Web.Areas.Admin.Controllers.CoreManagement
             _actionResultMessageService = actionResultMessageService;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<IActionResult> List()
         {
             var model = new NotifyEventListViewModel
@@ -40,7 +40,7 @@ namespace Web.Areas.Admin.Controllers.CoreManagement
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}/update")]
         public async Task<IActionResult> Update(int id)
         {
             var notifyEvent = await _notifyEventService.GetAsync(id);
@@ -68,7 +68,7 @@ namespace Web.Areas.Admin.Controllers.CoreManagement
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("{id:int}/update")]
         public async Task<IActionResult> Update(NotifyEventUpdateViewModel model)
         {
             if (ModelState.IsValid)
@@ -78,9 +78,9 @@ namespace Web.Areas.Admin.Controllers.CoreManagement
 
                 notifyEvent.Label = model.Label;
                 notifyEvent.EmailEnabled = model.EmailEnabled;
-                notifyEvent.EmailSubject_AZ = notifyEvent.EmailSubject_AZ;
-                notifyEvent.EmailSubject_RU = notifyEvent.EmailSubject_RU;
-                notifyEvent.EmailSubject_EN = notifyEvent.EmailSubject_EN;
+                notifyEvent.EmailSubject_AZ = model.EmailSubject_AZ;
+                notifyEvent.EmailSubject_RU = model.EmailSubject_RU;
+                notifyEvent.EmailSubject_EN = model.EmailSubject_EN;
                 notifyEvent.EmailText_AZ = model.EmailText_AZ;
                 notifyEvent.EmailText_RU = model.EmailText_RU;
                 notifyEvent.EmailText_EN = model.EmailText_EN;
@@ -101,7 +101,7 @@ namespace Web.Areas.Admin.Controllers.CoreManagement
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}/details")]
         public async Task<IActionResult> Details(int id)
         {
             var notifyEvent = await _notifyEventService.GetAsync(id);

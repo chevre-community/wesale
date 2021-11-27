@@ -1,0 +1,106 @@
+﻿@using Web.Areas.Admin.ViewModels.CoreManagement.Translation
+@using Core.Constants.User
+@model TranslationUpdateViewModel
+
+@{
+    ViewData["Title"] = "Translations";
+}
+
+
+@section plugin_styles{
+    <link href="~/admin/metrica/assets/plugins/select/selectr.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="translation" asp-action="list" asp-area="admin">Translations</a></li>
+                    <li class="breadcrumb-item active">Update</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Update translation</h4>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" asp-controller="translation" asp-action="update" asp-area="admin" id="translation-update">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="RelatedPage"></label>
+                                <input class="form-control" asp-for="RelatedPage">
+                                <span asp-validation-for="RelatedPage" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="ContentKey"></label>
+                                <input readonly class="form-control" asp-for="ContentKey">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Content_AZ"></label>
+                                <input class="form-control" asp-for="Content_AZ">
+                                <span asp-validation-for="Content_AZ" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Content_RU"></label>
+                                <input class="form-control" asp-for="Content_RU">
+                                <span asp-validation-for="Content_RU" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Content_EN"></label>
+                                <input class="form-control" asp-for="Content_EN">
+                                <span asp-validation-for="Content_EN" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary" type="submit" form="translation-update">Save</button>
+                    <a asp-controller="translation" asp-action="list" asp-area="admin" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section plugin_scripts{
+    @*<script src="~/admin/metrica/assets/plugins/select/selectr.min.js" asp-append-version="true"></script>*@
+}
+
+
+@section scripts{
+    @*<script src="~/admin/metrica/assets/pages/UserManagement/User/Edit.js" asp-append-version="true"></script>*@
+}
+

@@ -43,11 +43,11 @@ namespace DataAccess.Configurations
             #region Email
 
             builder
-              .Property(n => n.EmailSubject_EN)
+              .Property(n => n.EmailSubject_AZ)
               .IsRequired();
 
             builder
-               .Property(n => n.EmailText_EN)
+               .Property(n => n.EmailText_AZ)
                .IsRequired();
 
             #endregion
@@ -55,7 +55,7 @@ namespace DataAccess.Configurations
             #region SMS
 
             builder
-              .Property(n => n.SMSText_EN)
+              .Property(n => n.SMSText_AZ)
               .IsRequired();
 
             #endregion

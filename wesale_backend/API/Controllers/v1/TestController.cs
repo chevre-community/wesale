@@ -22,6 +22,8 @@ namespace API.Controllers.v1
         [HttpGet("sendemail")]
         public IActionResult SendEmail()
         {
+            string result = Request.Headers["test"];
+
             var message = new Message(new List<string> { "kanan.tapdigli@gmail.com" }, "Test subject", "Test body");
             _emailService.SendEmail(message);
             return Ok();

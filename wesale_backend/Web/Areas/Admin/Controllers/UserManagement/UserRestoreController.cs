@@ -19,7 +19,6 @@ namespace Web.Areas.Admin.Controllers.UserManagement
             _userRestoreService = userRestoreService;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> List()
         {

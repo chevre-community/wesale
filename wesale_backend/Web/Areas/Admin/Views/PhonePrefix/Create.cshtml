@@ -1,0 +1,100 @@
+﻿@using Web.Areas.Admin.ViewModels.CoreManagement.PhonePrefix
+@model PhonePrefixCreateViewModel
+
+@{
+    ViewData["Title"] = "Phone prefixes";
+}
+
+
+@section plugin_styles{
+    <link href="~/admin/metrica/assets/plugins/select/selectr.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="phoneprefix" asp-action="list" asp-area="admin">Phone prefixes</a></li>
+                    <li class="breadcrumb-item active">Create</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Create phone prefix</h4>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" asp-controller="phoneprefix" asp-action="create" asp-area="admin" id="form-create">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-body border mb-3">
+                                <div class="form-check form-switch form-switch-success">
+                                    <input asp-for="IsActive" class="form-check-input">
+                                    <label asp-for="IsActive" class="form-check-label"></label>
+                                    <span asp-validation-for="IsActive" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Country"></label>
+                                <input class="form-control" asp-for="Country">
+                                <span asp-validation-for="Country" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Prefix"></label>
+                                <input class="form-control" asp-for="Prefix">
+                                <span asp-validation-for="Prefix" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Order"></label>
+                                <input class="form-control" asp-for="Order">
+                                <span asp-validation-for="Order" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary" type="submit" form="form-create">Save</button>
+                    <a asp-controller="navbar" asp-action="list" asp-area="admin" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section plugin_scripts{
+  
+}
+
+
+@section scripts{
+
+}

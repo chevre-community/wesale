@@ -16,16 +16,35 @@ namespace API.ApiModels.v1.Account.Account
 
     public class ConfirmEmailApiModelValidator : AbstractValidator<ConfirmEmailApiModel>
     {
-        private User User { get; set; }
+        private readonly ITranslationService _translationService;
         private readonly IUserService _userService;
-        public ConfirmEmailApiModelValidator(IUserService userService)
+        private Core.Entities.User User { get; set; }
+
+        //Error messages (localized)
+        private string NOT_NULL_MESSAGE { get; set; }
+        private string NOT_EMPTY_MESSAGE { get; set; }
+        private string USER_NOT_FOUND_WITH_EMAIL { get; set; }
+        private string USER_EMAIL_ALREADY_CONFIRMED { get; set; }
+
+
+        public ConfirmEmailApiModelValidator(IUserService userService, ITranslationService translationService)
         {
             _userService = userService;
+            _translationService = translationService;
 
-            AddValidators();
+            IntegrateMessages();
+            IntegrateRules();
         }
 
-        private void AddValidators()
+        private void IntegrateMessages()
+        {
+            NOT_NULL_MESSAGE = _translationService.GetTranslationByKey("NotNull");
+            NOT_EMPTY_MESSAGE = _translationService.GetTranslationByKey("NotEmpty");
+            USER_NOT_FOUND_WITH_EMAIL = _translationService.GetTranslationByKey("UserNotFoundWithEmail");
+            USER_EMAIL_ALREADY_CONFIRMED = _translationService.GetTranslationByKey("UserEmailAlreadyConfirmed");
+        }
+
+        private void IntegrateRules()
         {
             #region User id
 
@@ -33,18 +52,18 @@ namespace API.ApiModels.v1.Account.Account
                 .Cascade(CascadeMode.Stop)
 
                 .NotNull()
-                .WithMessage("User id can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 .NotEmpty()
-                .WithMessage("User id can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 .Must(userId => IsUserExists(userId).Result != null)
                 .When(model => model.UserId != null, ApplyConditionTo.CurrentValidator)
-                .WithMessage("User not found")
+                .WithMessage(USER_NOT_FOUND_WITH_EMAIL)
 
                 .Must(userId => User.EmailConfirmed == false)
                 .When(model => User != null, ApplyConditionTo.CurrentValidator)
-                .WithMessage("User email already confirmed");
+                .WithMessage(USER_EMAIL_ALREADY_CONFIRMED);
 
             #endregion
 
@@ -52,17 +71,17 @@ namespace API.ApiModels.v1.Account.Account
 
             RuleFor(user => user.Token)
                 .NotNull()
-                .WithMessage("Token can't be null");
+                .WithMessage(NOT_NULL_MESSAGE);
 
             RuleFor(user => user.Token)
                 .NotEmpty()
                 .When(user => user.Token != null)
-                .WithMessage("Token can't be empty");
+                .WithMessage(NOT_EMPTY_MESSAGE);
 
             #endregion
         }
 
-        private async Task<User> IsUserExists(string email = null)
+        private async Task<Core.Entities.User> IsUserExists(string email = null)
         {
             var user = await _userService.FindByIdAsync(email);
             User = user;

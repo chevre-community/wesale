@@ -8,10 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Areas.Admin.ViewModels.SMS;
 
-namespace Web.Areas.Admin.Controllers.Core
+namespace Web.Areas.Admin.Controllers.CoreManagement
 {
     [Authorize(Roles = "Staff")]
     [Area("Admin")]
+    [Route("[area]/[controller]")]
     public class SMSController : Controller
     {
         private readonly ISmsOperationResultService _smsOperationResultService;
@@ -24,7 +25,7 @@ namespace Web.Areas.Admin.Controllers.Core
             _atlSmsService = atlSmsService;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<IActionResult> List()
         {
             var model = new SmsListViewModel
@@ -36,7 +37,7 @@ namespace Web.Areas.Admin.Controllers.Core
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}/details")]
         public async Task<IActionResult> Details(int id)
         {
             var smsOperationResult = await _smsOperationResultService.GetAsync(id);
@@ -52,7 +53,7 @@ namespace Web.Areas.Admin.Controllers.Core
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("{taskId:int}/detailedreport")]
         public async Task<IActionResult> DetailedReport(string taskId)
         {
             var detailedReport = await _atlSmsService.GetDetailedReportAsync(taskId);

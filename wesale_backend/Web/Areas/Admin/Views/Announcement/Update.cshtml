@@ -1,0 +1,498 @@
+﻿@using Web.Areas.Admin.ViewModels.ComponentManagement.Announcement
+@using Core.Constants.Announcement
+@using Core.Extensions.Enum
+@model AnnouncementUpdateViewModel
+
+@{
+    ViewData["Title"] = "Announcements";
+}
+
+@section plugin_styles{
+    <link href="~/common/plugins/dropzone/css/dropzone.css" asp-append-version="true" rel="stylesheet" type="text/css" />
+    <link href="~/common/plugins/dropzone/css/basic.css" asp-append-version="true" rel="stylesheet" type="text/css" />
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="announcement" asp-action="list" asp-area="admin">Announcements</a></li>
+                    <li class="breadcrumb-item active">Update</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Update announcement</h4>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" asp-controller="announcement" asp-action="update" asp-area="admin" id="announcement-create">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                    </div>
+
+                    <input id="requestId" asp-for="RequestId" type="hidden" />
+                    <div id="PhotoNames"></div>
+                    <div id="VideoNames"></div>
+
+                    @* User *@
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label asp-for="UserId"></label>
+                                <select id="user-select" class="form-select" asp-for="UserId" asp-items="Model.Users">
+                                    <option value="">Select user</option>
+                                </select>
+                                <span asp-validation-for="UserId" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Status *@
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label asp-for="Status"></label>
+                                <select class="form-select" asp-for="Status" asp-items="@Html.GetEnumSelectList<AnnouncementStatus>()">
+                                </select>
+                                <span asp-validation-for="Status" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* PropertyType *@
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="property-types mt-4">
+                                <label class="d-block mb-3">Property type</label>
+                                <select id="property-type" class="form-select" asp-for="AnnouncementProperty.Type" asp-items="Html.GetEnumSelectList<AnnouncementPropertyType>()"> </select>
+                            </div>
+
+                            @* BuildingType *@
+                            <div id="building-types" class="announcement-building-types mt-4">
+                                <div class="announcement-building-type d-flex align-items-center my-3">
+                                    <input checked class="property-subtype" type="radio" id="new-building" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.NewBuilding">
+                                    <label class="mx-2" for="new-building">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding)</label><br>
+                                </div>
+                                <div class="announcement-building-type d-flex align-items-center my-3">
+                                    <input class="property-subtype" type="radio" id="old-building" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.OldBuilding">
+                                    <label class="mx-2" for="old-building">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding)</label><br>
+                                </div>
+                                <div class="announcement-building-type d-flex align-items-center my-3">
+                                    <input class="property-subtype" type="radio" id="house" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.House">
+                                    <label class="mx-2" for="house">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding)</label><br>
+                                </div>
+                                <div class="announcement-building-type d-flex align-items-center my-3">
+                                    <input class="property-subtype" type="radio" id="garden" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.Garden">
+                                    <label class="mx-2" for="garden">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding)</label><br>
+                                </div>
+                            </div>
+
+                            @* ObjectType *@
+                            <div id="object-types" class="announcement-object-types mt-4">
+                                <div class="announcement-object-type d-flex align-items-center my-3">
+                                    <input class="property-subtype" type="radio" id="garage" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.Garage">
+                                    <label class="mx-2" for="garage">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementObject.AnnouncementGarageObject)</label><br>
+                                </div>
+                                <div class="announcement-object-type d-flex align-items-center my-3">
+                                    <input class="property-subtype" type="radio" id="office" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.Office">
+                                    <label class="mx-2" for="office">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject)</label><br>
+                                </div>
+                                <div class="announcement-object-type d-flex align-items-center my-3">
+                                    <input class="property-subtype" type="radio" id="land" asp-for="AnnouncementProperty.SubType" value="@AnnouncementPropertySubType.Land">
+                                    <label class="mx-2" for="land">@Html.DisplayNameFor(m => m.AnnouncementProperty.AnnouncementObject.AnnouncementLandObject)</label><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* DealType *@
+                        <div class="col-12 col-md-6">
+                            <div class="deal-types mt-4">
+                                <label class="d-block mb-3">Deal type</label>
+                                <select id="deal-type" class="form-select" asp-for="AnnouncementDeal.Type" asp-items="Html.GetEnumSelectList<AnnouncementDealType>()"> </select>
+
+                            </div>
+                            <div id="sale-types" class="announcement-sale-types mt-4">
+                                <div class="announcement-sale-type d-flex align-items-center my-3">
+                                    <input class="deal-subtype" asp-for="AnnouncementDeal.SubType" checked type="radio" id="cash" value="@AnnouncementDealSubType.Cash">
+                                    <label class="mx-2" for="cash">@AnnouncementDealSubType.Cash.GetDisplayName()</label><br>
+                                </div>
+                                <div class="announcement-sale-type d-flex align-items-center my-3">
+                                    <input class="deal-subtype" asp-for="AnnouncementDeal.SubType" type="radio" id="mortgage" value="@AnnouncementDealSubType.Mortgage">
+                                    <label class="mx-2" for="mortgage">@AnnouncementDealSubType.Mortgage.GetDisplayName()</label><br>
+                                </div>
+
+                            </div>
+                            <div id="rent-types" class="announcement-rent-types mt-4">
+                                <div class="announcement-rent-type d-flex align-items-center my-3">
+                                    <input class="deal-subtype" asp-for="AnnouncementDeal.SubType" type="radio" id="daily" value="@AnnouncementDealSubType.Daily.GetDisplayName()">
+                                    <label class="mx-2" for="daily">@AnnouncementDealSubType.Daily.GetDisplayName()</label><br>
+                                </div>
+                                <div class="announcement-rent-type d-flex align-items-center my-3">
+                                    <input class="deal-subtype" asp-for="AnnouncementDeal.SubType" type="radio" id="monthly" value="@AnnouncementDealSubType.Monthly.GetDisplayName()">
+                                    <label class="mx-2" for="monthly">@AnnouncementDealSubType.Monthly.GetDisplayName()</label><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*Property types sections*@
+                    <div id="property-types-sections">
+                        @*New building*@
+                        <div class="type-section" data-id="new-building">
+                            <h3>New building</h3>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.RoomCount"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.RoomCount">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.RoomCount" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.Floor"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.Floor">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.Floor" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.FloorCount"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.FloorCount">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementNewBuilding.FloorCount" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="type-section" data-id="old-building">
+                            <h3>Old building</h3>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.RoomCount"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.RoomCount">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.RoomCount" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.Floor"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.Floor">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.Floor" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.FloorCount"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.FloorCount">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementOldBuilding.FloorCount" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="type-section" data-id="house">
+                            <h3>House</h3>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.RoomCount"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.RoomCount">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.RoomCount" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.AreaOfLand"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.AreaOfLand">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementHouseBuilding.AreaOfLand" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="type-section" data-id="garden">
+                            <h3>Garden</h3>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding.AreaOfLand"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding.AreaOfLand">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementBuilding.AnnouncementGardenBuilding.AreaOfLand" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Object types sections*@
+                    <div id="object-types-sections">
+                        @*Garage*@
+                        <div class="type-section" data-id="garage">
+                            <h3>Garage</h3>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementGarageObject.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementGarageObject.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementObject.AnnouncementGarageObject.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Office*@
+                        <div class="type-section" data-id="office">
+                            <h3>Office</h3>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.Type"></label>
+                                        <select class="form-select" asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.Type" asp-items="Html.GetEnumSelectList<AnnouncementOfficeType>()">
+                                            <option value="">Select type</option>
+                                        </select>
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.Type" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.RoomCount"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.RoomCount">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.RoomCount" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementObject.AnnouncementOfficeObject.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Land*@
+                        <div class="type-section" data-id="land">
+                            <h3>Land</h3>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementLandObject.Area"></label>
+                                        <input class="form-control" asp-for="AnnouncementProperty.AnnouncementObject.AnnouncementLandObject.Area">
+                                        <span asp-validation-for="AnnouncementProperty.AnnouncementObject.AnnouncementLandObject.Area" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Cost *@
+                    <div class="row">
+                        <h3>Cost</h3>
+                        <div class="col-12 col-md-6 sale-cost">
+                            <div class="mb-3">
+                                <label asp-for="AnnouncementDeal.AnnouncementSale.CostFrom"></label>
+                                <input class="form-control" asp-for="AnnouncementDeal.AnnouncementSale.CostFrom">
+                                <span asp-validation-for="AnnouncementDeal.AnnouncementSale.CostFrom" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 sale-cost">
+                            <div class="mb-3">
+                                <label asp-for="AnnouncementDeal.AnnouncementSale.CostTo"></label>
+                                <input class="form-control" asp-for="AnnouncementDeal.AnnouncementSale.CostTo">
+                                <span asp-validation-for="AnnouncementDeal.AnnouncementSale.CostTo" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 rent-cost">
+                            <div class="mb-3">
+                                <label asp-for="AnnouncementDeal.AnnouncementRent.Cost"></label>
+                                <input class="form-control" asp-for="AnnouncementDeal.AnnouncementRent.Cost">
+                                <span asp-validation-for="AnnouncementDeal.AnnouncementRent.Cost" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Location *@
+                    <div class="row">
+                        <h3>Location</h3>
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="AnnouncementLocation.X"></label>
+                                <input class="form-control" asp-for="AnnouncementLocation.X">
+                                <span asp-validation-for="AnnouncementLocation.X" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="AnnouncementLocation.Y"></label>
+                                <input class="form-control" asp-for="AnnouncementLocation.Y">
+                                <span asp-validation-for="AnnouncementLocation.Y" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* About *@
+                    <div class="row">
+                        <h3>Description</h3>
+                        <div class="col-12">
+                            <div class="mt-4">
+                                <div class="mb-3">
+                                    <label asp-for="Title"></label>
+                                    <input class="form-control" asp-for="Title">
+                                    <span asp-validation-for="Title" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Description"></label>
+                                    <textarea rows="7" class="form-control" asp-for="Description"></textarea>
+                                    <span asp-validation-for="Description" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Contact *@
+                    <div class="row">
+                        <h3>Contact</h3>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label asp-for="AnnouncementContact.Email"></label>
+                                <input id="Email" class="form-control" asp-for="AnnouncementContact.Email">
+                                <span asp-validation-for="AnnouncementContact.Email" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mt-4">
+                                <div class="mb-3">
+                                    <label asp-for="AnnouncementContact.WpNumber"></label>
+                                    <input class="form-control" asp-for="AnnouncementContact.WpNumber">
+                                    <span asp-validation-for="AnnouncementContact.WpNumber" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contact-numbers" class="row">
+                        <label asp-for="AnnouncementContact.AnnouncementContactNumbers"></label>
+                        @if (Model.AnnouncementContact?.AnnouncementContactNumbers.Count > 0)
+                        {
+                            var count = 0;
+                            foreach (var announcementContactNumber in Model.AnnouncementContact.AnnouncementContactNumbers)
+                            {
+                                <div class="col-12 contact-number">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <input class="form-control" asp-for="AnnouncementContact.AnnouncementContactNumbers[count].PhoneNumber">
+                                            @if (Model.AnnouncementContact.AnnouncementContactNumbers.Count - 1 == count)
+                                            {
+                                                <i data-count="@count" class="add-contact-number fas fa-plus mx-3"></i>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                count++;
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12 contact-number">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <input class="form-control" asp-for="AnnouncementContact.AnnouncementContactNumbers[0].PhoneNumber">
+                                        <i data-count="0" class="add-contact-number fas fa-plus mx-3"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <span asp-validation-for="AnnouncementContact.AnnouncementContactNumbers" class="invalid-feedback" style="display:block"></span>
+                    </div>
+                </form>
+
+                @* Photo *@
+                <div id="photo-section">
+                    <div class="row">
+                        <div class="mt-4">
+                            <h3>Photo</h3>
+                            <div class="col-12">
+                                <form asp-action="uploadphoto" asp-controller="announcement" class="dropzone" id="photo-dropzone">
+                                    <input type="hidden" name="model.RequestId" value="@Model.RequestId" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Video *@
+                <div id="video-section">
+                    <div class="row">
+                        <div class="mt-4">
+                            <h3>Video</h3>
+                            <div class="col-12">
+                                <form asp-action="uploadvideo" asp-controller="announcement" class="dropzone" id="video-dropzone">
+                                    <input type="hidden" name="model.RequestId" value="@Model.RequestId" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group mt-3">
+                        <button class="btn btn-primary" type="submit" form="announcement-create">Save</button>
+                        <a asp-controller="announcement" asp-action="list" asp-area="admin" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/admin/custom/js/pages/ComponentManagement/Announcement/announcement.js" asp-append-version="true"></script>
+}
+
+@section plugin_scripts{
+    <script src="~/common/plugins/dropzone/js/dropzone.js"></script>
+}

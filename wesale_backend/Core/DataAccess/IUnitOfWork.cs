@@ -23,6 +23,20 @@ namespace Core.DataAccess
 
         IUserRestoreRepository UserRestores { get; }
 
+        ITranslationRepository Translations { get; }
+
+        IAnnouncementRepository Announcements { get; }
+
+        IAnnouncementPhotoRepository AnnouncementPhotos { get; }
+
+        IAnnouncementVideoRepository AnnouncementVideos { get; }
+
+        INavbarComponentRepository NavbarComponents { get; }
+
+        IPageSettingRepository PageSetting { get; }
+
+        IPhonePrefixRepository PhonePrefixes { get; }
+
         Task CommitAsync();
     }
 }

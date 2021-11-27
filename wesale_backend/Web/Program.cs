@@ -25,11 +25,14 @@ namespace Web
                 var userService = scope.ServiceProvider.GetService<IUserService>();
                 var roleService = scope.ServiceProvider.GetService<IRoleService>();
                 var permissionService = scope.ServiceProvider.GetService<IPermissionService>();
+                var translationService = scope.ServiceProvider.GetService<ITranslationService>();
 
                 DataSeeder.SeedNotifyEvents(context);
                 DataSeeder.SeedRoles(roleService);
                 DataSeeder.SeedSuperAdminPermissions(roleService, permissionService);
                 DataSeeder.SeedSuperAdminUser(userService);
+                DataSeeder.SeedTranslations(translationService);
+                DataSeeder.SeedPageSetting(context);
             }
             host.Run();
         }

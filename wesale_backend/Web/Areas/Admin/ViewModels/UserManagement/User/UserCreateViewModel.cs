@@ -17,7 +17,10 @@ namespace Web.Areas.Admin.ViewModels.UserManagement.User
         {
             RolesIDs = new List<string>();
             Permissions = new List<PermissionViewModel>();
+            PhonePrefixes = new List<PhonePrefix>();
         }
+
+        #region Passwords
 
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -27,32 +30,107 @@ namespace Web.Areas.Admin.ViewModels.UserManagement.User
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
 
+        #endregion
+
+        #region Email
+
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Display(Name = "Email confirmed")]
         public bool EmailConfirmed { get; set; }
 
+        #endregion
+
+        #region Fullname
+
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        #endregion
+
+        #region Country and city
+
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        #endregion
+
+        #region Gender
+
+        [Display(Name = "Gender")]
+        public Gender? Gender { get; set; }
+
+        #endregion
+
+        #region Birth info
+
+        [Display(Name = "Birth month")]
+        public Month? BirthMonth { get; set; }
+
+        [Display(Name = "Birth day")]
+        public int? BirthDay { get; set; }
+
+        [Display(Name = "Birth year")]
+        public int? BirthYear { get; set; }
+
+        #endregion
+
+        #region Notifications
+
+        [Display(Name = "News notification enabled")]
+        public bool NewsNotificationEnabled { get; set; }
+
+        [Display(Name = "SMS notification enabled")]
+        public bool SmsNotificationEnabled { get; set; }
+
+        #endregion
+
+        #region Role and permissions
+
         [Display(Name = "Role")]
         public List<string> RolesIDs { get; set; }
 
         public List<Core.Entities.Role> Roles { get; set; }
         public List<PermissionViewModel> Permissions { get; set; }
+
+        #endregion
+
+        #region Phone 
+
+        [Display(Name = "Phone prefix")]
+        public int? PhonePrefixId { get; set; }
+
+        [Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
+
+        public List<PhonePrefix> PhonePrefixes { get; set; }
+
+        #endregion
     }
 
     public class UserCreateViewModelValidator : AbstractValidator<UserCreateViewModel>
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IPhonePrefixService _phonePrefixService;
         private readonly IPermissionService _claimService;
 
         public UserCreateViewModelValidator(
             IUserService userService,
             IRoleService roleService,
+            IPhonePrefixService phonePrefixService,
             IPermissionService claimService)
         {
             _userService = userService;
             _roleService = roleService;
+            _phonePrefixService = phonePrefixService;
             _claimService = claimService;
 
             IntegrateRules();
@@ -74,8 +152,28 @@ namespace Web.Areas.Admin.ViewModels.UserManagement.User
                 .EmailAddress()
                 .WithMessage("Email is not correct")
 
-                .Must(email => IsUserExists(email).Result == false)
+                .MustAsync(async (email, _) => await IsUserExists(email) == false)
                 .WithMessage("Account with this email already exists");
+
+            #endregion
+
+            #region FirstName
+
+            RuleFor(model => model.FirstName)
+                .Cascade(CascadeMode.Stop)
+
+                .MaximumLength(35)
+                .When(model => model.FirstName != null)
+                .WithMessage("First name max length can be 35");
+
+            #endregion
+
+            #region LastName
+
+            RuleFor(model => model.LastName)
+                .MaximumLength(35)
+                .When(model => model.LastName != null)
+                .WithMessage("Last name max length can be 35");
 
             #endregion
 
@@ -89,6 +187,53 @@ namespace Web.Areas.Admin.ViewModels.UserManagement.User
 
                 .NotEmpty()
                 .WithMessage("Can't be empty");
+
+            #endregion
+
+            #region Country
+
+            RuleFor(model => model.Country)
+                .MaximumLength(60)
+                .When(model => model.Country != null)
+                .WithMessage("Country max length can be 60");
+
+            #endregion
+
+            #region City
+
+            RuleFor(model => model.City)
+                .MaximumLength(190)
+                .When(model => model.City != null)
+                .WithMessage("Country max length can be 190");
+
+            #endregion
+
+            #region BirthDay
+
+            RuleFor(model => model.BirthDay)
+                .LessThanOrEqualTo(31)
+                .GreaterThanOrEqualTo(1)
+                .When(model =>  model.BirthDay != null)
+                .WithMessage("Month day max can be 31");
+
+            #endregion
+
+            #region BirthYear
+
+            RuleFor(model => model.BirthYear)
+                .LessThanOrEqualTo(DateTime.UtcNow.Year)
+                .GreaterThanOrEqualTo(1900)
+                .When(model => model.BirthYear != null)
+                .WithMessage($"Birth year min 1900 and max can be {DateTime.UtcNow.Year}");
+
+            #endregion
+
+            #region PhonePrefixId
+
+            RuleFor(model => model.PhonePrefixId)
+                .MustAsync(async (prefixId, _) => await IsPhonePrefixExists(prefixId.Value))
+                .When(model => model.PhonePrefixId != null)
+                .WithMessage("Phone prefix does not exist");
 
             #endregion
 
@@ -141,6 +286,11 @@ namespace Web.Areas.Admin.ViewModels.UserManagement.User
                 .WithMessage("Some roles not found in system");
 
             #endregion
+        }
+
+        private async Task<bool> IsPhonePrefixExists(int id)
+        {
+            return await _phonePrefixService.GetAsync(id) != null;
         }
 
         private async Task<bool> IsUserExists(string email = null)

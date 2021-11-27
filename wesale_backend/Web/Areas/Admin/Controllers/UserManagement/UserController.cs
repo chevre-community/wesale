@@ -22,16 +22,19 @@ namespace Web.Areas.Admin.Controllers.UserManagement
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IPermissionService _permissionService;
+        private readonly IPhonePrefixService _phonePrefixService;
         private readonly IActionResultMessageService _actionResultMessageService;
         public UserController(
             IUserService userService,
             IRoleService roleService,
             IPermissionService permissionService,
+            IPhonePrefixService phonePrefixService,
             IActionResultMessageService actionResultMessageService)
         {
             _userService = userService;
             _roleService = roleService;
             _permissionService = permissionService;
+            _phonePrefixService = phonePrefixService;
             _actionResultMessageService = actionResultMessageService;
         }
 
@@ -47,7 +50,6 @@ namespace Web.Areas.Admin.Controllers.UserManagement
             var model = new UserListViewModel
             {
                 Users = await _userService.GetAllForAdminAsync(),
-                Roles = await _roleService.GetAllForAdminAsync()
             };
 
             return View("List", model);
@@ -68,7 +70,8 @@ namespace Web.Areas.Admin.Controllers.UserManagement
             {
                 Roles = await _roleService.GetAllAsync(),
                 Permissions = _permissionService.GetAll()
-                    .Select(p => new PermissionViewModel(p.Type, p.Name, p.Category, p.Info)).ToList()
+                    .Select(p => new PermissionViewModel(p.Type, p.Name, p.Category, p.Info)).ToList(),
+                PhonePrefixes = await _phonePrefixService.GetAllAsync()
             };
 
             return View("Create", model);
@@ -86,6 +89,18 @@ namespace Web.Areas.Admin.Controllers.UserManagement
             {
                 var newUser = new User
                 {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Country = model.Country,
+                    City = model.City,
+                    Gender = model.Gender,
+                    BirthMonth = model.BirthMonth,
+                    BirthDay = model.BirthDay,
+                    BirthYear = model.BirthYear,
+                    PhonePrefixId = model.PhonePrefixId,
+                    PhoneNumber = model.PhoneNumber,
+                    NewsNotificationEnabled = model.NewsNotificationEnabled,
+                    SmsNotificationEnabled = model.SmsNotificationEnabled,
                     EmailConfirmed = model.EmailConfirmed,
                     UserName = model.Email,
                     Email = model.Email,
@@ -123,12 +138,13 @@ namespace Web.Areas.Admin.Controllers.UserManagement
                 }
 
                 TempData["Message"] = JsonConvert.SerializeObject(_actionResultMessageService.GetSuccessMessage(
-                        ActionType.Create, "User " + newUser.Email, Url.Action("edit", "user", new { id = newUser.Id })));
+                        ActionType.Create, newUser.Email, Url.Action("edit", "user", new { id = newUser.Id })));
 
                 return RedirectToAction("list");
             }
 
             model.Roles = await _roleService.GetAllAsync();
+            model.PhonePrefixes = await _phonePrefixService.GetAllAsync();
 
             return View("Create", model);
         }
@@ -151,14 +167,27 @@ namespace Web.Areas.Admin.Controllers.UserManagement
 
             var model = new UserEditViewModel()
             {
-                ID = user.Id,
+                Id = user.Id,
                 Email = user.Email,
                 EmailConfirmed = user.EmailConfirmed,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                BirthDay = user.BirthDay,
+                BirthMonth = user.BirthMonth,
+                BirthYear = user.BirthYear,
+                Country = user.Country,
+                City = user.City,
+                Gender = user.Gender,
+                PhonePrefixId = user.PhonePrefixId,
+                PhoneNumber = user.PhoneNumber,
+                SmsNotificationEnabled = user.SmsNotificationEnabled,
+                NewsNotificationEnabled = user.NewsNotificationEnabled,
                 RolesIDs = await _userService.GetUserRolesId(user),
                 Roles = await _roleService.GetAllAsync(),
                 Permissions = _permissionService.GetAll()
                     .Select(p => new PermissionViewModel(p.Type, p.Name, p.Category, p.Info))
-                    .ToList()
+                    .ToList(),
+                PhonePrefixes = await _phonePrefixService.GetAllAsync(),
             };
 
             model.Permissions.ForEach(p =>
@@ -176,11 +205,23 @@ namespace Web.Areas.Admin.Controllers.UserManagement
             ViewBag.UserManagement = true;
             ViewBag.User = true;
 
-            var user = await _userService.FindByIdAsync(model.ID);
+            var user = await _userService.FindByIdAsync(model.Id);
             if (user == null) return NotFound();
 
             if (ModelState.IsValid)
             {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Country = model.Country;
+                user.City = model.City;
+                user.BirthMonth = model.BirthMonth;
+                user.BirthDay = model.BirthDay;
+                user.BirthYear = model.BirthYear;
+                user.Gender = model.Gender;
+                user.PhonePrefixId = model.PhonePrefixId;
+                user.PhoneNumber = model.PhoneNumber;
+                user.SmsNotificationEnabled = model.SmsNotificationEnabled;
+                user.NewsNotificationEnabled = model.NewsNotificationEnabled;
                 user.UserName = model.Email;
                 user.Email = model.Email;
                 user.EmailConfirmed = model.EmailConfirmed;
@@ -246,13 +287,13 @@ namespace Web.Areas.Admin.Controllers.UserManagement
                 return RedirectToAction("list");
             }
 
-
             var userPermissions = await _userService.GetPermissionsAsync(user);
             model.RolesIDs = await _userService.GetUserRolesId(user);
             model.Roles = await _roleService.GetAllAsync();
             model.Permissions = _permissionService.GetAll()
                     .Select(p => new PermissionViewModel(p.Type, p.Name, p.Category, p.Info))
                     .ToList();
+            model.PhonePrefixes = await _phonePrefixService.GetAllAsync();
 
             model.Permissions.ForEach(p =>
             {

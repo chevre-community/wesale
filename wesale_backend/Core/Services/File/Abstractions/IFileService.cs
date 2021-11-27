@@ -11,8 +11,6 @@ namespace Core.Services.File.Abstractions
     {
         Task<string> UploadFileAsync(IFormFile file, string path);
         void Delete(string filename, string path);
-        bool CheckContentType(IFormFile file, StringBuilder errorMessage, List<string> contentTypes = null);
-        bool CheckSize(IFormFile file, StringBuilder errorMessage, double? size = null);
         string GetFileUrl(string fileName, string path);
         string GetPureFileName(string fileName, bool withExtension = true);
         IFormFile GetFile(string fileName, string path);

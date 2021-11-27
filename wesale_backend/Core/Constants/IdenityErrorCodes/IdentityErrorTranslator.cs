@@ -97,7 +97,7 @@ namespace Core.Constants.IdenityErrorCodes
             InvalidToken,
         };
 
-        public Dictionary<string, string[]> Translate(IdentityResult identityResult)
+        public Dictionary<string, string[]> Translate(IdentityResult identityResult, string customErrorKey = null)
         {
             Dictionary<string, string[]> serializedIdentityErrors = new Dictionary<string, string[]>();
 
@@ -105,25 +105,25 @@ namespace Core.Constants.IdenityErrorCodes
             {
                 if (PasswordErrorCodes.Contains(identityError.Code))
                 {
-                    serializedIdentityErrors.Add("Password", TranslateByKey(identityError.Code));
+                    serializedIdentityErrors.Add(customErrorKey ?? "Password", TranslateByKey(identityError.Code));
                 }
                 else if (EmailErrorCodes.Contains(identityError.Code))
                 {
                     serializedIdentityErrors.Remove("Email"); //We have to do this because Username may contain errors so 2 key inserted;
-                    serializedIdentityErrors.Add("Email", TranslateByKey(identityError.Code));
+                    serializedIdentityErrors.Add(customErrorKey ?? "Email", TranslateByKey(identityError.Code));
                 }
                 else if (UsernameErrorCodes.Contains(identityError.Code))
                 {
                     serializedIdentityErrors.Remove("Email"); //We have to do this because Email may contain errors so 2 key inserted;
-                    serializedIdentityErrors.Add("Email", TranslateByKey(identityError.Code));
+                    serializedIdentityErrors.Add(customErrorKey ?? "Email", TranslateByKey(identityError.Code));
                 }
                 else if (TokenErrorCodes.Contains(identityError.Code))
                 {
-                    serializedIdentityErrors.Add("Token", TranslateByKey(identityError.Code));
+                    serializedIdentityErrors.Add(customErrorKey ?? "Token", TranslateByKey(identityError.Code));
                 }
                 else if (GeneralErrorCodes.Contains(identityError.Code))
                 {
-                    serializedIdentityErrors.Add("*", TranslateByKey(identityError.Code));
+                    serializedIdentityErrors.Add(customErrorKey ?? "*", TranslateByKey(identityError.Code));
                 }
             }
 

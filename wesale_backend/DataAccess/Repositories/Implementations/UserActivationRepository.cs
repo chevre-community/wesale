@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.Repositories.Abstractions;
+using Core.Entities;
 using Core.Entities.NotificationRelated;
 using Core.Mappers.Web.Admin.UserManagement.UserActivation;
 using DataAccess.Contexts;
@@ -30,7 +31,7 @@ namespace DataAccess.Repositories.Implementations
 
         public async Task<List<UserActivationViewModelMapper>> GetAllForAdminAsync()
         {
-            var result = _context.UserActivations
+            return await _context.UserActivations
                 .OrderByDescending(ua => ua.Id)
                 .Select(ua => new UserActivationViewModelMapper
                 {
@@ -42,9 +43,7 @@ namespace DataAccess.Repositories.Implementations
                     CreatedAt = ua.CreatedAt,
                     UpdatedAt = ua.UpdatedAt
                 })
-                .ToQueryString();
-
-            return new();
+                .ToListAsync();
         }
 
         public async Task<UserActivation> GetAsync(int id)
@@ -61,6 +60,11 @@ namespace DataAccess.Repositories.Implementations
         {
             _context.UserActivations.Attach(userActivation);
             _context.Entry(userActivation).State = EntityState.Modified;
+        }
+
+        public async Task<UserActivation> GetByUserAsync(User user)
+        {
+           return await _context.UserActivations.FirstOrDefaultAsync(ua => ua.UserId == user.Id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Core.Services.Business.Data.Abstractions;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,36 @@ namespace API.ApiModels.v1.Account.Account
 
     public class RegisterApiModelValidator : AbstractValidator<RegisterApiModel>
     {
-        public RegisterApiModelValidator()
+        private readonly ITranslationService _translationService;
+
+        //Error messages (localized)
+        private string NOT_NULL_MESSAGE { get; set; }
+        private string NOT_EMPTY_MESSAGE { get; set; }
+        private string EMAIL_NOT_CORRECT_MESSAGE { get; set; }
+        private string PASSWORDS_NOT_MATCH { get; set; }
+        private string MAX_LENGTH_WITH_SUBS { get; set; }
+        private string MIN_LENGTH_WITH_SUBS { get; set; }
+
+        public RegisterApiModelValidator(ITranslationService translationService)
+        {
+            _translationService = translationService;
+
+            IntegrateMessages();
+            IntegrateRules();
+        }
+
+        private void IntegrateMessages()
+        {
+            NOT_NULL_MESSAGE = _translationService.GetTranslationByKey("NotNull");
+            NOT_EMPTY_MESSAGE = _translationService.GetTranslationByKey("NotEmpty");
+            EMAIL_NOT_CORRECT_MESSAGE = _translationService.GetTranslationByKey("EmailNotCorrect");
+            PASSWORDS_NOT_MATCH = _translationService.GetTranslationByKey("PasswordsNotMatch");
+            MAX_LENGTH_WITH_SUBS = _translationService.GetTranslationByKey("MaxLengthWithSubs");
+            MIN_LENGTH_WITH_SUBS = _translationService.GetTranslationByKey("MinLengthWithSubs");
+        }
+
+
+        private void IntegrateRules()
         {
             #region Email
 
@@ -27,15 +57,15 @@ namespace API.ApiModels.v1.Account.Account
 
                 //Check whether email field exists in request body or not
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 //Check whether email field empty or not 
                 .NotEmpty()
-                .WithMessage("Can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 //Check whether email is in correct format or not
                 .EmailAddress()
-                .WithMessage("Email is not correct");
+                .WithMessage(EMAIL_NOT_CORRECT_MESSAGE);
 
             #endregion
 
@@ -45,26 +75,26 @@ namespace API.ApiModels.v1.Account.Account
                 .Cascade(CascadeMode.Stop)
 
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 .NotEmpty()
-                .WithMessage("Can't be empty");
+                .WithMessage(NOT_EMPTY_MESSAGE);
 
             #endregion
- 
+
             #region Confirm password
 
             RuleFor(user => user.ConfirmPassword)
                 .Cascade(CascadeMode.Stop)
 
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 .NotEmpty()
-                .WithMessage("Can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 .Equal(user => user.Password)
-                .WithMessage("Passwords does not match");
+                .WithMessage(PASSWORDS_NOT_MATCH);
 
             #endregion
 
@@ -74,16 +104,16 @@ namespace API.ApiModels.v1.Account.Account
                 .Cascade(CascadeMode.Stop)
 
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 .NotEmpty()
-                .WithMessage("Can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 .MaximumLength(255)
-                .WithMessage("Max length can be 255")
+                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "255"))
 
                 .MinimumLength(2)
-                .WithMessage("Min length can be 2");
+                .WithMessage(MIN_LENGTH_WITH_SUBS.Replace("{}", "2"));
 
             #endregion 
         }

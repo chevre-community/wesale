@@ -31,7 +31,7 @@ namespace DataAccess
         }
 
         private IUserRepository user;
-        public IUserRepository Users => user ??= new UserRepository(_userManager, _signInManager, _roleManager);
+        public IUserRepository Users => user ??= new UserRepository(_context, _userManager, _signInManager, _roleManager);
 
 
         private IRoleRepository role;
@@ -57,6 +57,33 @@ namespace DataAccess
         private IUserRestoreRepository userRestore;
         public IUserRestoreRepository UserRestores => userRestore ??= new UserRestoreRepository(_context);
 
+
+        private ITranslationRepository translation;
+        public ITranslationRepository Translations => translation ??= new TranslationRepository(_context);
+
+
+        private IAnnouncementRepository announcement;
+        public IAnnouncementRepository Announcements => announcement ??= new AnnouncementRepository(_context);
+
+
+        private IAnnouncementPhotoRepository announcementPhoto;
+        public IAnnouncementPhotoRepository AnnouncementPhotos => announcementPhoto ??= new AnnouncementPhotoRepository(_context);
+
+
+        private IAnnouncementVideoRepository announcementVideo;
+        public IAnnouncementVideoRepository AnnouncementVideos => announcementVideo ??= new AnnouncementVideoRepository(_context);
+
+
+        private INavbarComponentRepository navbarComponent;
+        public INavbarComponentRepository NavbarComponents => navbarComponent ??= new NavbarComponentRepository(_context);
+
+
+        private IPageSettingRepository pageSetting;
+        public IPageSettingRepository PageSetting => pageSetting ??= new PageSettingRepository(_context);
+
+
+        private IPhonePrefixRepository phonePrefix;
+        public IPhonePrefixRepository PhonePrefixes => phonePrefix ??= new PhonePrefixRepository(_context);
 
         public async Task CommitAsync()
         {

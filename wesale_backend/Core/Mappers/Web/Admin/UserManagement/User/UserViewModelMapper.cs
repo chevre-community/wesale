@@ -12,6 +12,12 @@ namespace Core.Admin.UserManagement.User
         public string ID { get; set; }
         public string Email { get; set; }
 
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
         [Display(Name = "Admin")]
         public bool IsAdmin { get; set; }
 

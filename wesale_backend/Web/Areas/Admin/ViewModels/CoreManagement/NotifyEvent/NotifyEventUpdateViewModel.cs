@@ -69,6 +69,8 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
             #region Id
 
             RuleFor(notifyEvent => notifyEvent.Id)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -77,6 +79,8 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
             #region Label
 
             RuleFor(notifyEvent => notifyEvent.Label)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -85,6 +89,8 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
             #region NotifyFor
 
             RuleFor(notifyEvent => notifyEvent.NotifyFor)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -92,7 +98,15 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
 
             #region Email
 
-            RuleFor(notifyEvent => notifyEvent.EmailText_EN)
+            RuleFor(notifyEvent => notifyEvent.EmailSubject_AZ)
+                .Cascade(CascadeMode.Stop)
+
+                .NotNull()
+                .WithMessage("Can't be empty");
+
+            RuleFor(notifyEvent => notifyEvent.EmailText_AZ)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -100,7 +114,9 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
 
             #region SMS
 
-            RuleFor(notifyEvent => notifyEvent.SMSText_EN)
+            RuleFor(notifyEvent => notifyEvent.SMSText_AZ)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 

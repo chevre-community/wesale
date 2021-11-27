@@ -18,13 +18,32 @@ namespace API.ApiModels.v1.Account.Account
     public class RestorePasswordApiModelValidator : AbstractValidator<RestorePasswordApiModel>
     {
         private readonly IUserService _userService;
-        private User User { get; set; }
+        private readonly ITranslationService _translationService;
+        private Core.Entities.User User { get; set; }
 
-        public RestorePasswordApiModelValidator(IUserService userService)
+        //Error messages (localized)
+        private string NOT_NULL_MESSAGE { get; set; }
+        private string NOT_EMPTY_MESSAGE { get; set; }
+        private string EMAIL_NOT_CORRECT_MESSAGE { get; set; }
+        private string EMAIL_NOT_FOUND { get; set; }
+        private string EMAIL_NOT_CONFIRMED_YET { get; set; }
+
+        public RestorePasswordApiModelValidator(IUserService userService, ITranslationService translationService)
         {
             _userService = userService;
+            _translationService = translationService;
 
+            IntegrateMessages();
             IntegrateRules();
+        }
+
+        private void IntegrateMessages()
+        {
+            NOT_NULL_MESSAGE = _translationService.GetTranslationByKey("NotNull");
+            NOT_EMPTY_MESSAGE = _translationService.GetTranslationByKey("NotEmpty");
+            EMAIL_NOT_CORRECT_MESSAGE = _translationService.GetTranslationByKey("EmailNotCorrect");
+            EMAIL_NOT_FOUND = _translationService.GetTranslationByKey("EmailNotFound");
+            EMAIL_NOT_CONFIRMED_YET = _translationService.GetTranslationByKey("UserEmailNotConfirmedYet");
         }
 
         private void IntegrateRules()
@@ -37,28 +56,28 @@ namespace API.ApiModels.v1.Account.Account
 
                 //Check whether email field exists in request body or not
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 //Check whether email field empty or not in request body
                 .NotEmpty()
-                .WithMessage("Can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 //Check whether email is in correct format or not
                 .EmailAddress()
-                .WithMessage("Email is not correct")
+                .WithMessage(EMAIL_NOT_CORRECT_MESSAGE)
 
                 //Check whether email exists in system or not
-                .Must(email => IsUserExists(email).Result != null)
-                .WithMessage("Email not found")
+                .MustAsync(async (email, cancellation) => await IsUserExists(email) != null)
+                .WithMessage(EMAIL_NOT_FOUND)
 
                 //Check whether user email is confirmed or not
-                .Must(email =>_userService.IsEmailConfirmedAsync(this.User).Result)
-                .WithMessage("Email not confirmed");
+                .MustAsync(async (email, cancellation) => await _userService.IsEmailConfirmedAsync(this.User))
+                .WithMessage(EMAIL_NOT_CONFIRMED_YET);
 
             #endregion
         }
 
-        private async Task<User> IsUserExists(string email = null)
+        private async Task<Core.Entities.User> IsUserExists(string email = null)
         {
             var user = await _userService.FindByEmailAsync(email);
             User = user;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
 {
-    public class NotifyEventCreateViewModel
+    public class PhonePrefixCreateViewModel
     {
         public string Label { get; set; }
 
@@ -61,13 +61,15 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
 
     }
 
-    public class NotifyEventCreateViewModelValidator : AbstractValidator<NotifyEventCreateViewModel>
+    public class NotifyEventCreateViewModelValidator : AbstractValidator<PhonePrefixCreateViewModel>
     {
         public NotifyEventCreateViewModelValidator()
         {
             #region Label
 
             RuleFor(notifyEvent => notifyEvent.Label)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -76,6 +78,8 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
             #region NotifyFor
 
             RuleFor(notifyEvent => notifyEvent.NotifyFor)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -83,7 +87,15 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
 
             #region Email
 
-            RuleFor(notifyEvent => notifyEvent.EmailText_EN)
+            RuleFor(notifyEvent => notifyEvent.EmailSubject_AZ)
+                .Cascade(CascadeMode.Stop)
+
+                .NotNull()
+                .WithMessage("Can't be empty");
+
+            RuleFor(notifyEvent => notifyEvent.EmailText_AZ)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 
@@ -91,7 +103,9 @@ namespace Web.Areas.Admin.ViewModels.CoreManagement.NotifyEvent
 
             #region SMS
 
-            RuleFor(notifyEvent => notifyEvent.SMSText_EN)
+            RuleFor(notifyEvent => notifyEvent.SMSText_AZ)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage("Can't be empty");
 

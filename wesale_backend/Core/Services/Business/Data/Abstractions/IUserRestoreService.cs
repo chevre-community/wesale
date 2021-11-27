@@ -1,5 +1,8 @@
-﻿using Core.Entities.NotificationRelated;
+﻿using Core.Entities;
+using Core.Entities.NotificationRelated;
 using Core.Mappers.Web.Admin.UserManagement.UserRestore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +22,7 @@ namespace Core.Services.Business.Data.Abstractions
         Task CreateAsync(UserRestore userRestore);
 
         Task UpdateAsync(UserRestore userRestore);
+
+        Task<UserRestore> GenerateRestoreLinkAsync(User user, IUrlHelper urlHelper, HttpRequest request);
     }
 }

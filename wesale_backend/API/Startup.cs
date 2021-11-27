@@ -8,7 +8,6 @@ using Core.Services.Notification.Email.Configuration.SMTP;
 using Core.Services.JWT.Abstractions;
 using DataAccess;
 using DataAccess.Contexts;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +33,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Services.BackgroundTask.BackgroundTaskQueue;
 using Services.BackgroundTask.BackgroundTaskQueue;
+using Core.Services.Notification.SMS.Abstraction;
+using Core.Services.Notification.SMS.Generator;
+using Services.Notification.SMS.Client;
+using Services.Notification.SMS.Implementation;
+using Services.Notification.SMS.Generator;
+using Core.Services.Notification.SMS.Client;
+using Core.Services.Notification.SMS.Configuration;
+using API.Middlewares;
+using FluentValidation.AspNetCore;
+using Core.Services.File.Abstractions;
+using Services.File.Implementations;
+using FluentValidation;
+using Core.Filters.API.Announcement;
 
 namespace API
 {
@@ -49,14 +61,47 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLocalization();
             services.AddCors();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                )
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressModelStateInvalidFilter = true;
                 });
+
+            #region Localization and Globalization
+
+            services.AddLocalization();
+
+            //configure localization cookie
+            services.Configure<RequestLocalizationOptions>(
+                opt =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en"),
+                        new CultureInfo("az"),
+                        new CultureInfo("ru"),
+                    };
+
+                    opt.DefaultRequestCulture = new RequestCulture("az");
+                    opt.SupportedCultures = supportedCultures;
+                    opt.SupportedUICultures = supportedCultures;
+                    opt.RequestCultureProviders = new List<IRequestCultureProvider>
+                    {
+                        new QueryStringRequestCultureProvider(),
+                        new CookieRequestCultureProvider
+                        {
+                            CookieName = "Culture",
+                        }
+                    };
+                }
+            );
+
+            #endregion
 
             #region Context
 
@@ -122,6 +167,9 @@ namespace API
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<BackgroundQueueHostedService>();
 
+            //JWT
+            services.AddTransient<IJwtService, JwtService>();
+
             //UnitOfWorkk
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -134,20 +182,35 @@ namespace API
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IUserActivationService, UserActivationService>();
             services.AddTransient<IUserRestoreService, UserRestoreService>();
+            services.AddTransient<ITranslationService, TranslationService>();
+            services.AddTransient<IPhonePrefixService, PhonePrefixService>();
 
+            services.AddTransient<IAnnouncementService, AnnouncementService>();
+            services.AddTransient<IAnnouncementPhotoService, AnnouncementPhotoService>();
+            services.AddTransient<IAnnouncementVideoService, AnnouncementVideoService>();
             //Email
 
             //SMTP
-            //var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();
-            //services.AddSingleton(smtpConfiguration);
-            //services.AddTransient<IEmailService, SMTPService>();
+            var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();
+            services.AddSingleton(smtpConfiguration);
+            services.AddTransient<IEmailService, SMTPService>();
 
-            //SendGrid
-            var sendGridConfiguration = Configuration.GetSection("SendGridConfiguration").Get<SendGridConfiguration>();
-            services.AddSingleton(sendGridConfiguration);
-            services.AddTransient<IEmailService, SendGridService>();
+            ////SendGrid
+            //var sendGridConfiguration = Configuration.GetSection("SendGridConfiguration").Get<SendGridConfiguration>();
+            //services.AddSingleton(sendGridConfiguration);
+            //services.AddTransient<IEmailService, SendGridService>();
 
-            //
+            //SMS
+            var atlSmsConfiguration = Configuration.GetSection("AtlSmsConfiguration").Get<AtlSmsConfiguration>();
+            services.AddSingleton(atlSmsConfiguration);
+
+            services.AddTransient<IAtlSmsService, AtlSmsService>();
+            services.AddTransient<IAtlSmsGenerator, AtlSmsGenerator>();
+            services.AddHttpClient<ISmsClient, SmsClient>();
+
+            //File
+            services.AddSingleton<IFileService, FileService>();
+
             #endregion
 
             #region LowercaseRouting
@@ -159,7 +222,8 @@ namespace API
             #region FluentValidation
 
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
-            
+            services.AddTransient<IValidator<AnnouncementGetAllRecentFilterApiModel>, AnnouncementGetAllRecentFilterApiModelValidator>();
+
             #endregion
         }
 
@@ -171,6 +235,10 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
+            //app.UseVerifyAPIKeyMiddleware();
+
             app.UseCors(x => x
                .AllowAnyOrigin()
                .AllowAnyMethod()
@@ -180,6 +248,12 @@ namespace API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            #region Localization and globalization
+
+            app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+
+            #endregion
 
             app.UseRequestLocalization(
                 app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);

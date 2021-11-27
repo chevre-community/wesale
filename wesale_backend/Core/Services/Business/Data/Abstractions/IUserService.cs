@@ -1,7 +1,9 @@
 ﻿using Core.Admin.UserManagement.User;
 using Core.Constants.User;
 using Core.Entities;
+using Core.Entities.Announcement;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +16,15 @@ namespace Core.Services.Business.Data.Abstractions
     public interface IUserService
     {
         Task<List<User>> GetAllAsync();
+        Task<List<SelectListItem>> GetAllAsSelectListItemAsync();
         Task<User> GetUserAsync(ClaimsPrincipal User);
         Task<IdentityResult> UpdateAsync(User user);
         Task<IdentityResult> CreateAsync(User user, string passsword);
         Task<User> FindByUserNameAsync(string username);
         Task<User> FindByIdAsync(string userId);
+        Task<User> FindByPrincipialAsync(ClaimsPrincipal User);
         Task<User> FindByEmailAsync(string email);
+        Task<User> FindByEmailWithPrefixAsync(string email);
         Task<bool> IsInRoleAsync(User user, string role);
         Task<bool> IsAdmin(User user);
         Task<bool> IsAdmin(string userId);
@@ -40,5 +45,7 @@ namespace Core.Services.Business.Data.Abstractions
         Task<IdentityResult> AddPermissionAsync(User user, Permission permission);
         Task<IdentityResult> AddPermissionsAsync(User user, IEnumerable<Permission> permissions);
         Task<IdentityResult> RemovePermissionsAsync(User user, IEnumerable<Permission> permissions);
+        Task<IdentityResult> ChangePasswordAsync(User user, string currentPassword, string newPassword);
+        Task<bool> IsPossesiveToAnnouncementAsync(User user, Announcement announcement);
     }
 }

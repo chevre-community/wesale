@@ -33,27 +33,119 @@
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data" asp-controller="user" asp-action="edit" asp-area="admin" id="user-edit">
                     @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
 
                     <div class="row">
                         <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-body border mb-3">
-                                <div class="form-check form-switch form-switch-success">
-                                    <input asp-for="EmailConfirmed" class="form-check-input">
-                                    <label asp-for="EmailConfirmed" class="form-check-label"></label>
-                                    <span asp-validation-for="EmailConfirmed" class="invalid-feedback" style="display:block"></span>
+                        <div class="card-body border mb-3">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-check form-switch form-switch-success">
+                                        <input asp-for="EmailConfirmed" class="form-check-input">
+                                        <label asp-for="EmailConfirmed" class="form-check-label"></label>
+                                        <span asp-validation-for="EmailConfirmed" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-check form-switch form-switch-success">
+                                        <input asp-for="SmsNotificationEnabled" class="form-check-input">
+                                        <label asp-for="SmsNotificationEnabled" class="form-check-label"></label>
+                                        <span asp-validation-for="SmsNotificationEnabled" class="invalid-feedback" style="display:block"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-check form-switch form-switch-success">
+                                        <input asp-for="NewsNotificationEnabled" class="form-check-input">
+                                        <label asp-for="NewsNotificationEnabled" class="form-check-label"></label>
+                                        <span asp-validation-for="NewsNotificationEnabled" class="invalid-feedback" style="display:block"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label asp-for="PhonePrefixId"></label>
+                                <select class="form-select" asp-for="PhonePrefixId" asp-items='new SelectList(Model.PhonePrefixes,"Id", "Prefix")'>
+                                    <option value="">....</option>
+                                </select>
+                                <span asp-validation-for="PhonePrefixId" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label asp-for="PhoneNumber"></label>
+                                <input class="form-control" asp-for="PhoneNumber">
+                                <span asp-validation-for="PhoneNumber" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label asp-for="Email"></label>
                                 <input class="form-control" asp-for="Email">
                                 <span asp-validation-for="Email" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="FirstName"></label>
+                                <input class="form-control" asp-for="FirstName">
+                                <span asp-validation-for="FirstName" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="LastName"></label>
+                                <input class="form-control" asp-for="LastName">
+                                <span asp-validation-for="LastName" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Country"></label>
+                                <input class="form-control" asp-for="Country">
+                                <span asp-validation-for="Country" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="City"></label>
+                                <input class="form-control" asp-for="City">
+                                <span asp-validation-for="City" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label asp-for="Gender"></label>
+                                <select class="form-select" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+                                <span asp-validation-for="Gender" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label asp-for="BirthMonth"></label>
+                                <select class="form-select" asp-for="BirthMonth" asp-items="Html.GetEnumSelectList<Month>()"></select>
+                                <span asp-validation-for="BirthMonth" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label asp-for="BirthDay"></label>
+                                <input class="form-control" asp-for="BirthDay">
+                                <span asp-validation-for="BirthDay" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label asp-for="BirthYear"></label>
+                                <input class="form-control" asp-for="BirthYear">
+                                <span asp-validation-for="BirthYear" class="invalid-feedback" style="display:block"></span>
                             </div>
                         </div>
 

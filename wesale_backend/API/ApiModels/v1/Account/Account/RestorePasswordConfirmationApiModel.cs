@@ -21,13 +21,36 @@ namespace API.ApiModels.v1.Account.Account
     public class RestorePasswordConfirmationApiModelValidator : AbstractValidator<RestorePasswordConfirmationApiModel>
     {
         private readonly IUserService _userService;
-        private User User { get; set; }
+        private readonly ITranslationService _translationService;
+        private Core.Entities.User User { get; set; }
 
-        public RestorePasswordConfirmationApiModelValidator(IUserService userService)
+        //Error messages (localized)
+        public string NOT_NULL_MESSAGE { get; set; }
+        public string NOT_EMPTY_MESSAGE { get; set; }
+        public string EMAIL_NOT_CORRECT_MESSAGE { get; set; }
+        public string EMAIL_NOT_FOUND_MESSAGE { get; set; }
+        public string PASSWORDS_NOT_MATCH { get; set; }
+        public string MAX_LENGTH_WITH_SUBS { get; set; }
+        public string MIN_LENGTH_WITH_SUBS { get; set; }
+
+        public RestorePasswordConfirmationApiModelValidator(IUserService userService, ITranslationService translationService)
         {
             _userService = userService;
+            _translationService = translationService;
 
+            IntegrateMessages();
             IntegrateRules();
+        }
+
+        public void IntegrateMessages()
+        {
+            NOT_NULL_MESSAGE = _translationService.GetTranslationByKey("NotNull");
+            NOT_EMPTY_MESSAGE = _translationService.GetTranslationByKey("NotEmpty");
+            EMAIL_NOT_CORRECT_MESSAGE = _translationService.GetTranslationByKey("EmailNotCorrect");
+            EMAIL_NOT_FOUND_MESSAGE = _translationService.GetTranslationByKey("EmailNotFound");
+            PASSWORDS_NOT_MATCH = _translationService.GetTranslationByKey("PasswordsNotMatch");
+            MAX_LENGTH_WITH_SUBS = _translationService.GetTranslationByKey("MaxLengthWithSubs");
+            MIN_LENGTH_WITH_SUBS = _translationService.GetTranslationByKey("MinLengthWithSubs");
         }
 
         private void IntegrateRules()
@@ -40,19 +63,19 @@ namespace API.ApiModels.v1.Account.Account
 
                 //Check whether email field exists in request body or not
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 //Check whether email field empty or not in request body
                 .NotEmpty()
-                .WithMessage("Can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 //Check whether email is in correct format or not
                 .EmailAddress()
-                .WithMessage("Email is not correct")
+                .WithMessage(EMAIL_NOT_CORRECT_MESSAGE)
 
                 //Check whether email exists in system or not
-                .Must(email => IsUserExists(email).Result != null)
-                .WithMessage("Email not found");
+                .MustAsync(async (email, cancellationToken) => await IsUserExists(email) != null)
+                .WithMessage(EMAIL_NOT_FOUND_MESSAGE);
 
             #endregion
 
@@ -63,13 +86,11 @@ namespace API.ApiModels.v1.Account.Account
 
                 //Check whether email field exists in request body or not
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 //Check whether email field empty or not in request body
                 .NotEmpty()
-                .WithMessage("Can't be empty");
-
-                
+                .WithMessage(NOT_EMPTY_MESSAGE);
 
             #endregion
 
@@ -80,15 +101,15 @@ namespace API.ApiModels.v1.Account.Account
 
                 //Check whether email field exists in request body or not
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 //Check whether email field empty or not in request body
                 .NotEmpty()
-                .WithMessage("Can't be empty")
+                .WithMessage(NOT_EMPTY_MESSAGE)
 
                 //Check wheter confirm password is equal to password or not
                 .Equal(user => user.Password)
-                .WithMessage("Passwords are not match");
+                .WithMessage(PASSWORDS_NOT_MATCH);
 
             #endregion
 
@@ -99,16 +120,16 @@ namespace API.ApiModels.v1.Account.Account
 
                 //Check whether email field exists in request body or not
                 .NotNull()
-                .WithMessage("Can't be null")
+                .WithMessage(NOT_NULL_MESSAGE)
 
                 //Check whether email field empty or not in request body
                 .NotEmpty()
-                .WithMessage("Can't be empty");
+                .WithMessage(NOT_EMPTY_MESSAGE);
 
             #endregion
         }
 
-        private async Task<User> IsUserExists(string email = null)
+        private async Task<Core.Entities.User> IsUserExists(string email = null)
         {
             var user = await _userService.FindByEmailAsync(email);
             User = user;

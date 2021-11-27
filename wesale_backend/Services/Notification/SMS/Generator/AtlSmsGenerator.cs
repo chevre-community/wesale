@@ -145,7 +145,7 @@ namespace Services.Notification.SMS.Generator
 
         private string GetScheduledDate(DateTime? schedule)
         {
-            return schedule.HasValue ? schedule.Value.ToString("yyyy-MM-dd hh:mm:ss") : DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            return schedule.HasValue ? schedule.Value.ToString("yyyy-MM-dd hh:mm:ss") : DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
         private string GetControlId()

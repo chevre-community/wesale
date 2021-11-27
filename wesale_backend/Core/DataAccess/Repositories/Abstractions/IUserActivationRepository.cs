@@ -20,5 +20,7 @@ namespace Core.DataAccess.Repositories.Abstractions
         Task CreateAsync(UserActivation userActivation);
 
         Task UpdateAsync(UserActivation userActivation);
+
+        Task<UserActivation> GetByUserAsync(User user);
     }
 }

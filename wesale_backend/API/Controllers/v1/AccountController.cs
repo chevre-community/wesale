@@ -1,6 +1,8 @@
 ﻿using API.ApiModels.v1.Account.Account;
 using AutoMapper;
+using Core.Constants.Notification;
 using Core.Entities;
+using Core.Entities.NotificationRelated;
 using Core.Extensions.IdentityResult;
 using Core.Extensions.ModelState;
 using Core.Services.Business.Data.Abstractions;
@@ -17,7 +19,7 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace API.Controllers.v1.Account
+namespace API.Controllers.v1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -25,17 +27,20 @@ namespace API.Controllers.v1.Account
     {
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
-        private readonly SignInManager<User> _signInManager;
+        private readonly INotificationService _notificationService;
+        private readonly SignInManager<Core.Entities.User> _signInManager;
         private readonly IJwtService _jwtService;
 
         public AccountController(
             IUserService userService,
+            INotificationService notificationService,
             IMapper mapper,
-            SignInManager<User> signInManager,
+            SignInManager<Core.Entities.User> signInManager,
             IJwtService jwtService)
         {
             _userService = userService;
-            _mapper = mapper;   
+            _notificationService = notificationService;
+            _mapper = mapper;
             _signInManager = signInManager;
             _jwtService = jwtService;
         }
@@ -50,10 +55,10 @@ namespace API.Controllers.v1.Account
                 return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
 
-            User user = new User
+            Core.Entities.User user = new Core.Entities.User
             {
                 Email = model.Email,
-                UserName = model.Email
+                UserName = model.Email,
             };
 
             var result = await _userService.CreateAsync(user, model.Password);
@@ -61,17 +66,14 @@ namespace API.Controllers.v1.Account
             if (!result.Succeeded)
             {
                 return BadRequest(new { Errors = result.SerializeErrors() });
-        }
+            }
 
-            string confirmationToken = await _userService.GenerateEmailConfirmationTokenAsync(user);
-            string confirmationLink = Url.Action("confirmemail", "account",
-                new { userId = user.Id, token = confirmationToken, }, Request.Scheme);
-
+            await _notificationService.SendAccountActivationAsync(user, Url, Request);
             string jwtToken = _jwtService.GenerateJwtToken(user);
 
             return StatusCode((int)HttpStatusCode.Created, new { token = jwtToken });
         }
-            
+
 
         [HttpPost("confirmemail")]
         public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailApiModel model)
@@ -124,9 +126,7 @@ namespace API.Controllers.v1.Account
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
-            string resetToken = await _userService.GeneratePasswordResetTokenAsync(user);
-            string resetPasswordLink = Url.Action("restorepasswordconfirmation", "account",
-                new { email = user.Email, token = resetToken}, Request.Scheme);
+            await _notificationService.SendRestorePasswordAsync(user, Url, Request);
 
             return Ok();
         }
@@ -156,7 +156,7 @@ namespace API.Controllers.v1.Account
         public string ChangeCulture(string culture)
         {
             Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
+                "Culture",
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.Now.AddDays(30) });
 

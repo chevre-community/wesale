@@ -44,9 +44,15 @@
                             </a>
                         </li>
 
-                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Core" data-bs-trigger="hover">
-                            <a href="#Core" class="nav-link">
+                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Core Management" data-bs-trigger="hover">
+                            <a href="#CoreManagement" class="nav-link">
                                 <i class="ti ti-flare menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Component Management" data-bs-trigger="hover">
+                            <a href="#ComponentManagement" class="nav-link">
+                                <i class="ti ti-layout-grid menu-icon"></i>
                             </a>
                         </li>
                     </ul><!--end nav-->
@@ -68,7 +74,7 @@
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link">Home</a>
+                            <a asp-controller="home" asp-action="index" asp-area="admin" class="nav-link">Home</a>
                         </li>
                     </ul><!--end nav-->
                 </div>
@@ -96,14 +102,12 @@
                         </ul><!--end nav-->
                     }
 
-                    @if ((await _authorizationService.AuthorizeAsync(User, "UserActivationListPolicy")).Succeeded)
-                    {
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a asp-controller="useractivation" asp-action="list" asp-area="admin" class="nav-link">User activations</a>
-                            </li>
-                        </ul><!--end nav-->
-                    }
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-controller="useractivation" asp-action="list" asp-area="admin" class="nav-link">User activations</a>
+                        </li>
+                    </ul><!--end nav-->
+
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a asp-controller="userrestore" asp-action="list" asp-area="admin" class="nav-link">User restores</a>
@@ -112,19 +116,61 @@
                 </div>
 
 
-                <div id="Core" class="main-icon-menu-pane tab-pane" role="tabpanel" aria-labelledby="dasboard-tab">
+                <div id="CoreManagement" class="main-icon-menu-pane tab-pane" role="tabpanel" aria-labelledby="dasboard-tab">
                     <div class="title-box">
-                        <h6 class="menu-title">Core</h6>
+                        <h6 class="menu-title">Core Management</h6>
                     </div>
+
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a asp-action="list" asp-controller="notifyevent" class="nav-link">Notify events</a>
                         </li>
+                    </ul><!--end nav-->
+
+                    <ul class="nav flex-column">
                         <li class="nav-item">
                             <a asp-action="list" asp-controller="notification" class="nav-link">Notifications</a>
                         </li>
+                    </ul><!--end nav-->
+
+                    <ul class="nav flex-column">
                         <li class="nav-item">
                             <a asp-action="list" asp-controller="sms" class="nav-link">Sms Panel</a>
+                        </li>
+                    </ul><!--end nav-->
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="translation" class="nav-link">Translations</a>
+                        </li>
+                    </ul><!--end nav-->
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="phoneprefix" class="nav-link">Phone prefixes</a>
+                        </li>
+                    </ul><!--end nav-->
+                </div>
+
+                <div id="ComponentManagement" class="main-icon-menu-pane tab-pane" role="tabpanel" aria-labelledby="dasboard-tab">
+                    <div class="title-box">
+                        <h6 class="menu-title">Component Management</h6>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="announcement" class="nav-link">Announcements</a>
+                        </li>
+                    </ul><!--end nav-->
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-action="list" asp-controller="navbar" class="nav-link">Navbar elements</a>
+                        </li>
+                    </ul><!--end nav-->
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a asp-action="details" asp-controller="pagesetting" class="nav-link">Page setting details</a>
                         </li>
                     </ul><!--end nav-->
                 </div>
@@ -191,13 +237,12 @@
     </div>
     <!-- end page-wrapper -->
     <!-- Javascript  -->
-    <!-- Plugin Js -->
-
-    @RenderSection("plugin_scripts", required: false)
 
     <!-- App js -->
     <script src="~/admin/metrica/assets/js/app.js" asp-append-version="true"></script>
-
+    <script src="~/common/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <!-- Plugin Js -->
+    @RenderSection("plugin_scripts", required: false)
     <!-- Custom Js -->
     @RenderSection("scripts", required: false)
 </body>

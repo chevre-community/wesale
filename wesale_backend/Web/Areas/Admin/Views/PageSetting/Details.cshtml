@@ -1,0 +1,94 @@
+﻿@using Web.Areas.Admin.ViewModels.ComponentManagement.PageSetting
+@model PageSettingDetailsViewModel
+
+@{
+    ViewData["Title"] = "Page setting";
+}
+
+
+@section plugin_styles{
+    <link href="~/admin/metrica/assets/plugins/select/selectr.min.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Page setting details</h4>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("ActionResultMessage")
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body border mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-check form-switch form-switch-success">
+                                    <input disabled asp-for="InstagramLive" class="form-check-input">
+                                    <label asp-for="InstagramLive" class="form-check-label"></label>
+                                    <span asp-validation-for="InstagramLive" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="FacebookLink"></label>
+                            <input readonly class="form-control" asp-for="FacebookLink">
+                            <span asp-validation-for="FacebookLink" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="InstagramLink"></label>
+                            <input readonly class="form-control" asp-for="InstagramLink">
+                            <span asp-validation-for="InstagramLink" class="invalid-feedback" style="display:block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="d-flex m-0 bold-text" asp-for="InstagramPhoto"></label>
+                        <img class="mt-2 mb-2" style="width:200px; object-fit:cover;" src="@Model.InstagramPhotoPath" />
+                        <span class="text-danger validate-message d-inline-block py-2" asp-validation-for="InstagramPhoto"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="d-flex m-0 bold-text" asp-for="LogoPhoto"></label>
+                        <img class="mt-2 mb-2" style="width:200px; object-fit:cover;" src="@Model.LogoPhotoPath" />
+                        <span class="text-danger validate-message d-inline-block py-2" asp-validation-for="LogoPhoto"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-3">
+                    <a asp-controller="pagesetting" asp-action="update" asp-area="admin" class="btn btn-primary">Update</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section plugin_scripts{
+
+}
+
+
+@section scripts{
+
+}

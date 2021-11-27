@@ -9,13 +9,19 @@ namespace Core.Extensions.IdentityResult
 {
     public static class IdentityResultExtension
     {
-        public static IDictionary<string, string[]> SerializeErrors(this Microsoft.AspNetCore.Identity.IdentityResult identityResult)
+        /// <summary>
+        /// Serializes identity error messages
+        /// </summary>
+        /// <param name="identityResult"></param>
+        /// <param name="customErrorKey">Supply it if you want to show errors for specific key</param>
+        /// <returns></returns>
+        public static IDictionary<string, string[]> SerializeErrors(this Microsoft.AspNetCore.Identity.IdentityResult identityResult, string customErrorKey = null)
         {
             if (!identityResult.Succeeded)
             {
                 IdentityErrorTranslator identityErrorTranslator = new IdentityErrorTranslator();
 
-                return identityErrorTranslator.Translate(identityResult);
+                return identityErrorTranslator.Translate(identityResult, customErrorKey);
             }
 
             return null;

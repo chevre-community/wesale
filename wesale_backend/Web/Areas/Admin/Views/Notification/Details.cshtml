@@ -1,0 +1,71 @@
+﻿@using Web.Areas.Admin.ViewModels.CoreManagement.Notification
+@model NotificationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Notification";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="notification" asp-action="list" asp-area="admin">Notifications</a></li>
+                </ol>
+            </div>
+            <h4 class="page-title">Details notification</h4>
+        </div><!--end page-title-box-->
+    </div><!--end col-->
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Label"></label>
+                            <input readonly class="form-control" asp-for="Label">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ObjectPk"></label>
+                            <input readonly class="form-control" asp-for="ObjectPk">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Email"></label>
+                            <input readonly class="form-control" asp-for="Email">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="CreatedAt"></label>
+                            <input readonly class="form-control" asp-for="CreatedAt">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label asp-for="Extra"></label>
+                            <textarea readonly class="form-control" asp-for="Extra"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

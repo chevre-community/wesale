@@ -53,6 +53,12 @@
                                     <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.Users.GetEnumerator().Current.Email)</span>
                                 </th>
                                 <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.Users.GetEnumerator().Current.FirstName)</span>
+                                </th>
+                                <th>
+                                    <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.Users.GetEnumerator().Current.LastName)</span>
+                                </th>
+                                <th>
                                     <span class="mr-1" style="pointer-events: none;">@Html.DisplayNameFor(x => x.Users.GetEnumerator().Current.EmailConfirmed)</span>
                                 </th>
                                 <th>
@@ -76,6 +82,8 @@
                                             @rowCounter
                                         </td>
                                         <td>@user.Email</td>
+                                        <td>@user.FirstName</td>
+                                        <td>@user.LastName</td>
                                         <td>@await Component.InvokeAsync("BooleanResult", new { result = user.EmailConfirmed })</td>
                                         <td>@await Component.InvokeAsync("BooleanResult", new { result = user.IsAdmin })</td>
                                         <td class="localize-date" data-format="DD/MM/yyyy HH:mm:ss">@user.JoinedAt.ToString("o")</td>

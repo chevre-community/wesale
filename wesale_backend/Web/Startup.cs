@@ -4,6 +4,7 @@ using Core.Entities;
 using Core.Services.ActionResultMessage.Abstraction;
 using Core.Services.BackgroundTask.BackgroundTaskQueue;
 using Core.Services.Business.Data.Abstractions;
+using Core.Services.File.Abstractions;
 using Core.Services.Notification.Email.Abstraction;
 using Core.Services.Notification.Email.Configuration.Sendgrid;
 using Core.Services.Notification.Email.Configuration.SMTP;
@@ -19,13 +20,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Services.ActionResultMessage.Implementations;
 using Services.BackgroundTask.BackgroundTaskQueue;
 using Services.Business.Data.Implementations;
+using Services.File.Implementations;
 using Services.Notification.Email.Implementation.SendGrid;
 using Services.Notification.Email.Implementation.SMTP;
 using Services.Notification.SMS.Client;
@@ -33,6 +38,7 @@ using Services.Notification.SMS.Generator;
 using Services.Notification.SMS.Implementation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -54,6 +60,35 @@ namespace Web
             services.AddControllersWithViews();
 
             services.AddHttpClient();
+
+            #region Localization and Globalization
+
+            services.AddLocalization();
+
+            //configure localization cookie
+            services.Configure<RequestLocalizationOptions>(
+                opt =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en"),
+                    };
+
+                    opt.DefaultRequestCulture = new RequestCulture("en");
+                    opt.SupportedCultures = supportedCultures;
+                    opt.SupportedUICultures = supportedCultures;
+                    opt.RequestCultureProviders = new List<IRequestCultureProvider>
+                    {
+                        new QueryStringRequestCultureProvider(),
+                        new CookieRequestCultureProvider
+                        {
+                            CookieName = "Culture",
+                        }
+                    };
+                }
+            );
+
+            #endregion
 
             #region Context
 
@@ -83,7 +118,7 @@ namespace Web
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<BackgroundQueueHostedService>();
 
-            //UnitOfWorkk
+            //UnitOfWork
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             //Data
@@ -95,16 +130,23 @@ namespace Web
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IUserActivationService, UserActivationService>();
             services.AddTransient<IUserRestoreService, UserRestoreService>();
+            services.AddTransient<ITranslationService, TranslationService>();
+            services.AddTransient<IAnnouncementService, AnnouncementService>();
+            services.AddTransient<IAnnouncementPhotoService, AnnouncementPhotoService>();
+            services.AddTransient<IAnnouncementVideoService, AnnouncementVideoService>();
+            services.AddTransient<INavbarComponentService, NavbarComponentService>();
+            services.AddTransient<IPageSettingService, PageSettingService>();
+            services.AddTransient<IPhonePrefixService, PhonePrefixService>();
 
             //SMTP
-            var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();
-            services.AddSingleton(smtpConfiguration);
-            services.AddTransient<IEmailService, SMTPService>();
+            //var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();
+            //services.AddSingleton(smtpConfiguration);
+            //services.AddTransient<IEmailService, SMTPService>();
 
             //SendGrid
-            //var sendGridConfiguration = Configuration.GetSection("SendGridConfiguration").Get<SendGridConfiguration>();
-            //services.AddSingleton(sendGridConfiguration);
-            //services.AddTransient<IEmailService, SendGridService>();
+            var sendGridConfiguration = Configuration.GetSection("SendGridConfiguration").Get<SendGridConfiguration>();
+            services.AddSingleton(sendGridConfiguration);
+            services.AddTransient<IEmailService, SendGridService>();
 
             //SMS
             var atlSmsConfiguration = Configuration.GetSection("AtlSmsConfiguration").Get<AtlSmsConfiguration>();
@@ -114,8 +156,11 @@ namespace Web
             services.AddTransient<IAtlSmsGenerator, AtlSmsGenerator>();
             services.AddHttpClient<ISmsClient, SmsClient>();
 
+            //File
+            services.AddSingleton<IFileService, FileService>();
 
             //Inner
+            services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IActionResultMessageService, ActionResultMessageService>();
 
             #endregion
@@ -137,8 +182,8 @@ namespace Web
 
             services.ConfigureApplicationCookie(options =>
             {
-                //options.LoginPath = "/admin/account/login";
-                //options.AccessDeniedPath = "/admin/account/login";
+                options.LoginPath = "/admin/account/login";
+                options.AccessDeniedPath = "/admin/account/login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(72);
             });
 
@@ -148,17 +193,14 @@ namespace Web
                 options.ValidationInterval = TimeSpan.Zero;
             });
 
+            //Permissions
+            AddPolicies(services);
+
             #endregion
 
             #region FluentValidation
 
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
-
-            #endregion
-
-            #region Policies (permissions)
-
-            AddPolicies(services);
 
             #endregion
         }
@@ -172,7 +214,8 @@ namespace Web
             }
             else
             {
-                app.UseExceptionHandler("/home/error");
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/home/error");
                 //app.UseHsts();
             }
 
@@ -184,11 +227,17 @@ namespace Web
             app.UseAuthorization();
             app.UseAuthentication();
 
+            #region Localization and globalization
+
+            app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+
+            #endregion
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                   name: "areas",
-                  template: "{area:exists}/{controller=home}/{action=index}/{id?}"
+                  template: "{area:exists}/{controller=account}/{action=login}/{id?}"
                 );
             });
         }

@@ -1,7 +1,10 @@
 ﻿using Core.DataAccess;
+using Core.Entities;
 using Core.Entities.NotificationRelated;
 using Core.Mappers.Web.Admin.UserManagement.UserRestore;
 using Core.Services.Business.Data.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +16,13 @@ namespace Services.Business.Data.Implementations
     public class UserRestoreService : IUserRestoreService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public UserRestoreService(IUnitOfWork unitOfWork)
+        public UserRestoreService(IUnitOfWork unitOfWork,
+            IUserService userService)
         {
             _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
         public async Task<List<UserRestore>> GetAllAsync()
@@ -44,6 +50,23 @@ namespace Services.Business.Data.Implementations
         {
             await _unitOfWork.UserRestores.UpdateAsync(userRestore);
             await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<UserRestore> GenerateRestoreLinkAsync(User user, IUrlHelper urlHelper, HttpRequest request)
+        {
+            string resetToken = await _userService.GeneratePasswordResetTokenAsync(user);
+
+            string resetPasswordLink = urlHelper.Action("forgetpasswordconfirmation", "account",
+                new { email = user.Email, token = resetToken}, request.Scheme);
+
+            var userRestore = new UserRestore
+            {
+                RestoreLink = resetPasswordLink,
+                User = user,
+            };
+
+            await CreateAsync(userRestore);
+            return userRestore;
         }
     }
 }

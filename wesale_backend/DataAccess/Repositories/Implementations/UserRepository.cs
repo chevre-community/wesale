@@ -2,7 +2,10 @@
 using Core.Constants.User;
 using Core.DataAccess.Repositories.Abstractions;
 using Core.Entities;
+using Core.Entities.Announcement;
+using DataAccess.Contexts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,15 +18,18 @@ namespace DataAccess.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
+        private readonly WeSaleContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
 
         public UserRepository(
+            WeSaleContext context,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             RoleManager<Role> roleManager)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -37,6 +43,17 @@ namespace DataAccess.Repositories.Implementations
         public List<User> GetAllOrderedByIdA(Func<User, object> keySelector)
         {
             return _userManager.Users.OrderBy(keySelector).ToList();
+        }
+
+        public async Task<List<SelectListItem>> GetAllAsSelectListItemAsync()
+        {
+            return await _userManager.Users
+                 .Select(u => new SelectListItem
+                 {
+                     Text = u.Email,
+                     Value = u.Id
+                 })
+                 .ToListAsync();
         }
 
         public async Task<User> GetUserAsync(ClaimsPrincipal User)
@@ -57,6 +74,11 @@ namespace DataAccess.Repositories.Implementations
         public async Task<User> FindByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<User> FindByEmailWithPrefixAsync(string email)
+        {
+            return await _userManager.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<IdentityResult> CreateAsync(User user, string password)
@@ -144,6 +166,8 @@ namespace DataAccess.Repositories.Implementations
                 .Select(u => new UserViewModelMapper
                     {
                         ID = u.Id,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
                         Email = u.Email,
                         EmailConfirmed = u.EmailConfirmed,
                         JoinedAt = u.CreatedAt
@@ -169,6 +193,16 @@ namespace DataAccess.Repositories.Implementations
         public async Task<IdentityResult> RemovePermissionsAsync(User user, IEnumerable<Permission> permissions)
         {
             return await _userManager.RemoveClaimsAsync(user, permissions);
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string currentPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        }
+
+        public async Task<bool> IsPossesiveToAnnouncementAsync(User user, Announcement announcement)
+        {
+            return await _context.Announcements.AnyAsync(a => a.Id == announcement.Id && a.UserId == user.Id);
         }
     }
 }

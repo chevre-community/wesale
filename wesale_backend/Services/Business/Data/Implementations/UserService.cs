@@ -3,9 +3,11 @@ using Core.Constants.User;
 using Core.DataAccess;
 using Core.DataAccess.Repositories.Abstractions;
 using Core.Entities;
+using Core.Entities.Announcement;
 using Core.Services.Business.Data.Abstractions;
 using DataAccess.Repositories.Memory;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,14 +30,14 @@ namespace Services.Business.Data.Implementations
             _roleService = roleService;
         }
 
-        public async Task<bool> CheckPasswordAsync(User user, string password)
-        {
-            return await _unitOfWork.Users.CheckPasswordAsync(user, password);
-        }
-
         public async Task<List<User>> GetAllAsync()
         {
             return await _unitOfWork.Users.GetAllAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetAllAsSelectListItemAsync()
+        {
+            return await _unitOfWork.Users.GetAllAsSelectListItemAsync();
         }
 
         public async Task<List<UserViewModelMapper>> GetAllForAdminAsync()
@@ -66,9 +68,20 @@ namespace Services.Business.Data.Implementations
             return await _unitOfWork.Users.FindByIdAsync(userId);
         }
 
+        public Task<User> FindByPrincipialAsync(ClaimsPrincipal User)
+        {
+            var id = User.Claims.FirstOrDefault(c => c.Type == "Id").Value;
+            return _unitOfWork.Users.FindByIdAsync(id);
+        }
+
         public async Task<User> FindByEmailAsync(string email)
         {
             return await _unitOfWork.Users.FindByEmailAsync(email);
+        }
+
+        public async Task<User> FindByEmailWithPrefixAsync(string email)
+        {
+            return await _unitOfWork.Users.FindByEmailWithPrefixAsync(email);
         }
 
         public async Task<IdentityResult> CreateAsync(User user, string password)
@@ -146,6 +159,11 @@ namespace Services.Business.Data.Implementations
             return await _unitOfWork.Users.IsEmailConfirmedAsync(user);
         }
 
+        public async Task<bool> CheckPasswordAsync(User user, string password)
+        {
+            return await _unitOfWork.Users.CheckPasswordAsync(user, password);
+        }
+
         public async Task<string> GeneratePasswordResetTokenAsync(User user)
         {
             return await _unitOfWork.Users.GeneratePasswordResetTokenAsync(user);
@@ -178,6 +196,15 @@ namespace Services.Business.Data.Implementations
         {
             return await _unitOfWork.Users.RemovePermissionsAsync(user, permissions);
         }
+
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string currentPassword, string newPassword)
+        {
+            return await _unitOfWork.Users.ChangePasswordAsync(user, currentPassword, newPassword);
+        }
+        public async Task<bool> IsPossesiveToAnnouncementAsync(User user, Announcement announcement)
+        {
+            return await _unitOfWork.Users.IsPossesiveToAnnouncementAsync(user, announcement);
+        }
+      
     }
 }
- 
