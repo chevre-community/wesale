@@ -7,7 +7,7 @@
     "prettier:watch": "onchange 'src/**/*.js' -- prettier --write {{changed}}",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p ${PORT:=3000}",
+    "start": "next start",
     "docker:prod": "docker start wesale-prod",
     "lint": "next lint"
   },
