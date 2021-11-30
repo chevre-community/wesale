@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .g-container {
   width: 100%;
   margin: 0 auto;
@@ -8,11 +10,11 @@
   }
 
   @include breakpoint-max($desktop-width) {
-    max-width: calc(100% - #{rem($offset / 2)} * 2);
+    max-width: calc(100% - #{rem(math.div($offset, 2))} * 2);
   }
 
   @include breakpoint-max($tablet-width) {
-    max-width: calc(100% - #{rem($offset / 5)} * 2);
+    max-width: calc(100% - #{rem(math.div($offset, 5))} * 2);
   }
 }
 

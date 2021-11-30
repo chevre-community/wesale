@@ -1,3 +1,5 @@
+@use "sass:math";
+
 /// make color slightly light
 /// @return {color}
 
@@ -12,12 +14,12 @@
   @return mix(black, $color, $percentage);
 }
 @function strip-unit($value) {
-  @return $value / ($value * 0 + 1);
+  @return math.div($value, ($value * 0 + 1));
 }
 
 @function rem($value, $base: 16) {
   @if type-of($value) == number {
-    @return $value / $base + rem;
+    @return math.div($value, $base) * 1rem;
   } @else {
     @return $value;
   }
@@ -25,19 +27,19 @@
 
 @function convert($value, $convertUnit, $convertBase: 16px) {
   $currentUnit: unit($value);
-  $strippedValue: $value / ($value * 0 + 1);
+  $strippedValue: math.div($value, ($value * 0 + 1));
   @if not unitless($convertBase) {
     @if unit($convertBase) != px {
       @error "Not supported unit '#{unit($convertBase)}' as convert base!";
     }
-    $convertBase: $convertBase / ($convertBase * 0 + 1);
+    $convertBase: math.div($convertBase, ($convertBase * 0 + 1));
   }
 
   @if $currentUnit == px {
     @if $convertUnit == "em" {
-      @return 0em + ($strippedValue / $convertBase);
+      @return 0em + math.div($strippedValue, $convertBase);
     } @else if $convertUnit == "%" {
-      @return percentage($strippedValue / $convertBase);
+      @return percentage(math.div($strippedValue, $convertBase));
     }
   } @else if $currentUnit == em {
     @if $convertUnit == "px" {
@@ -47,17 +49,17 @@
     }
   } @else if $currentUnit == "%" {
     @if $convertUnit == "px" {
-      @return 0em + ($strippedValue * $convertBase / 100);
+      @return 0em + math.div(($strippedValue * $convertBase), 100);
     } @else if $convertUnit == "em" {
-      @return 0em + ($strippedValue / 100);
+      @return 0em + math.div($strippedValue, 100);
     }
   } @else if $currentUnit == pt {
     @if $convertUnit == "px" {
       @return 0px + ($strippedValue * 1.3333);
     } @else if $convertUnit == "em" {
-      @return 0em + ($strippedValue / 12);
+      @return 0em + math.div($strippedValue, 12);
     } @else if $convertUnit == "%" {
-      @return percentage($strippedValue / 12);
+      @return percentage(math.div($strippedValue, 12));
     }
   }
   @error "Can't convert '#{$value}' to unit '#{$convertUnit}'!";

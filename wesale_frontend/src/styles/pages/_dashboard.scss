@@ -288,33 +288,6 @@
       @include font-size(15, 500);
       color: $ntr-dark-06;
     }
-
-    ul {
-      list-style: none;
-      padding-left: 0;
-      margin-top: rem(16);
-      margin-bottom: rem(16);
-
-      li {
-        margin-bottom: rem(8);
-        color: $ntr-dark-06;
-        @include font-size(14, 400);
-        line-height: 150%;
-        /* identical to box height, or 21px */
-        letter-spacing: 0.03em;
-        font-feature-settings: "liga" off;
-        color: #565555;
-        padding-left: rem(22);
-
-        @include pseudo() {
-          top: rem(7);
-          left: 0;
-          @include box(7);
-          border-radius: 50%;
-          background-color: $ntr-light-01;
-        }
-      }
-    }
   }
 
   &__last {

@@ -106,7 +106,7 @@ $font: (
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__lg--semibold": (
     "size": 18,
@@ -117,7 +117,7 @@ $font: (
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__md--regular": (
     "size": 15,
@@ -189,6 +189,13 @@ $font: (
   "caption__lg--semibold": (
     "size": 14,
     "weight": 600,
+    "line-height": 18,
+    "spacing": 0.02em,
+    "transform": none,
+  ),
+  "caption__lg--medium": (
+    "size": 14,
+    "weight": 500,
     "line-height": 18,
     "spacing": 0.02em,
     "transform": none,
@@ -358,3 +365,6 @@ $z-index-menu: $z-index-sticky + 3;
 $z-index-form: $z-index-sticky - 1;
 
 $nav-height: 72;
+
+$line-h-sm: null;
+$size-sm: null;

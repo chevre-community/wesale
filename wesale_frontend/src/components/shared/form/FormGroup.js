@@ -1,11 +1,17 @@
 import React from "react";
 
-const FormGroup = ({ children, label, id, error, info, disabled }) => {
+import classNames from "classnames";
+
+const FormGroup = ({ children, label, id, error, info, disabled, size }) => {
 	// className={classNames("g-form-group", {
 	// 	disabled: disabled,
 	// })}
 	return (
-		<div className="g-form-group">
+		<div
+			className={classNames("g-form-group", {
+				[`g-form-group__${size}`]: size,
+			})}
+		>
 			<label htmlFor={id} className="g-label">
 				{label}
 			</label>

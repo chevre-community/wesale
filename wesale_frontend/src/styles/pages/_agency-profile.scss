@@ -1,0 +1,37 @@
+.agency-profile {
+  $this: &;
+  max-width: rem(950);
+  width: 100%;
+
+  &__main-info {
+    display: grid;
+    grid-template-columns: rem(260) 1fr;
+    grid-gap: rem(30);
+    margin-bottom: rem(40);
+
+    &-img {
+      box-shadow: 0px 2px 25px rgba(17, 20, 45, 0.07);
+      border-radius: rem(16);
+      overflow: hidden;
+      height: max-content;
+
+      img {
+        border-radius: rem(16);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__form {
+    max-width: rem(650);
+    width: 100%;
+
+    &-item {
+      & + #{$this}__form-item {
+        margin-top: rem(32);
+      }
+    }
+  }
+}

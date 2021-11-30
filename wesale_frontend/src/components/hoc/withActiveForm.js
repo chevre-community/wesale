@@ -15,11 +15,10 @@ export default function WithActiveForm(WrappedComponent) {
 	const { pathname } = useRouter();
 
 	useEffect(() => {
-		if (pathname === "/home") {
-			dispatch(toggleActiveForm("home"));
-		} else if (pathname === "/object") {
+		if (pathname === "/object") {
 			dispatch(toggleActiveForm("object"));
 		}
+		dispatch(toggleActiveForm("home"));
 	}, [pathname, dispatch]);
 
 	return <WrappedComponent activeForm={activeForm} />;

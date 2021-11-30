@@ -11,7 +11,7 @@ import {
 	InputRadio,
 } from "@/components";
 
-const AgencyProfile = () => {
+const UserProfile = () => {
 	const [isPassword, setIsPassword] = useState(true);
 
 	const passwordInput = useRef();
@@ -150,10 +150,12 @@ const AgencyProfile = () => {
 										<p>
 											Ваш пароль должен состоять не менее чем из 8 символов:
 										</p>
-										<ul>
-											<li>Заглавные буквы</li>
-											<li>Строчные буквы</li>
-											<li>Цифры или специальные символы: %, #, $ и другие</li>
+										<ul className="styled__list">
+											<li className="styled__list-item">Заглавные буквы</li>
+											<li className="styled__list-item">Строчные буквы</li>
+											<li className="styled__list-item">
+												Цифры или специальные символы: %, #, $ и другие
+											</li>
 										</ul>
 									</div>
 									<FormGroup label="Новый пароль" id="Сменить пароль">
@@ -197,8 +199,8 @@ const AgencyProfile = () => {
 	);
 };
 
-AgencyProfile.getLayout = (page) => {
+UserProfile.getLayout = (page) => {
 	return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export default AgencyProfile;
+export default UserProfile;
