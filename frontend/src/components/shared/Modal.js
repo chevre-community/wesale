@@ -8,7 +8,7 @@ import { DelayedPortal } from "@/components";
 
 import classNames from "classnames";
 
-const Modal = ({ isShowing, children, title, size }) => {
+const Modal = ({ isShowing, children, title, size, justClose }) => {
 	const router = useRouter();
 
 	const [classnames, setClassnames] = useState("");
@@ -22,7 +22,14 @@ const Modal = ({ isShowing, children, title, size }) => {
 				<BsModal
 					show={isShowing}
 					onHide={() => {
-						router.back() || router.push("/home");
+						if (!justClose) {
+							router.back() || router.push("/home");
+						} else {
+							justClose.toggle({
+								value: false,
+								modal: justClose.modal,
+							});
+						}
 					}}
 					size={size}
 					aria-labelledby="contained-modal-title-vcenter"

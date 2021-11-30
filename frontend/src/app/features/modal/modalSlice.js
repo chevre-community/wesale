@@ -5,6 +5,8 @@ const initialState = {
 	isShowing: {
 		login: false,
 		signup: false,
+		changeEmail: false,
+		basicInfo: false,
 	},
 };
 

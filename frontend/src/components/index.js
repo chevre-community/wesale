@@ -98,3 +98,5 @@ export { default as NProgress } from "@/components/custom/NProgress";
 
 export { default as LoginModal } from "@/components/modals/LoginModal";
 export { default as RegisterModal } from "@/components/modals/RegisterModal";
+export { default as ChangeEmailModal } from "@/components/modals/ChangeEmailModal";
+export { default as BasicInfoModal } from "@/components/modals/BasicInfoModal";
