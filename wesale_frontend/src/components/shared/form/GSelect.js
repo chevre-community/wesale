@@ -10,6 +10,7 @@ import colors from "@/styles/modules/colors.module.scss";
 const GSelect = ({
 	options,
 	color,
+	control_color,
 	hover_color,
 	bg_color_option,
 	bg_color_option_selected,
@@ -90,12 +91,14 @@ const GSelect = ({
 			border: "none",
 		}),
 		singleValue: (provided, state) => {
-			const { opacity, transition, fontSize } = {
+			const singleValueStyles = {
 				opacity: state.isDisabled ? 0.5 : 1,
 				transition: "opacity 300ms",
 				fontSize: rem(15),
 				lineHeight: 1.7,
-				color: colors["primary-black"],
+				color:
+					`${control_color} !important` ||
+					`${colors["primary-black"]} !important`,
 				letterSpacing: "0.02em",
 				fontWeight: 400,
 				padding: 0,
@@ -105,7 +108,7 @@ const GSelect = ({
 				whiteSpace: "nowrap",
 			};
 
-			return { ...provided, opacity, transition, fontSize };
+			return { ...provided, ...singleValueStyles };
 		},
 		valueContainer: (provided) => ({
 			...provided,

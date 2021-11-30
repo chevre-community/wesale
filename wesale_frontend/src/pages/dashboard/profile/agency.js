@@ -8,8 +8,12 @@ import {
 	DashboardLayout,
 	FormGroup,
 	GInput,
+	GSelect,
+	PlusIcon,
 	UploadIcon,
 } from "@/components";
+
+import colors from "@/styles/modules/colors.module.scss";
 
 const AgencyProfile = () => {
 	useEffect(() => {
@@ -45,10 +49,7 @@ const AgencyProfile = () => {
 							</li>
 						</ul>
 						<div className="d-flex align-items-center mt-md gap-5">
-							<label
-								className="g-btn-upload mb-2 w-content"
-								htmlFor="upload-btn"
-							>
+							<label className="g-btn-upload w-content" htmlFor="upload-btn">
 								<input
 									className="visually-hidden"
 									type="file"
@@ -94,13 +95,84 @@ const AgencyProfile = () => {
 									label={"Я хочу получать новые уведомления на почту"}
 								/>
 							</div>
-							<div className="mt-lg">
-								<div className="d-flex align-items-center gap-3">
-									<button className="g-btn-secondary">
-										Отменить изменения
+							<div className="my-lg">
+								<p className="g-text__lg--semibold mb-md-24">
+									Контактные данные
+								</p>
+								<p className="text-with-dash g-text__md--regular mb-sm">
+									— Укажите номер телефона по которому пользователи смогут к вам
+									позвонить
+								</p>
+								<div className="phone-input__grid">
+									<FormGroup label={"Контактный номер"} size="md">
+										<div className="phone-input">
+											<div className="phone-input__select">
+												<GSelect
+													options={[
+														{
+															label: "+99450",
+															value: "+99450",
+														},
+														{
+															label: "+99455",
+															value: "+99455",
+														},
+														{
+															label: "+99470",
+															value: "+99470",
+														},
+														{
+															label: "+99477",
+															value: "+99477",
+														},
+													]}
+													instanceId="phone-input-select"
+													control_color={colors["primary-blue"]}
+												/>
+											</div>
+											<input type="text" placeholder="000  00  00" />
+										</div>
+									</FormGroup>
+									<button className="g-btn-count">
+										<PlusIcon />
 									</button>
-									<button className="g-btn-green">Сохранить</button>
 								</div>
+								<div className="phone-input__grid mt-lg-42">
+									<FormGroup label={"Связь по “WhatsApp”"} size="md">
+										<div className="phone-input">
+											<div className="phone-input__select">
+												<GSelect
+													options={[
+														{
+															label: "+99450",
+															value: "+99450",
+														},
+														{
+															label: "+99455",
+															value: "+99455",
+														},
+														{
+															label: "+99470",
+															value: "+99470",
+														},
+														{
+															label: "+99477",
+															value: "+99477",
+														},
+													]}
+													instanceId="phone-input-select-for-wp"
+													control_color={colors["primary-blue"]}
+												/>
+											</div>
+											<input type="text" placeholder="000  00  00" />
+										</div>
+									</FormGroup>
+								</div>
+								<div className="mt-lg-42">hello</div>
+							</div>
+							<div className="d-flex align-items-center gap-3">
+								<button className="g-btn-secondary">Отменить изменения</button>
+								<button className="g-btn-green">Сохранить</button>
 							</div>
 						</div>
 					</form>
