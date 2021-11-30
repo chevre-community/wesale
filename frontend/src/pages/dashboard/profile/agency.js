@@ -1,8 +1,10 @@
-import { autoResize } from "@/lib";
+import { autoResize, useModal } from "@/lib";
 
 import React, { useEffect } from "react";
 
 import {
+	BasicInfoModal,
+	ChangeEmailModal,
 	Checkbox,
 	CustomImage,
 	DashboardLayout,
@@ -16,6 +18,8 @@ import {
 import colors from "@/styles/modules/colors.module.scss";
 
 const AgencyProfile = () => {
+	const { isShowing, toggle } = useModal();
+
 	useEffect(() => {
 		autoResize();
 	}, []);
@@ -168,7 +172,34 @@ const AgencyProfile = () => {
 										</div>
 									</FormGroup>
 								</div>
-								<div className="mt-lg-42">hello</div>
+								<div className="mt-lg-42">
+									<div className="d-flex align-items-center gap-md">
+										<FormGroup
+											label="Email"
+											size="md"
+											info={"Ваш email виден только вам"}
+										>
+											<GInput
+												type="email"
+												disabled={true}
+												defaultValue="absheronamlakagentliyi@gmail.com"
+											/>
+										</FormGroup>
+										<button
+											className="g-btn-text g-caption__lg--medium text-primary-blue"
+											onClick={(e) => {
+												e.preventDefault();
+
+												toggle({
+													value: true,
+													modal: "changeEmail",
+												});
+											}}
+										>
+											Сменить почту
+										</button>
+									</div>
+								</div>
 							</div>
 							<div className="d-flex align-items-center gap-3">
 								<button className="g-btn-secondary">Отменить изменения</button>
@@ -183,7 +214,13 @@ const AgencyProfile = () => {
 };
 
 AgencyProfile.getLayout = (page) => {
-	return <DashboardLayout>{page}</DashboardLayout>;
+	return (
+		<DashboardLayout>
+			{page}
+			<ChangeEmailModal justClose={true} modal="changeEmail" />
+			<BasicInfoModal justClose={true} modal="basicInfo" />
+		</DashboardLayout>
+	);
 };
 
 export default AgencyProfile;
