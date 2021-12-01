@@ -46,7 +46,7 @@ namespace Core.Filters.API.Announcement
         }
         private void IntegrateMessages()
         {
-            NOT_EMPTY_MESSAGE = _translationService.TranslateByKey("NotEmpty");
+            NOT_EMPTY_MESSAGE = _translationService.GetTranslationByKey("NotEmpty");
         }
 
         private void IntegrateRules()
