@@ -199,7 +199,7 @@ namespace Web.Areas.Admin.Controllers.ComponentManagement.Announcement
         [HttpPost("uploadphoto")]
         public async Task<IActionResult> UploadPhoto(AnnouncementUploadPhotoViewModel model)
         {
-            if (!ModelState.IsValid) return Ok(new { errors = ModelState.SerializeErrors() });
+            if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 
             var user = await _userService.GetUserAsync(User);
             if (user == null) return NotFound();

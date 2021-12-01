@@ -22,7 +22,6 @@ namespace Core.Services.Business.Data.Abstractions
         Task<IdentityResult> CreateAsync(User user, string passsword);
         Task<User> FindByUserNameAsync(string username);
         Task<User> FindByIdAsync(string userId);
-        Task<User> FindByPrincipialAsync(ClaimsPrincipal User);
         Task<User> FindByEmailAsync(string email);
         Task<User> FindByEmailWithPrefixAsync(string email);
         Task<bool> IsInRoleAsync(User user, string role);
@@ -47,5 +46,6 @@ namespace Core.Services.Business.Data.Abstractions
         Task<IdentityResult> RemovePermissionsAsync(User user, IEnumerable<Permission> permissions);
         Task<IdentityResult> ChangePasswordAsync(User user, string currentPassword, string newPassword);
         Task<bool> IsPossesiveToAnnouncementAsync(User user, Announcement announcement);
+        Task<string> GetUserPhone(User user);
     }
 }

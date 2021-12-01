@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Core.Constants.Notification;
 using Core.Services.Business.Data.Abstractions;
 using Core.Constants.User;
+using Core.Services.Rest.GoogleMap;
 
 namespace DataAccess.Seeders
 {
@@ -15,9 +16,7 @@ namespace DataAccess.Seeders
     {
         public static void SeedNotifyEvents(WeSaleContext _context)
         {
-            if (!_context.NotifyEvents.Any())
-            {
-                var notifyEvents = new List<NotifyEvent>
+            var notifyEvents = new List<NotifyEvent>
                 {
                     new NotifyEvent
                     {
@@ -50,11 +49,32 @@ namespace DataAccess.Seeders
                         SMSText_RU = "-",
                         SMSText_EN = "-",
                         IsActive = true
+                    },
+                    new NotifyEvent
+                    {
+                        Label = "Phone number activation",
+                        NotifyFor = NotifyIdentifier.PhoneNumberActivation,
+                        SMSEnabled = true,
+                        EmailSubject_AZ = "-",
+                        EmailSubject_RU = "-",
+                        EmailSubject_EN = "-",
+                        EmailText_AZ = "-",
+                        EmailText_RU = "-",
+                        EmailText_EN = "-",
+                        SMSText_AZ = "-",
+                        SMSText_RU = "-",
+                        SMSText_EN = "-",
+                        IsActive = true
                     }
                 };
 
-                _context.NotifyEvents.AddRange(notifyEvents);
-                _context.SaveChanges();
+            foreach (var notifyEvent in notifyEvents)
+            {
+                if (_context.NotifyEvents.FirstOrDefault(ne => ne.NotifyFor == notifyEvent.NotifyFor) == null)
+                {
+                    _context.NotifyEvents.Add(notifyEvent);
+                    _context.SaveChanges();
+                }
             }
         }
 
@@ -164,14 +184,14 @@ namespace DataAccess.Seeders
 
                //Profile settings (Notifications)
                new Translation("*", "NotificationsInfo",
-                "Tapşırıq üçün ifaçılardan təkliflər alın, həmçinin WeSale-də yeni təkliflər, müştərilərdən rəy, tapşırıq bildirişləri və digər tövsiyələr haqqında xatırlatmalar alın", 
+                "Tapşırıq üçün ifaçılardan təkliflər alın, həmçinin WeSale-də yeni təkliflər, müştərilərdən rəy, tapşırıq bildirişləri və digər tövsiyələr haqqında xatırlatmalar alın",
                 "Получать предложения от исполнителей на задание, а так же получайте напоминания о ноых предложениях, отзывы от заказчиков, уведомления о заданиях и прочие советы о действиях на WeSale",
                 "Receive suggestions from performers for a task, as well as receive reminders of new offers, feedback from customers, task notifications and other tips about actions on WeSale"),
                new Translation("*", "NewsNotification", "Sayt xəbərləri almaq istəyirəm", "Я хочу получать новости сайта", "I want to receive site news"),
                new Translation("*", "SmsNotification", "SMS mesajları", "SMS-сообщения", "SMS messages"),
 
                //Profile settings (Security)
-               new Translation("*", "PasswordMinLength", 
+               new Translation("*", "PasswordMinLength",
                 "Parolunuz ən azı {} simvol uzunluğunda olmalıdır",
                 "Ваш пароль должен состоять не менее чем из {} символов",
                 "Your password must be at least {} characters long"),
@@ -195,7 +215,7 @@ namespace DataAccess.Seeders
                new Translation("*", "December", "December", "December", "December"),
 
                //
-               new Translation("*", "MonthLength", 
+               new Translation("*", "MonthLength",
                 "Ayın günü minimum {MIN_LENGTH} maximum {MAX_LENGTH} ola bilər",
                 "Число дней месяца может быть от {MIN_LENGTH} до {MAX_LENGTH}",
                 "The day of the month can be a minimum of {MIN_LENGTH} and a maximum of {MAX_LENGTH}"),
@@ -206,9 +226,23 @@ namespace DataAccess.Seeders
                 "The year can be a minimum of {MIN_LENGTH} to a maximum of {MAX_LENGTH}"),
 
                new Translation("*", "PasswordNotCorrectFormat", "Parol düzgün formatda deyil", "Пароль неверный формат", "Password is not in correct format"),
-               new Translation("*", "ChangeNumber", "ChangeNumber", "ChangeNumber", "ChangeNumber"), 
+               new Translation("*", "ChangeNumber", "ChangeNumber", "ChangeNumber", "ChangeNumber"),
                new Translation("*", "ChangeNumberInfo", "ChangeNumberInfo", "ChangeNumberInfo", "ChangeNumberInfo"),
                new Translation("*", "MobileNumber", "MobileNumber", "MobileNumber", "MobileNumber"),
+               new Translation("*", "PhoneNumberNotCorrect", "PhoneNumberNotCorrect", "PhoneNumberNotCorrect", "PhoneNumberNotCorrect"),
+               new Translation("*", "YouShouldWaitToSendAgain", "YouShouldWaitToSendAgain", "YouShouldWaitToSendAgain", "PhonYouShouldWaitToSendAgaineNumberNotCorrect"),
+               new Translation("*", "PrefixNotExist", "PrefixNotExist", "PrefixNotExist", "PrefixNotExist"),    
+               new Translation("*", "OTPSendMessage1",
+                "Biz kodu {PHONE_NUMBER} nömrəsinə göndərdik. Qəbul edilmiş kodu daxil edin və ya",
+                "Мы отправили код на номер {PHONE_NUMBER}. Введите полученный код или",
+                "We have sent the code to the number {PHONE_NUMBER}. Enter the received code or"),
+               new Translation("*", "OTPSendMessage2", "telefon nömrəsini dəyişdirin", "измините номер телефона", "change the phone number"),
+               new Translation("*", "OTPSendAgain", 
+                "<p><span data-resend-time-in-sec=\"{RESEND_SEC}\"></span> ərzində yenidən göndərin</p>",
+                "<p>Отправить еще раз через <span data-resend-time-in-sec=\"{RESEND_SEC}\"></span></p>", 
+                "<p>Send again in <span data-resend-time-in-sec=\"{RESEND_SEC}\"></span></p>"),
+               new Translation("*", "OtpNotCorrect", "OtpNotCorrect", "OtpNotCorrect", "OtpNotCorrect"),
+               new Translation("*", "OtpIsExpired", "OtpIsExpired", "OtpIsExpired", "OtpIsExpired"),
            };
 
             foreach (var translation in translations)
@@ -237,6 +271,16 @@ namespace DataAccess.Seeders
                 _context.SaveChanges();
             }
 
+        }
+
+        public async static Task SeedDistrictsWithSubsAsync(WeSaleContext _context, ILocationService locationService)
+        {
+            if (!_context.Districts.Any())
+            {
+                var districts = await locationService.GetAllDistrictsWithSubsAsync();
+                await _context.Districts.AddRangeAsync(districts);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

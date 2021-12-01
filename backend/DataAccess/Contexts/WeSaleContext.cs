@@ -4,12 +4,14 @@ using Core.Entities.Announcement;
 using Core.Entities.Announcement.AnnouncementBuilding;
 using Core.Entities.Announcement.AnnouncementContact;
 using Core.Entities.Announcement.AnnouncementObject;
+using Core.Entities.District;
 using Core.Entities.NotificationRelated;
 using DataAccess.Configurations;
 using DataAccess.Configurations.Announcement;
 using DataAccess.Configurations.Announcement.AnnouncementBuilding;
 using DataAccess.Configurations.Announcement.AnnouncementObject;
 using DataAccess.Configurations.AnnouncementBuilding;
+using DataAccess.Configurations.District;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -58,6 +60,9 @@ namespace DataAccess.Contexts
         public DbSet<NavbarComponent> NavbarComponents { get; set; }
         public DbSet<PageSetting> PageSetting { get; set; }
         public DbSet<PhonePrefix> PhonePrefixes { get; set; }
+        public DbSet<PhoneNumberActivation> PhoneNumberActivations { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<SubDistrict> SubDistricts { get; set; }
 
 
         #region ConfigurationMethods
@@ -101,6 +106,14 @@ namespace DataAccess.Contexts
             builder.ApplyConfiguration(new NavbarComponentConfiguration());
             builder.ApplyConfiguration(new PageSettingsConfiguration());
             builder.ApplyConfiguration(new PhonePrefixConfiguration());
+            builder.ApplyConfiguration(new PhoneNumberActivationConfiguration());
+
+            #region DistrictConfiguration
+
+            builder.ApplyConfiguration(new DistrictConfiguration());
+            builder.ApplyConfiguration(new SubDistrictConfiguration());
+
+            #endregion
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

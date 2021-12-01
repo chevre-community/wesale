@@ -22,12 +22,17 @@ namespace Services.Business.Data.Implementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly PermissionRepository _permissionRepository;
         private readonly IRoleService _roleService;
+        private readonly IPhonePrefixService _phonePrefixService;
 
-        public UserService(IUnitOfWork unitOfWork, IRoleService roleService)
+        public UserService(
+            IUnitOfWork unitOfWork,
+            IRoleService roleService,
+            IPhonePrefixService phonePrefixService)
         {
             _unitOfWork = unitOfWork;
             _permissionRepository = new PermissionRepository();
             _roleService = roleService;
+            _phonePrefixService = phonePrefixService;
         }
 
         public async Task<List<User>> GetAllAsync()
@@ -66,12 +71,6 @@ namespace Services.Business.Data.Implementations
         public async Task<User> FindByIdAsync(string userId)
         {
             return await _unitOfWork.Users.FindByIdAsync(userId);
-        }
-
-        public Task<User> FindByPrincipialAsync(ClaimsPrincipal User)
-        {
-            var id = User.Claims.FirstOrDefault(c => c.Type == "Id").Value;
-            return _unitOfWork.Users.FindByIdAsync(id);
         }
 
         public async Task<User> FindByEmailAsync(string email)
@@ -205,6 +204,18 @@ namespace Services.Business.Data.Implementations
         {
             return await _unitOfWork.Users.IsPossesiveToAnnouncementAsync(user, announcement);
         }
-      
+
+        public async Task<string> GetUserPhone(User user)
+        {
+            if (user.PhonePrefixId.HasValue && !string.IsNullOrEmpty(user.PhoneNumber))
+            {
+                PhonePrefix phonePrefix = await _phonePrefixService.GetAsync(user.PhonePrefixId.Value);
+
+                return phonePrefix.Prefix + user.PhoneNumber;
+            }
+
+            return String.Empty;
+        }
+
     }
 }

@@ -59,14 +59,14 @@ namespace DataAccess.Repositories.Implementations
         {
             string[] profileTranslations =
             {
-                "ProfileSettings", "PersonalInformation", "Notifications", "Security", 
+                "ProfileSettings", "PersonalInformation", "Notifications", "Security",
                 "FirstName","LastName", "Country", "ContactNumber", "YourEmailVisibleOnlyToYou",
-                "ChangeNumber", "Month", "Day", "Year", "Gender", "NotificationsInfo", 
-                "NewsNotification", "SmsNotification", "PasswordMinLength", "CapitalLetters", "LowerLetters", 
+                "ChangeNumber", "Month", "Day", "Year", "Gender", "NotificationsInfo",
+                "NewsNotification", "SmsNotification", "PasswordMinLength", "CapitalLetters", "LowerLetters",
                 "NewPassword", "RepeatNewPassword"
             };
 
-            return  (await _context.Translations
+            return (await _context.Translations
                 .Where(t => profileTranslations.Contains(t.ContentKey))
                 .ToListAsync())
                 .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
@@ -83,6 +83,22 @@ namespace DataAccess.Repositories.Implementations
                 .Where(t => enterPhoneModalTranslations.Contains(t.ContentKey))
                 .ToListAsync())
                 .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
+        }
+
+        public async Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix)
+        {
+            string ChangeNumber = GetTranslationByKey("ChangeNumber");
+            string OTPSendMessage1 = GetTranslationByKey("OTPSendMessage1").Replace("{PHONE_NUMBER}", phoneNumberWithPrefix);
+            string OTPSendMessage2 = GetTranslationByKey("OTPSendMessage2");
+            string OTPSendAgain = GetTranslationByKey("OTPSendAgain");
+
+            return new Dictionary<string, string>()
+            {
+                { nameof(ChangeNumber), ChangeNumber },
+                { nameof(OTPSendMessage1), OTPSendMessage1 },
+                { nameof(OTPSendMessage2), OTPSendMessage2 },
+                {nameof(OTPSendAgain), OTPSendAgain },
+            };
         }
 
         public List<Translation> GetAll()

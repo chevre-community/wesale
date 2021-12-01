@@ -13,28 +13,34 @@ using System.Threading.Tasks;
 namespace API.Controllers.v1.User
 {
     [Route("api/v1/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
         private readonly ITranslationService _translationService;
         private readonly IPhonePrefixService _phonePrefixService;
+        private readonly INotificationService _notificationService;
 
         public UserController(
-            IUserService userService, 
+            IUserService userService,
             ITranslationService translationService,
-            IPhonePrefixService phonePrefixService)
+            IPhonePrefixService phonePrefixService,
+            INotificationService notificationService)
         {
             _userService = userService;
             _translationService = translationService;
             _phonePrefixService = phonePrefixService;
+            _notificationService = notificationService;
         }
 
+
+        #region Update view data
 
         [HttpGet("[action]")]
         public async Task<IActionResult> Update()
         {
-            var user = await _userService.FindByEmailWithPrefixAsync("wesale_manager@gmail.com");
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
 
             ProfileSettingApiModel model = new ProfileSettingApiModel
             {
@@ -65,15 +71,21 @@ namespace API.Controllers.v1.User
             return Ok(model);
         }
 
+        #endregion
+
+        #region Update general settings
+
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateGeneralSettings([FromForm] UpdateGeneralSettingsApiModel model)
         {
-            var user = await _userService.FindByEmailWithPrefixAsync("wesale_manager@gmail.com");
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
+
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
 
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
@@ -89,15 +101,20 @@ namespace API.Controllers.v1.User
             return Ok();
         }
 
+        #endregion
+
+        #region Update notification settings
+
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateNotificationSettings([FromForm] UpdateNotificationSettingsApiModel model)
         {
-            var user = await _userService.FindByEmailWithPrefixAsync("wesale_manager@gmail.com");
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
+
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
 
             user.SmsNotificationEnabled = model.SmsNotificationEnabled;
             user.NewsNotificationEnabled = model.NewsNotificationEnabled;
@@ -107,15 +124,20 @@ namespace API.Controllers.v1.User
             return Ok();
         }
 
+        #endregion
+
+        #region Update password
+
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdatePassword([FromForm] UpdatePasswordApiModel model)
         {
-            var user = await _userService.FindByEmailWithPrefixAsync("wesale_manager@gmail.com");
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
+
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
 
             var result = await _userService.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
 
@@ -127,9 +149,16 @@ namespace API.Controllers.v1.User
             return Ok();
         }
 
+        #endregion
+
+        #region Enter phone number
+
         [HttpGet("[action]")]
         public async Task<IActionResult> EnterPhoneNumber()
         {
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
             EnterPhoneNumberModalApiModel model = new EnterPhoneNumberModalApiModel
             {
                 PhonePrefixes = await _phonePrefixService.GetAllActive(),
@@ -138,5 +167,86 @@ namespace API.Controllers.v1.User
 
             return Ok(model);
         }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> EnterPhoneNumber(UpdatePhoneNumberApiModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+            }
+
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            user.PhonePrefixId = model.PhonePrefixId;
+            user.PhoneNumber = model.PhoneNumber;
+
+            await _userService.UpdateAsync(user);
+
+            _notificationService.SendPhoneNumberActivationInBackground(user);
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region Enter OTP
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> EnterOTP()
+        {
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            string userPhone = await _userService.GetUserPhone(user);
+
+            EnterOTPApiModel model = new EnterOTPApiModel
+            {
+                Languages = await _translationService.TranslationsForEnterOTPModalAsync(userPhone),
+            };
+
+            return Ok(model);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> EnterOTP(OTPApiModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+            }
+
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            user.PhoneNumberConfirmed = true;
+
+            await _userService.UpdateAsync(user);
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region Resend OTP
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ResendOTP(ResendOTPApiModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+            }
+
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            _notificationService.SendPhoneNumberActivationInBackground(user);
+
+            return Ok();
+        }
+
+        #endregion
     }
 }

@@ -13,6 +13,9 @@ namespace Core.Constants.Notification
         AccountActivation,
 
         [Display(Name = "Restore Password")]
-        RestorePassword
+        RestorePassword,
+
+        [Display(Name = "Phone number activation")]
+        PhoneNumberActivation
     }
 }

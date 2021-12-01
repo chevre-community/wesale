@@ -37,6 +37,8 @@ namespace Core.DataAccess
 
         IPhonePrefixRepository PhonePrefixes { get; }
 
+        IPhoneNumberActivationRepository PhoneNumberActivations { get; }
+
         Task CommitAsync();
     }
 }

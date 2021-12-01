@@ -52,10 +52,6 @@ namespace Web.Areas.Admin.ViewModels.ComponentManagement.Announcement
 
         public AnnouncementContact? AnnouncementContact { get; set; }
 
-        public AnnouncementUploadPhotoViewModel AnnouncementUploadPhotoViewModel { get; set; }
-
-        public AnnouncementUploadVideoViewModel AnnouncementUploadVideoViewModel { get; set; }
-
         #endregion
     }
 

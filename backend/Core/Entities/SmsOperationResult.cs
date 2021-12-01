@@ -21,6 +21,8 @@ namespace Core.Entities
 
         public SmsType Type { get; set; }
 
+        public bool IsSuccessStatusCode { get; set; }
+
 
         #region Serializers
 

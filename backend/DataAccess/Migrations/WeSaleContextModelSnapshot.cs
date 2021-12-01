@@ -544,6 +544,79 @@ namespace DataAccess.Migrations
                     b.ToTable("AnnouncementVideos");
                 });
 
+            modelBuilder.Entity("Core.Entities.District.District", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name_AZ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name_EN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name_RU")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("X")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Y")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Districts");
+                });
+
+            modelBuilder.Entity("Core.Entities.District.SubDistrict", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name_AZ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name_EN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name_RU")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("X")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Y")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DistrictId");
+
+                    b.ToTable("SubDistricts");
+                });
+
             modelBuilder.Entity("Core.Entities.NavbarComponent", b =>
                 {
                     b.Property<int>("Id")
@@ -627,6 +700,46 @@ namespace DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("Core.Entities.NotificationRelated.PhoneNumberActivation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OTP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SMSSent")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("SendAgainDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("PhoneNumberActivations");
                 });
 
             modelBuilder.Entity("Core.Entities.NotificationRelated.UserActivation", b =>
@@ -876,6 +989,9 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSuccessStatusCode")
+                        .HasColumnType("bit");
 
                     b.Property<string>("RequestBody")
                         .HasColumnType("nvarchar(max)");
@@ -1372,6 +1488,17 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Entities.District.SubDistrict", b =>
+                {
+                    b.HasOne("Core.Entities.District.District", "District")
+                        .WithMany("SubDistricts")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("District");
+                });
+
             modelBuilder.Entity("Core.Entities.Notification", b =>
                 {
                     b.HasOne("Core.Entities.NotifyEvent", "NotifyEvent")
@@ -1386,6 +1513,16 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("NotifyEvent");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.NotificationRelated.PhoneNumberActivation", b =>
+                {
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithOne("PhoneNumberActivation")
+                        .HasForeignKey("Core.Entities.NotificationRelated.PhoneNumberActivation", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -1525,6 +1662,11 @@ namespace DataAccess.Migrations
                     b.Navigation("AnnouncementObject");
                 });
 
+            modelBuilder.Entity("Core.Entities.District.District", b =>
+                {
+                    b.Navigation("SubDistricts");
+                });
+
             modelBuilder.Entity("Core.Entities.NotifyEvent", b =>
                 {
                     b.Navigation("Notifications");
@@ -1544,6 +1686,8 @@ namespace DataAccess.Migrations
                     b.Navigation("AnnouncementVideos");
 
                     b.Navigation("Notifications");
+
+                    b.Navigation("PhoneNumberActivation");
 
                     b.Navigation("UserActivation");
 

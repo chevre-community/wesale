@@ -76,6 +76,11 @@ namespace Services.Business.Data.Implementations
             return await _unitOfWork.Translations.TranslationsForPhoneEnterModalAsync();
         }
 
+        public async Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix)
+        {
+            return await _unitOfWork.Translations.TranslationsForEnterOTPModalAsync(phoneNumberWithPrefix);
+        }
+
         public async Task<Dictionary<int, string>> TranslateMonthsAsync()
         {
             return await _unitOfWork.Translations.TranslateMonthsAsync();

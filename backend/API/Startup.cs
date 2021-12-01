@@ -46,6 +46,10 @@ using Core.Services.File.Abstractions;
 using Services.File.Implementations;
 using FluentValidation;
 using Core.Filters.API.Announcement;
+using Core.Services.Rest;
+using Services.Rest;
+using Services.Rest.GoogleMap;
+using Core.Services.Rest.GoogleMap;
 
 namespace API
 {
@@ -141,6 +145,7 @@ namespace API
                     ValidateLifetime = true,
                     RequireExpirationTime = false,
                     ClockSkew = TimeSpan.Zero, // This is for custom Expiration date
+                    
                 };
             });
 
@@ -163,6 +168,9 @@ namespace API
 
             #region Services
 
+            //HttpContext 
+            services.AddHttpContextAccessor();
+
             //BackgroundTasks
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<BackgroundQueueHostedService>();
@@ -184,6 +192,8 @@ namespace API
             services.AddTransient<IUserRestoreService, UserRestoreService>();
             services.AddTransient<ITranslationService, TranslationService>();
             services.AddTransient<IPhonePrefixService, PhonePrefixService>();
+            services.AddTransient<IPhoneNumberActivationService, PhoneNumberActivationService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
 
             services.AddTransient<IAnnouncementService, AnnouncementService>();
             services.AddTransient<IAnnouncementPhotoService, AnnouncementPhotoService>();
@@ -211,6 +221,9 @@ namespace API
             //File
             services.AddSingleton<IFileService, FileService>();
 
+            //Rest
+            services.AddTransient<ILocationService, LocationService>();
+
             #endregion
 
             #region LowercaseRouting
@@ -223,6 +236,8 @@ namespace API
 
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddTransient<IValidator<AnnouncementGetAllRecentFilterApiModel>, AnnouncementGetAllRecentFilterApiModelValidator>();
+            services.AddTransient<IValidator<AnnouncementBuildingSearchFilterApiModel>, AnnouncementBuildingSearchFilterApiModelValidator>();
+            services.AddTransient<IValidator<AnnouncementObjectSearchFilterApiModel>, AnnouncementObjectSearchFilterApiModelValidator>();
 
             #endregion
         }

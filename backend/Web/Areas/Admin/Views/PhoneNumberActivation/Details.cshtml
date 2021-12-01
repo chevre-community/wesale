@@ -1,0 +1,84 @@
+﻿@using Web.Areas.Admin.ViewModels.UserManagement.PhoneNumberActivation
+@model PhoneNumberActivationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Phone number activations";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a asp-controller="phonenumberactivation" asp-action="list" asp-area="admin">Phone number activations</a>
+                    </li>
+                </ol>
+            </div>
+            <h4 class="page-title">Details phone number activation</h4>
+        </div><!--end page-title-box-->
+    </div><!--end col-->
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div asp-validation-summary="ModelOnly" class="invalid-feedback" style="display:block"></div>
+                </div>
+
+                <div class="row">
+                    <div class="card-body border mb-3">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-check form-switch form-switch-success">
+                                    <input asp-for="SMSSent" class="form-check-input">
+                                    <label asp-for="SMSSent" class="form-check-label"></label>
+                                    <span asp-validation-for="SMSSent" class="invalid-feedback" style="display:block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="OTP"></label>
+                            <input readonly class="form-control" asp-for="OTP">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="UserEmail"></label>
+                            <input readonly class="form-control" asp-for="UserEmail">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ExpireDate"></label>
+                            <input readonly class="form-control" asp-for="ExpireDate">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="SendAgainDate"></label>
+                            <textarea readonly class="form-control" asp-for="SendAgainDate"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="SendAgainDate"></label>
+                            <textarea readonly class="form-control" asp-for="SendAgainDate"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

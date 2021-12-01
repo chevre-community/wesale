@@ -38,6 +38,7 @@ namespace Core.Entities
         public ICollection<Notification> Notifications { get; set; }
 
         public UserActivation UserActivation { get; set; }
+        public PhoneNumberActivation PhoneNumberActivation { get; set; }
 
         public ICollection<UserRestore> UserRestores { get; set; }
 

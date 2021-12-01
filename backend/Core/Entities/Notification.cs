@@ -24,11 +24,9 @@ namespace Core.Entities
         #region NavigationProperties
 
         public NotifyEvent NotifyEvent { get; set; }
-
         public int NotifyEventId { get; set; }
 
         public User User { get; set; }
-
         public string UserId { get; set; }
 
         #endregion

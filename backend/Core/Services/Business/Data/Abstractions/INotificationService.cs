@@ -27,14 +27,19 @@ namespace Core.Services.Business.Data.Abstractions
 
         Task UpdateAsync(Entities.Notification notification);
 
+        Task<SendResult> SendByIdAsync(int id);
+
+        Task<bool> SendEmailAsync(Entities.Notification notification);
+
+        Task<bool> SendSMSAsync(Entities.Notification notification);
+
+
         Task SendAccountActivationAsync(User user, IUrlHelper urlHelper, HttpRequest request);
 
         Task SendRestorePasswordAsync(User user, IUrlHelper urlHelper, HttpRequest request);
 
-        Task SendByIdAsync(int id);
+        Task SendPhoneNumberActivationAsync(User user);
 
-        Task<bool> SendEmailAsync(Entities.Notification notification);
-
-        Task SendSMSAsync(Entities.Notification notification);
+        void SendPhoneNumberActivationInBackground(User user);
     }
 }

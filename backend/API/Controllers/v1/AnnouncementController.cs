@@ -59,10 +59,10 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return NotFound();
 
-            var announcement = new Core.Entities.Announcement.Announcement
+            var announcement = new Announcement
             {
                 Title = model.Title,
                 Description = model.Description,
@@ -87,7 +87,7 @@ namespace API.Controllers.v1
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Update(int id)
         {
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             var announcement = await _announcementService.GetWithNavigationPropertiesAsync(id);
@@ -117,7 +117,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             var announcement = await _announcementService.GetWithNavigationPropertiesAsync(model.Id);
@@ -166,7 +166,7 @@ namespace API.Controllers.v1
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             var announcement = await _announcementService.GetWithFilesAsync(id);
@@ -187,7 +187,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             List<string> announcementPhotosNames = new List<string>();
@@ -213,7 +213,7 @@ namespace API.Controllers.v1
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeletePhoto([FromForm] string name)
         {
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             if (string.IsNullOrEmpty(name)) return NotFound();
@@ -244,7 +244,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             List<string> announcementVideosNames = new List<string>();
@@ -270,7 +270,7 @@ namespace API.Controllers.v1
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteVideo([FromForm] string name)
         {
-            var user = await _userService.FindByPrincipialAsync(User);
+            var user = await _userService.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
             if (string.IsNullOrEmpty(name)) return NotFound();
@@ -303,7 +303,7 @@ namespace API.Controllers.v1
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> FilterBuilding(AnnouncementBuildingSearchFilterApiModel model)
+        public async Task<IActionResult> FilterBuilding([FromForm] AnnouncementBuildingSearchFilterApiModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 
@@ -312,7 +312,7 @@ namespace API.Controllers.v1
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> FilterObject(AnnouncementObjectSearchFilterApiModel model)
+        public async Task<IActionResult> FilterObject([FromForm] AnnouncementObjectSearchFilterApiModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.SerializeErrors());
 

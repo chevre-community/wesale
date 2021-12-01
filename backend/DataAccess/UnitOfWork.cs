@@ -85,6 +85,10 @@ namespace DataAccess
         private IPhonePrefixRepository phonePrefix;
         public IPhonePrefixRepository PhonePrefixes => phonePrefix ??= new PhonePrefixRepository(_context);
 
+
+        private IPhoneNumberActivationRepository phoneNumberActivation;
+        public IPhoneNumberActivationRepository PhoneNumberActivations => phoneNumberActivation ??= new PhoneNumberActivationRepository(_context);
+
         public async Task CommitAsync()
         {
             await _context.SaveChangesAsync();

@@ -114,6 +114,9 @@ namespace Web
 
             #region Services
 
+            //HttpContext 
+            services.AddHttpContextAccessor();
+
             //BackgroundTasks
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<BackgroundQueueHostedService>();
@@ -137,6 +140,9 @@ namespace Web
             services.AddTransient<INavbarComponentService, NavbarComponentService>();
             services.AddTransient<IPageSettingService, PageSettingService>();
             services.AddTransient<IPhonePrefixService, PhonePrefixService>();
+            services.AddTransient<IPhoneNumberActivationService, PhoneNumberActivationService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
+
 
             //SMTP
             //var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();

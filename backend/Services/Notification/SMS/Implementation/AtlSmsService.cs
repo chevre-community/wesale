@@ -37,7 +37,7 @@ namespace Services.Notification.SMS.Implementation
             var xml = _atlSmsGenerator.GenerateSubmitBulkRequestXml(smsMessageBulk, schedule);
             var response = await _smsClient.SendXMLRequestAsync(xml);
             var content = await response.Content.ReadAsStringAsync();
-            return new SmsOperationResult { RequestBody = xml, ResponseBody = content, Type = SmsType.Bulk };
+            return new SmsOperationResult { RequestBody = xml, ResponseBody = content, Type = SmsType.Bulk, IsSuccessStatusCode = response.IsSuccessStatusCode };
         }
 
         public async Task<SmsOperationResult> SendIndividualMessageAsync(List<SmsMessage> smsMessages, DateTime? schedule = null)
@@ -45,7 +45,7 @@ namespace Services.Notification.SMS.Implementation
             var xml = _atlSmsGenerator.GenerateSubmitIndividualRequestXML(smsMessages, schedule);
             var response = await _smsClient.SendXMLRequestAsync(xml);
             var content = await response.Content.ReadAsStringAsync();
-            return new SmsOperationResult { RequestBody = xml, ResponseBody = content, Type = SmsType.Individual };
+            return new SmsOperationResult { RequestBody = xml, ResponseBody = content, Type = SmsType.Individual, IsSuccessStatusCode = response.IsSuccessStatusCode };
         }
 
         public async Task<int> GetUnitsAsync()

@@ -1,5 +1,7 @@
 ﻿using Core.Services.Notification.Email.Abstraction;
 using Core.Services.Notification.Email.Models;
+using Core.Services.Rest;
+using Core.Services.Rest.GoogleMap;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,13 @@ namespace API.Controllers.v1
     public class TestController : Controller
     {
         private readonly IEmailService _emailService;
+        private readonly ILocationService _locationService;
 
-        public TestController(IEmailService emailService)
+        public TestController(IEmailService emailService,
+            ILocationService locationService)
         {
             _emailService = emailService;
+            _locationService = locationService;
         }
 
         [HttpGet("sendemail")]
@@ -27,6 +32,13 @@ namespace API.Controllers.v1
             var message = new Message(new List<string> { "kanan.tapdigli@gmail.com" }, "Test subject", "Test body");
             _emailService.SendEmail(message);
             return Ok();
+        }
+
+        [HttpGet("getdistricts")]
+        public async Task<IActionResult> GetDistricts()
+        {
+            var districts = await _locationService.GetAllDistrictsWithSubsAsync();
+            return Ok(districts);
         }
     }
 }

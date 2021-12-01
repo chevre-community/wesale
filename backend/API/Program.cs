@@ -1,4 +1,5 @@
 using Core.Services.Business.Data.Abstractions;
+using Core.Services.Rest.GoogleMap;
 using DataAccess.Contexts;
 using DataAccess.Seeders;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +16,7 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
@@ -26,6 +27,7 @@ namespace API
                 var roleService = scope.ServiceProvider.GetService<IRoleService>();
                 var permissionService = scope.ServiceProvider.GetService<IPermissionService>();
                 var translationService = scope.ServiceProvider.GetService<ITranslationService>();
+                var locationService = scope.ServiceProvider.GetService<ILocationService>();
 
                 DataSeeder.SeedNotifyEvents(context);
                 DataSeeder.SeedRoles(roleService);
@@ -33,6 +35,7 @@ namespace API
                 DataSeeder.SeedSuperAdminUser(userService);
                 DataSeeder.SeedTranslations(translationService);
                 DataSeeder.SeedPageSetting(context);
+                await DataSeeder.SeedDistrictsWithSubsAsync(context, locationService);
             }
 
             host.Run();
