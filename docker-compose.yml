@@ -11,16 +11,16 @@ services:
   db:
     image: postgis/postgis:13-3.1-alpine
     volumes:
-        - pg-data:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql/data
     environment:
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: medical-media-db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: medical-media-db
     ports:
-        - "5432:5432"
-  
+      - "5432:5432"
+
   api:
-    container_name: "api" 
+    container_name: "api"
     volumes:
       - api-data:/app/wwwroot
     # restart: always
@@ -48,7 +48,7 @@ services:
   web-client:
     container_name: "web-client"
     volumes:
-      - web-admin-data:/app/assets
+      - web-client-data:/app/assets
     # restart: always
     build:
       context: ./frontend

@@ -4,32 +4,32 @@ services:
   db:
     image: postgis/postgis:13-3.1-alpine
     volumes:
-        - pg-data:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql/data
     environment:
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: medical-media-db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: medical-media-db
     ports:
-        - "5432:5432"
-  
+      - "5432:5432"
+
   api:
-    container_name: "api" 
+    container_name: "api"
     volumes:
       - api-data:/app/wwwroot
     # restart: always
     build:
-      context: ./backend
+      context: ../backend
       dockerfile: API/Dockerfile
     ports:
       - "5000:80"
-  
+
   web-admin:
     container_name: "web-admin"
     volumes:
       - web-admin-data:/app/wwwroot
     # restart: always
     build:
-      context: ./backend
+      context: ../backend
       dockerfile: Web/Dockerfile
     ports:
       - "3306:80"
@@ -40,7 +40,7 @@ services:
       - web-client-data:/app/assets
     # restart: always
     build:
-      context: ./frontend
+      context: ../frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
