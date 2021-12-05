@@ -19,7 +19,7 @@ services:
     ports:
       - "1433:1433"
     environment:
-      - SA_PASSWORD=PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+      - SA_PASSWORD=FTmLjmC2RvhXZmhv
       - ACCEPT_EULA=Y
 
   api:
@@ -38,7 +38,7 @@ services:
       - SQL_SERVER_NAME=sql-server-db
       - SQL_DATABASE=master
       - SQL_USER=sa
-      - SQL_PASSWORD=PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+      - SQL_PASSWORD=FTmLjmC2RvhXZmhv
       - VIRTUAL_HOST=api.wesale.az
 
   web-admin:
@@ -56,7 +56,7 @@ services:
       - SQL_SERVER_NAME=sql-server-db
       - SQL_DATABASE=master
       - SQL_USER=sa
-      - SQL_PASSWORD=PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+      - SQL_PASSWORD=FTmLjmC2RvhXZmhv
       - VIRTUAL_HOST=cevmin.wesale.az
 
   web-client:
