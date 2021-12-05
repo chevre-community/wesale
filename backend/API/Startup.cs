@@ -276,8 +276,6 @@ namespace API
 
             #endregion
 
-            app.UseRequestLocalization(
-                app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseEndpoints(endpoints =>
             {
