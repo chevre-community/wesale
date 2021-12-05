@@ -19,8 +19,8 @@ services:
     ports:
       - "1433:1433"
     environment:
-      SA_PASSWORD: "PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS"
-      ACCEPT_EULA: "Y"
+      - SA_PASSWORD=PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+      - ACCEPT_EULA=Y
 
   api:
     container_name: "api"
