@@ -3,6 +3,7 @@ using Core.Services.Rest.GoogleMap;
 using DataAccess.Contexts;
 using DataAccess.Seeders;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
