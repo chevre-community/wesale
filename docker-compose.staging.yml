@@ -39,6 +39,7 @@ services:
       - SQL_DATABASE=master
       - SQL_USER=sa
       - SQL_PASSWORD=PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+      - ASPNETCORE_ENVIRONMENT=Staging
       - VIRTUAL_HOST=devapi.wesale.az
 
   web-admin:
@@ -57,6 +58,7 @@ services:
       - SQL_DATABASE=master
       - SQL_USER=sa
       - SQL_PASSWORD=PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+      - ASPNETCORE_ENVIRONMENT=Staging
       - VIRTUAL_HOST=devcevmin.wesale.az
 
   web-client:
