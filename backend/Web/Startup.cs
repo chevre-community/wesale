@@ -94,14 +94,28 @@ namespace Web
 
             services.AddDbContext<WeSaleContext>(option =>
             {
-                string serverName = Environment.GetEnvironmentVariable("SQL_SERVER_NAME");
-                string database = Environment.GetEnvironmentVariable("SQL_DATABASE");
-                string user = Environment.GetEnvironmentVariable("SQL_USER");
-                string password = Environment.GetEnvironmentVariable("SQL_PASSWORD");
+                //Get current hosting environment
+                var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                var isDevelopment = environment == Environments.Development;
 
-                string connectionString = @$"Server={serverName};Database={database};User={user};Password={password};";
+                if (isDevelopment)
+                {
+                    option.UseSqlServer(
+                        Configuration.GetConnectionString(Environment.GetEnvironmentVariable("CONNECTION_STRING_NAME")),
+                        x => x.MigrationsAssembly("DataAccess"));
+                }
+                else
+                {
+                    string serverName = Environment.GetEnvironmentVariable("SQL_SERVER_NAME");
+                    string database = Environment.GetEnvironmentVariable("SQL_DATABASE");
+                    string user = Environment.GetEnvironmentVariable("SQL_USER");
+                    string password = Environment.GetEnvironmentVariable("SQL_PASSWORD");
 
-                option.UseSqlServer(connectionString,  x => x.MigrationsAssembly("DataAccess"));
+                    string connectionString = @$"Server={serverName};Database={database};User={user};Password={password};";
+
+                    option.UseSqlServer(connectionString,  x => x.MigrationsAssembly("DataAccess"));
+                }
+
             });
 
             #endregion
