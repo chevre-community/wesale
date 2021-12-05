@@ -4,7 +4,7 @@ version: "3.9"
 # Server name: <SERVER_IP>, 1433
 # Authentication : SQL Server Authentication
 # Login : sa
-# Password : PAEc6#UU$Ds8m%L@UpaSe$2tX5%hGN3wGy7QVS
+# Password : FTmLjmC2RvhXZmhv
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy
