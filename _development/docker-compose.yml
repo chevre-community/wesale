@@ -1,44 +1,60 @@
 version: "3.9"
 
+
+# NOTE: If you want to connect db from SQL Management studio :
+# Server name: localhost, 1433
+# Authentication : SQL Server Authentication
+# Login : sa
+# Password : LocalDevPassword123
 services:
-  db:
-    image: postgis/postgis:13-3.1-alpine
-    volumes:
-      - pg-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: medical-media-db
+  sql-server-db:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2019-latest 
     ports:
-      - "5432:5432"
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "LocalDevPassword123"
+      ACCEPT_EULA: "Y"
 
   api:
     container_name: "api"
     volumes:
       - api-data:/app/wwwroot
-    # restart: always
     build:
       context: ../backend
       dockerfile: API/Dockerfile
     ports:
       - "5000:80"
+    depends_on:
+      - "sql-server-db"
+    environment:
+      SQL_SERVER_NAME: "sql-server-db"
+      SQL_DATABASE: "master"
+      SQL_USER: "sa"
+      SQL_PASSWORD: "LocalDevPassword123"
 
   web-admin:
     container_name: "web-admin"
     volumes:
       - web-admin-data:/app/wwwroot
-    # restart: always
     build:
       context: ../backend
       dockerfile: Web/Dockerfile
+
     ports:
       - "3306:80"
+    depends_on:
+      - "sql-server-db"
+    environment:
+      SQL_SERVER_NAME: "sql-server-db"
+      SQL_DATABASE: "master"
+      SQL_USER: "sa"
+      SQL_PASSWORD: "LocalDevPassword123"
 
   web-client:
     container_name: "web-client"
     volumes:
       - web-client-data:/app/assets
-    # restart: always
     build:
       context: ../frontend
       dockerfile: Dockerfile
@@ -46,7 +62,6 @@ services:
       - "3000:3000"
 
 volumes:
-  pg-data:
   api-data:
   web-admin-data:
   web-client-data:

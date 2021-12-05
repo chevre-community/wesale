@@ -2,6 +2,7 @@ using Core.Services.Business.Data.Abstractions;
 using DataAccess.Contexts;
 using DataAccess.Seeders;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,8 @@ namespace Web
             {
                 var services = scope.ServiceProvider;
                 var context = scope.ServiceProvider.GetService<WeSaleContext>();
+                context.Database.Migrate();
+
                 var userService = scope.ServiceProvider.GetService<IUserService>();
                 var roleService = scope.ServiceProvider.GetService<IRoleService>();
                 var permissionService = scope.ServiceProvider.GetService<IPermissionService>();

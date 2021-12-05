@@ -110,11 +110,17 @@ namespace API
             #region Context
 
             services.AddDbContext<WeSaleContext>(option =>
-                           option.UseSqlServer(Configuration.GetConnectionString(
-                               Environment.GetEnvironmentVariable("CONNECTION_STRING_NAME")
-                               ), x => x.MigrationsAssembly("DataAccess")));
-            //Environment.GetEnvironmentVariable("CONNECTION_STRING_NAME")
-            
+            {
+                string serverName = Environment.GetEnvironmentVariable("SQL_SERVER_NAME");
+                string database = Environment.GetEnvironmentVariable("SQL_DATABASE");
+                string user = Environment.GetEnvironmentVariable("SQL_USER");
+                string password = Environment.GetEnvironmentVariable("SQL_PASSWORD");
+
+                string connectionString = @$"Server={serverName};Database={database};User={user};Password={password};";
+
+                option.UseSqlServer(connectionString, x => x.MigrationsAssembly("DataAccess"));
+            });
+
 
             #endregion
 
