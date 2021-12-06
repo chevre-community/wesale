@@ -5,7 +5,7 @@ import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, withRouter } from "next/router";
 
 import {
 	BookmarkIcon,
@@ -87,11 +87,10 @@ const options = [
 	},
 ];
 
-const Navbar = () => {
-	const router = useRouter();
+const Navbar = ({ router }) => {
+	console.log(router);
 
 	const { mainState, mainDispatch } = useMain();
-	const { toggle } = useModal();
 
 	const handleLocaleChange = (locale) => {
 		router.push(router.asPath, router.asPath, { locale });
@@ -172,16 +171,20 @@ const Navbar = () => {
 								onChange={(e) => handleLocaleChange(e.value)}
 							/>
 							<Link href="/dashboard/favourites" passHref>
-								<a className="g-btn g-btn__icon with-gap-16" href="">
+								<a className="g-btn g-btn__icon with-gap-16">
 									<HeartIcon />
 								</a>
 							</Link>
 							<Link href="/dashboard/saved-searches" passHref>
-								<a className="g-btn g-btn__icon with-gap-16" href="">
+								<a className="g-btn g-btn__icon with-gap-16">
 									<BookmarkIcon />
 								</a>
 							</Link>
-							<Link href="?login=true" passHref>
+							<Link
+								href="?login=true"
+								as={`${router.asPath}?login=true`}
+								passHref
+							>
 								<a className="g-btn g-btn__icon with-gap-16">
 									<ProfileIcon />
 								</a>
@@ -223,4 +226,4 @@ const Navbar = () => {
 	);
 };
 
-export default Navbar;
+export default withRouter(Navbar);

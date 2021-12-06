@@ -1,15 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CSSTransition } from "react-transition-group";
+import React from "react";
 
-import { FilterFormWrapper, Footer, Navbar } from "@/components";
-
-import { useMain } from "@/context/providers/main-context";
+import { AdvancedFilterModal, Footer, Navbar } from "@/components";
 
 const MainLayout = ({ children }) => {
 	return (
 		<>
 			<Navbar />
 			<div className="g-container">{children}</div>
+			<AdvancedFilterModal justClose={true} modal="advancedFilter" />
 			<Footer />
 		</>
 	);

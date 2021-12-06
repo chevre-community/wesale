@@ -3,10 +3,14 @@ import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
 	isShowing: {
+		advancedFilter: false,
+		basicInfo: false,
+		becomeAgency: false,
+		becomeAgencyChoice: false,
+		becomeAgencySuccess: false,
+		changeEmail: false,
 		login: false,
 		signup: false,
-		changeEmail: false,
-		basicInfo: false,
 	},
 };
 

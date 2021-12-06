@@ -39,13 +39,15 @@ const Modal = ({ isShowing, children, title, size, justClose }) => {
 					className={classNames("g-modal", classnames)}
 				>
 					<BsModal.Header closeButton={true} className="g-modal-header">
-						<BsModal.Title
-							className="g-modal-title"
-							id="contained-modal-title-vcenter"
-							as="h5"
-						>
-							{title}
-						</BsModal.Title>
+						{title && (
+							<BsModal.Title
+								className="g-modal-title"
+								id="contained-modal-title-vcenter"
+								as="h5"
+							>
+								{title}
+							</BsModal.Title>
+						)}
 					</BsModal.Header>
 					<BsModal.Body className="g-modal-body">{children}</BsModal.Body>
 				</BsModal>,

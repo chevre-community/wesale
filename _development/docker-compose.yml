@@ -37,7 +37,12 @@ services:
   web-client:
     container_name: "web-client"
     volumes:
-      - web-client-data:/app/assets
+      - web-client-data:/app
+      # - ./:/app
+      # - /app/node_modules
+      # - /app/.next
+      # - /app/public
+      # - /app/package.json
     # restart: always
     build:
       context: ../frontend

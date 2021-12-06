@@ -4,7 +4,7 @@ import React from "react";
 
 import { Modal } from "@/components";
 
-const BasicInfoModal = ({ justClose, modal }) => {
+const AdvancedFilterModal = ({ justClose, modal }) => {
 	const { isShowing, toggle } = useModal();
 
 	return (
@@ -16,7 +16,7 @@ const BasicInfoModal = ({ justClose, modal }) => {
 					modal,
 				})
 			}
-			size="md"
+			title="Расширенный фильтр"
 			justClose={
 				justClose && {
 					toggle: (payload) => toggle(payload),
@@ -24,11 +24,9 @@ const BasicInfoModal = ({ justClose, modal }) => {
 				}
 			}
 		>
-			<h4 className="text-center g-text__lg--semibold my-md">
-				Ваша жалоба была отправлена
-			</h4>
+			<h4></h4>
 		</Modal>
 	);
 };
 
-export default BasicInfoModal;
+export default AdvancedFilterModal;

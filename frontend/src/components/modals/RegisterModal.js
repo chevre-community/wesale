@@ -99,7 +99,11 @@ const RegisterModal = () => {
 						</a>
 						<p className="g-caption__lg--medium mt-md-32 mb-sm">
 							Уже зарегистрированы?
-							<Link href="?login=true" passHref>
+							<Link
+								href="?login=true"
+								as={`${router.asPath}?login=true`}
+								passHref
+							>
 								<a className="text-primary-blue hover-primary-blue-hover">
 									Войти
 								</a>

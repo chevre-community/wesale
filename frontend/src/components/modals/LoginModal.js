@@ -97,7 +97,11 @@ const LoginModal = () => {
 						</a>
 						<p className="g-caption__lg--medium mt-md-32 mb-sm">
 							У вас нет аккаунта?
-							<Link href="?signup=true" passHref>
+							<Link
+								href="?signup=true"
+								as={`${router.asPath}?signup=true`}
+								passHref
+							>
 								<a className="text-primary-blue hover-primary-blue-hover">
 									Зарегистрироваться
 								</a>

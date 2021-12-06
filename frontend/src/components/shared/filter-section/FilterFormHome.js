@@ -1,4 +1,5 @@
 import { seperateWithSpace } from "@/lib";
+import { useModal } from "@/lib";
 
 import React, { useEffect, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
@@ -9,6 +10,8 @@ import { FilterIcon, GInput, GSelect } from "@/components";
 import classNames from "classnames";
 
 const FilterFormHome = ({ options, options2, colors }) => {
+	const { toggle } = useModal();
+
 	const priceRangeInput = useRef(null);
 	const priceRangeInputs = useRef(null);
 	const willFocusRef = useRef(null);
@@ -192,6 +195,14 @@ const FilterFormHome = ({ options, options2, colors }) => {
 						className={classNames("filter-form__btn", {
 							["text-" + colors?.icon]: "text" + colors?.icon,
 						})}
+						onClick={(e) => {
+							e.preventDefault();
+
+							toggle({
+								value: true,
+								modal: "advancedFilter",
+							});
+						}}
 					>
 						<FilterIcon />
 						<span className="number-of-active-filters">12</span>

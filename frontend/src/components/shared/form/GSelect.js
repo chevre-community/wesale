@@ -139,6 +139,9 @@ const GSelect = ({
 						<ChevronDown />
 					</components.IndicatorsContainer>
 				),
+				Control: (props) => (
+					<components.Control {...props} className="g-select-control" />
+				),
 			}}
 			{...rest}
 		/>

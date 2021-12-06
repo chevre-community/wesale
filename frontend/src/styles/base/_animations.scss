@@ -43,3 +43,22 @@
     transform: translateY(0);
   }
 }
+
+
+@keyframes spin-loader--center {
+  from {
+    transform: rotate(0deg) translate(-50%,-50%);
+  }
+  to {
+    transform: rotate(360deg) translate(-50%,-50%);
+  }
+}
+
+//@keyframes spin-loader--center {
+//  from {
+//    transform: rotate(0deg) translate(-50%,-50%);
+//  }
+//  to {
+//    transform: rotate(360deg) translate(-50%,-50%);
+//  }
+//}

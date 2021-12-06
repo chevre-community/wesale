@@ -1,14 +1,6 @@
-import {
-	selectActiveForm,
-	toggleActiveForm,
-} from "@/app/features/filter-form/filterFormSlice";
-
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import { CustomImage, FilterFormHome, FilterFormObject } from "@/components";
 
