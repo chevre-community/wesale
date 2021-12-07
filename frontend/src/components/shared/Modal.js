@@ -8,7 +8,15 @@ import { DelayedPortal } from "@/components";
 
 import classNames from "classnames";
 
-const Modal = ({ isShowing, children, title, size, justClose }) => {
+const Modal = ({
+	isShowing,
+	children,
+	title,
+	size,
+	justClose,
+	isCloseable,
+	closeableIsBoolean, // this prevents the close issue when pass the isCloseable as a boolean and not a function
+}) => {
 	const router = useRouter();
 
 	const [classnames, setClassnames] = useState("");
@@ -38,7 +46,12 @@ const Modal = ({ isShowing, children, title, size, justClose }) => {
 					onExit={() => setClassnames("")}
 					className={classNames("g-modal", classnames)}
 				>
-					<BsModal.Header closeButton={true} className="g-modal-header">
+					<BsModal.Header
+						{...(closeableIsBoolean
+							? { closeButton: isCloseable }
+							: { closeButton: true })}
+						className="g-modal-header"
+					>
 						{title && (
 							<BsModal.Title
 								className="g-modal-title"

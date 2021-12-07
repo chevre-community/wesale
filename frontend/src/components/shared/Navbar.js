@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter, withRouter } from "next/router";
 
 import {
+	AdvancedFilterModal,
 	BookmarkIcon,
 	ChevronDown,
 	CustomImage,
@@ -222,6 +223,8 @@ const Navbar = ({ router }) => {
 			>
 				<FilterFormWrapper />
 			</CSSTransition>
+
+			<AdvancedFilterModal justClose={true} modal="advancedFilter" />
 		</>
 	);
 };

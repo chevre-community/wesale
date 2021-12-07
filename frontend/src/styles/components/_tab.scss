@@ -74,3 +74,37 @@
     }
   }
 }
+
+.g-tabs {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  &__item {
+    background: $white;
+    border: rem(1) solid transparentize($ntr-light-06, 0.5);
+    border-radius: rem(16);
+    @include advancedRem(padding, (11 25));
+    @include font-size(15, 400);
+    line-height: 150%;
+    letter-spacing: 0.02em;
+    // color: $ntr-dark-01;
+    @include transition();
+    width: rem(172);
+
+    &.active {
+      background-color: $primary-blue;
+      color: $white;
+      border-color: $primary-blue;
+
+      &:hover {
+        background-color: $primary-blue-hover;
+      }
+    }
+
+    &:hover:not(&.active) {
+      border-color: $primary-blue;
+      color: $primary-blue;
+    }
+  }
+}

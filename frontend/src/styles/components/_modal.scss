@@ -107,8 +107,29 @@
   padding: rem(6);
 }
 
-.animate__fadeInDown {
-  .modal-dialog {
-    animation: fadeInDown 0.5s;
+.filter-modal {
+  &-wrapper {
+  }
+
+  &-tabs {
+    margin-bottom: rem(12);
+
+    &-content {
+      margin-top: rem(8);
+      width: 100%;
+
+      .swiper {
+        height: 100%;
+        width: 100%;
+
+        &-slide {
+          width: max-content !important;
+        }
+
+        &-wrapper {
+          padding-bottom: rem(12);
+        }
+      }
+    }
   }
 }
