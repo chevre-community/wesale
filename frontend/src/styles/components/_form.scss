@@ -445,6 +445,50 @@
   }
 }
 
+.range-value-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: rem(8);
+  height: rem(48);
+  background-color: $ntr-light-04;
+
+  &__item {
+    display: flex;
+    align-items: stretch;
+
+    &:first-child {
+      border-right: rem(1) solid $ntr-light-02;
+    }
+
+    input,
+    label {
+      height: 100%;
+      background-color: transparent;
+      @include font-size(15, 400);
+      color: $ntr-dark-01;
+      letter-spacing: 0.02em;
+      @include advancedRem(padding, (0 12 0 4))
+    }
+
+    input {
+      width: 100%;
+      @include advancedRem(padding, (4, 16));
+      flex: 1;
+      border: none;
+      outline: none;
+
+      &::placeholder {
+        color: $ntr-dark-03;
+      }
+    }
+
+    label {
+      display: grid;
+      place-items: center;
+    }
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

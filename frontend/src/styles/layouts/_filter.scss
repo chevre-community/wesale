@@ -132,6 +132,18 @@
       }
     }
   }
+
+  &-modal {
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: rem(24);
+
+      @include breakpoint-max(768) {
+        grid-template-columns: repeat(auto-fit, minmax(#{rem(240)}, 1fr));
+      }
+    }
+  }
 }
 
 .price-range__divider {

@@ -4,7 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import React, { useCallback } from "react";
 
-import { ChevronLeft, Modal } from "@/components";
+import { ChevronLeft, FormGroup, GSelect, Modal } from "@/components";
+
+import { htmlToProps } from "@/lib";
 
 const AdvancedFilterModal = ({ justClose, modal }) => {
 	const { isShowing, toggle } = useModal();
@@ -22,7 +24,7 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 		(swiper) => {
 			setActiveIndex(swiper.activeIndex);
 		},
-		[activeIndex]
+		[activeIndex, isShowing]
 	);
 
 	const handleSlideTo = (swiper, index) => swiper.slideTo(index);
@@ -56,7 +58,7 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 				>
 					<ChevronLeft />
 				</button>
-			)}{" "}
+			)}
 			<div className="filter-modal-wrapper">
 				<div className="filter-modal-tabs">
 					<p className="g-caption__lg--regular text-ntr-dark-01">
@@ -67,9 +69,8 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 							<Swiper {...tabsSwiperParams}>
 								<SwiperSlide>
 									<button
-										className={`g-tabs__item ${
-											filterFormSwiper?.activeIndex === 1 ? "active" : ""
-										}`}
+										className={`g-tabs__item ${filterFormSwiper?.activeIndex === 1 ? "active" : ""
+											}`}
 										onClick={() => handleSlideTo(filterFormSwiper, 1)}
 									>
 										Районы
@@ -77,9 +78,8 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 								</SwiperSlide>
 								<SwiperSlide>
 									<button
-										className={`g-tabs__item ${
-											filterFormSwiper?.activeIndex === 2 ? "active" : ""
-										}`}
+										className={`g-tabs__item ${filterFormSwiper?.activeIndex === 2 ? "active" : ""
+											}`}
 										onClick={() => handleSlideTo(filterFormSwiper, 2)}
 									>
 										Станции метро
@@ -87,9 +87,8 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 								</SwiperSlide>
 								<SwiperSlide>
 									<button
-										className={`g-tabs__item ${
-											filterFormSwiper?.activeIndex === 3 ? "active" : ""
-										}`}
+										className={`g-tabs__item ${filterFormSwiper?.activeIndex === 3 ? "active" : ""
+											}`}
 										onClick={() => handleSlideTo(filterFormSwiper, 3)}
 									>
 										Ориентиры
@@ -100,29 +99,143 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 					</div>
 				</div>
 				<div className="filter-modal-content">
-					<Swiper
-						direction="horizontal"
-						allowTouchMove={false}
-						onSwiper={setFilterFormSwiper}
-						onSlideChange={changeActiveIndex}
-						effect="fade"
-						fadeEffect={{ crossFade: true }}
-						speed={500}
-						modules={[EffectFade]}
-					>
-						<SwiperSlide>
-							<h1>The First</h1>
-						</SwiperSlide>
-						<SwiperSlide>
-							<h1>The Second</h1>
-						</SwiperSlide>
-						<SwiperSlide>
-							<h1>The Third</h1>
-						</SwiperSlide>
-						<SwiperSlide>
-							<h1>The Fourth</h1>
-						</SwiperSlide>
-					</Swiper>
+					<form method="POST">
+						<Swiper
+							direction="horizontal"
+							allowTouchMove={false}
+							onSwiper={setFilterFormSwiper}
+							onSlideChange={changeActiveIndex}
+							effect="fade"
+							fadeEffect={{ crossFade: true }}
+							speed={500}
+							modules={[EffectFade]}
+							autoHeight={true}
+						>
+							<SwiperSlide>
+								<div className="filter-modal-content__common">
+									<div className="filter-form-modal__grid">
+										<div className="filter-form-modal__grid--item">
+											<FormGroup label={htmlToProps(<>Площадь (м<sup>2</sup>)</>)}>
+												<div className="range-value-inputs">
+													<div className="range-value-inputs__item">
+														<input placeholder="от" type="text" name="" id="" />
+													</div>
+													<div className="range-value-inputs__item">
+														<input placeholder="до" type="text" name="" id="" />
+													</div>
+												</div>
+											</FormGroup>
+										</div>
+										<div className="filter-form-modal__grid--item">
+											<FormGroup label={htmlToProps(<>Жилая площадь (м<sup>2</sup>)</>)}>
+												<div className="range-value-inputs">
+													<div className="range-value-inputs__item">
+														<input placeholder="от" type="text" name="" id="" />
+													</div>
+													<div className="range-value-inputs__item">
+														<input placeholder="до" type="text" name="" id="" />
+													</div>
+												</div>
+											</FormGroup>
+										</div>
+										<div className="filter-form-modal__grid--item">
+											<FormGroup label={"Год постройки"}>
+												<div className="range-value-inputs">
+													<div className="range-value-inputs__item">
+														<input placeholder="от" type="text" name="" id="" />
+														<label htmlFor="">г.</label>
+													</div>
+													<div className="range-value-inputs__item">
+														<input placeholder="до" type="text" name="" id="" />
+														<label htmlFor="">г.</label>
+													</div>
+												</div>
+											</FormGroup>
+										</div>
+										<div className="filter-form-modal__grid--item">
+											<FormGroup label={"Этаж"}>
+												<div className="range-value-inputs">
+													<div className="range-value-inputs__item">
+														<input placeholder="от" type="text" name="" id="" />
+													</div>
+													<div className="range-value-inputs__item">
+														<input placeholder="до" type="text" name="" id="" />
+													</div>
+												</div>
+											</FormGroup>
+										</div>
+										<div className="filter-form-modal__grid--item">
+											<FormGroup label={"Ремонт дома:"}>
+												<GSelect
+													instanceId="select-1"
+													options={[
+														{
+															label: "Новый",
+															value: "new",
+														},
+														{
+															label: "Без отделки",
+															value: "no-decoration",
+														},
+														{
+															label: "С отделкой",
+															value: "decoration",
+														},
+														{
+															label: "С перепланировкой",
+															value: "replan",
+														}
+													]}
+												/>
+											</FormGroup>
+										</div>
+										<div className="filter-form-modal__grid--item">
+											<FormGroup label={"Материал дома:"}>
+												<GSelect
+													instanceId="select-2"
+													options={[
+														{
+															label: "Кирпич",
+															value: "brick",
+														},
+														{
+															label: "Брус",
+															value: "timber",
+														},
+														{
+															label: "Кирпич и брус",
+															value: "brick-timber",
+														},
+														{
+															label: "Дерево",
+															value: "wood",
+														},
+														{
+															label: "Дерево и кирпич",
+															value: "wood-brick",
+														}
+													]}
+												/>
+											</FormGroup>
+										</div>
+									</div>
+								</div>
+							</SwiperSlide>
+							<SwiperSlide>
+								<h1>The Second</h1>
+							</SwiperSlide>
+							<SwiperSlide>
+								<h1>The Third</h1>
+							</SwiperSlide>
+							<SwiperSlide>
+								<h1>The Fourth</h1>
+							</SwiperSlide>
+						</Swiper>
+						<div className="d-flex align-items-center gap-4 mt-sm">
+							<button className="g-btn-text g-caption__lg--semibold text-ntr-dark-02" form="" type="reset">Очистить фильтры</button>
+							<button className="g-btn-green" form="" type="submit">Применить фильтры</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</Modal>

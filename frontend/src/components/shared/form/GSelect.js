@@ -75,6 +75,8 @@ const GSelect = ({
 			borderRadius: radius ? rem(radius) : rem(16),
 			width: "100%",
 			overflow: "hidden",
+			maxHeight: rem(250),
+			overflowY: "auto",
 			zIndex: 99,
 		}),
 		placeholder: (provided) => ({
@@ -130,6 +132,7 @@ const GSelect = ({
 			placeholder={placeholder}
 			instanceId={instanceId}
 			defaultValue={options[1]}
+			noOptionsMessage={() => "No options"}
 			components={{
 				Menu: (props) => (
 					<components.Menu {...props} className="g-select-dropdown" />

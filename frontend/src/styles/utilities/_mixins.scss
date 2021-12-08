@@ -212,19 +212,19 @@
 }
 
 @mixin tablet {
-  @media screen and (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+  @media screen and (min-width: #{rem($tablet-width)}) and (max-width: #{rem($desktop-width - 1)}) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media screen and (min-width: #{$desktop-width}) {
+  @media screen and (min-width: #{rem($desktop-width)}) {
     @content;
   }
 }
 
 @mixin mobile {
-  @media screen and (min-width: #{$mobile-width}) and (max-width: #{$tablet-width}) {
+  @media screen and (min-width: #{rem($mobile-width)}) and (max-width: #{rem($tablet-width)}) {
     @content;
   }
 }

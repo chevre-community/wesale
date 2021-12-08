@@ -7,6 +7,11 @@
       padding: 0;
     }
 
+    &-dialog {
+      margin: 2rem auto;
+      padding: 0 rem(20);
+    }
+
     &-backdrop {
       &.show {
         opacity: 0.3;
@@ -129,6 +134,17 @@
         &-wrapper {
           padding-bottom: rem(12);
         }
+      }
+    }
+  }
+
+  &-content {
+    .swiper {
+      overflow: visible !important;
+     
+      &-wrapper,
+      &-slide {
+      overflow-y: visible !important;
       }
     }
   }
