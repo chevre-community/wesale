@@ -1,3 +1,9 @@
+.scroll-down {
+  .filter-form-wrapper {
+    transform: translate3d(0, -200%, 0);
+  }
+}
+
 .filter-form {
   &-wrapper {
     position: fixed;

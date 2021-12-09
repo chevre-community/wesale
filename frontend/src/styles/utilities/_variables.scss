@@ -106,7 +106,7 @@ $font: (
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__lg--semibold": (
     "size": 18,
@@ -117,7 +117,7 @@ $font: (
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__md--regular": (
     "size": 15,
@@ -236,6 +236,7 @@ $colors: (
   "secondary-green": #23b957,
   "secondary-blue": #135ac5,
   "secondary-grey": #7c7d89,
+  "secondary-grey-deactive": #808191,
   "ntr-dark-01": #343434,
   "ntr-dark-02": #898f96,
   "ntr-dark-03": #9697af,
@@ -269,6 +270,7 @@ $secondary-error: map-get($colors, "secondary-error");
 $secondary-green: map-get($colors, "secondary-green");
 $secondary-blue: map-get($colors, "secondary-blue");
 $secondary-grey: map-get($colors, "secondary-grey");
+$secondary-grey-deactive: map-get($colors, "secondary-grey-deactive");
 $ntr-dark-01: map-get($colors, "ntr-dark-01");
 $ntr-dark-02: map-get($colors, "ntr-dark-02");
 $ntr-dark-03: map-get($colors, "ntr-dark-03");
