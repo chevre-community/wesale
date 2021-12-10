@@ -4,9 +4,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import React, { useCallback } from "react";
 
-import { ChevronLeft, FormGroup, GSelect, Modal } from "@/components";
+import { ChevronLeft, FormGroup, GSelect, Modal, SearchIcon } from "@/components";
 
 import { htmlToProps } from "@/lib";
+import { BsSearch } from "react-icons/bs";
+import { FaSearch, FaTimes } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 
 const AdvancedFilterModal = ({ justClose, modal }) => {
 	const { isShowing, toggle } = useModal();
@@ -222,7 +225,23 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 								</div>
 							</SwiperSlide>
 							<SwiperSlide>
-								<h1>The Second</h1>
+								<div className="search-box">
+									<input type="text" id="search-districts" placeholder="Поиск" />
+									<label htmlFor="search-districts">
+										<SearchIcon fill="#200E32" />
+									</label>
+								</div>
+								<div className="selection-choices">
+									<div className="selection-choices__item">
+										<input type="checkbox" name="" id="khazar" />
+										<label htmlFor="khazar">
+											Хазарский р.
+											<span className="selection-choices__times">
+												<FaTimes />
+											</span>
+										</label>
+									</div>
+								</div>
 							</SwiperSlide>
 							<SwiperSlide>
 								<h1>The Third</h1>
