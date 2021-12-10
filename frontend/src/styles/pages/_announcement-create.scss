@@ -1,0 +1,66 @@
+.caption {
+  $this: &;
+
+  &__cards {
+    @include advancedRem(padding, (35, $offset));
+    background-color: #fafafb;
+    margin: 0 rem(-$offset);
+
+    .swiper-slide {
+      // width: max-content;
+      height: auto;
+    }
+  }
+
+  &--major {
+    #{$this}__card--title {
+      color: $primary-blue;
+    }
+  }
+
+  &__card {
+    background: $white;
+    box-shadow: rem(2) rem(5) rem(20) rgba(17, 20, 45, 0.08);
+    border-radius: rem(8);
+    @include advancedRem(padding, (24 8 16));
+    @include flex-center(column);
+    text-align: center;
+    // width: rem(412);
+    height: 100%;
+
+    &--title {
+      @include font-size(18, 600);
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      margin-bottom: rem(8);
+    }
+
+    &--text {
+      @include font-size(14, 400);
+      list-style: 1.3;
+      letter-spacing: 0.02em;
+      color: $ntr-dark-02;
+      max-width: rem(380);
+      width: 100%;
+    }
+  }
+}
+
+.announcement__create {
+  &--container {
+    max-width: rem(992);
+    width: 100%;
+    margin: rem(32) auto 0;
+    padding: 0 rem(24);
+  }
+
+  &--grid {
+    display: grid;
+    grid-template-columns: 1fr rem(310);
+    grid-gap: rem(20);
+  }
+
+  &--title {
+    margin-bottom: rem(32);
+  }
+}

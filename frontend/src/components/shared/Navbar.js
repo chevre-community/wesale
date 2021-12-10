@@ -1,6 +1,6 @@
-import { useModal } from "@/lib";
+import { revealNavOnScroll, useModal } from "@/lib";
 
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 
@@ -89,8 +89,6 @@ const options = [
 ];
 
 const Navbar = ({ router }) => {
-	console.log(router);
-
 	const { mainState, mainDispatch } = useMain();
 
 	const handleLocaleChange = (locale) => {
@@ -103,6 +101,12 @@ const Navbar = ({ router }) => {
 		exit: "animate__animated animate__faster",
 		exitActive: "animate__fadeOutUp animate__faster",
 	};
+
+	useEffect(() => {
+		revealNavOnScroll();
+
+		return () => window.removeEventListener("scroll", revealNavOnScroll);
+	}, []);
 
 	return (
 		<>
@@ -193,9 +197,11 @@ const Navbar = ({ router }) => {
 							{/* <a className="g-btn g-btn__icon with-gap-16" onClick={toggle}>
 								<ProfileIcon />
 							</a> */}
-							<a href="" className="g-btn g-btn-blue with-gap-16">
-								Разместить объявление
-							</a>
+							<Link href="/announcement/create" passHref>
+								<a className="g-btn g-btn-blue with-gap-16">
+									Разместить объявление
+								</a>
+							</Link>
 						</div>
 					</div>
 				</div>

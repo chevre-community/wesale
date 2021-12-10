@@ -14,6 +14,8 @@
     "^react-bootstrap/(.*)$",
     "^next/(.*)$",
     "^next-seo",
+    "^swiper",
+    "^swiper/(.*)$",
     "^@/components",
     "^@/lib/(.*)$",
     "^@/context/(.*)$",
