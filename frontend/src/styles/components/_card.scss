@@ -142,8 +142,12 @@
 }
 
 .custom-cards {
-  @include grid-repeated-cols(_, 20, "fr", 3);
+  // @include grid-repeated-cols(_, 20, "fr", 3);
   margin-bottom: rem(16);
+
+  .swiper-slide {
+    width: max-content;
+  }
 }
 
 .custom-card {
@@ -152,6 +156,10 @@
   background: $white;
   box-shadow: 2px 5px 40px rgba(17, 20, 45, 0.08);
   border-radius: rem(8);
+
+  @include breakpoint-max($screen-ms) {
+    max-width: rem(280);    
+  }
 
   &:hover & {
     &__title {

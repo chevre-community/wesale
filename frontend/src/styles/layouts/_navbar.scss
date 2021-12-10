@@ -61,6 +61,7 @@
     position: relative;
     margin-right: rem(32);
     margin-top: rem(5);
+    flex-shrink: 0;
 
     img {
       max-width: rem(90);

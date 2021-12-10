@@ -91,6 +91,8 @@ export { default as GoogleIcon } from "@/components/icons/GoogleIcon";
 export { default as AppleIcon } from "@/components/icons/AppleIcon";
 export { default as FacebookIcon2 } from "@/components/icons/FacebookIcon2";
 
+export { default as MetroMap } from "@/components/icons/MetroMap";
+
 // Custom Components
 
 export { default as CustomImage } from "@/components/custom/Image.custom";

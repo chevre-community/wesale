@@ -1,18 +1,22 @@
 .quick-links {
   @include grid-repeated-cols(_, 20, "fr", 3);
-
+  
+  &-card {
+    margin-top: rem(16);
+  }
+  
   &__title {
     @include font-size(16, 600);
     line-height: rem(24);
     color: $primary-grey;
     margin-bottom: rem(6);
   }
-
+  
   &__grid {
-    @include grid-repeated-cols(180, 20, "minmax");
+    @include grid-repeated-cols(150, 20, "minmax");
     grid-gap: rem(20);
   }
-
+  
   &__list {
     li {
       &:not(:last-child) {

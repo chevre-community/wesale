@@ -4,12 +4,62 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import React, { useCallback } from "react";
 
-import { ChevronLeft, FormGroup, GSelect, Modal, SearchIcon } from "@/components";
+import { ChevronLeft, FormGroup, GSelect, MetroMap, Modal, SearchIcon } from "@/components";
 
 import { htmlToProps } from "@/lib";
-import { BsSearch } from "react-icons/bs";
-import { FaSearch, FaTimes } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
+import { FaTimes } from "react-icons/fa";
+
+const data = [
+	{
+		district: "Абшеронский р.",
+		areas: [
+			"Геокмалы",
+			"Горадил",
+			"Джейранбатан",
+			"Дигях",
+			"Ени Джорат",
+			"Загульба",
+			"Кобу",
+			"Мехтиабад",
+		]
+	},
+	{
+		district: "Хазарский р.",
+		areas: [
+			"Бина",
+			"Бузовна",
+			"Гала",
+			"Зира",
+			"Шувелян",
+			"Туркяны",
+			"Мардакяны",
+		]
+	},
+	{
+		district: "Сабунчинский р.",
+		areas: [
+			"Бакиханова",
+			"Балаханы",
+			"Бильгях",
+			"Ени Балаханы",
+			"Ени Романы",
+			"Забрат",
+			"Кюрдаханы",
+		]
+	},
+	{
+		district: "Бинагадинский р.",
+		areas: [
+			"2-ая Алатава",
+			"28 мая",
+			"6-ой мкр",
+			"7-ой мкр",
+			"8-ой мкр",
+			"9-ой мкр",
+			"Биладжары",
+		]
+	}
+]
 
 const AdvancedFilterModal = ({ justClose, modal }) => {
 	const { isShowing, toggle } = useModal();
@@ -232,7 +282,7 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 									</label>
 								</div>
 								<div className="selection-choices">
-									<div className="selection-choices__item">
+									<div className="selection-choices__item selection-choices--md --district">
 										<input type="checkbox" name="" id="khazar" />
 										<label htmlFor="khazar">
 											Хазарский р.
@@ -241,10 +291,53 @@ const AdvancedFilterModal = ({ justClose, modal }) => {
 											</span>
 										</label>
 									</div>
+									<div className="selection-choices__item selection-choices--md">
+										<input type="checkbox" name="" id="Горадил" />
+										<label htmlFor="Горадил">
+											Горадил
+											<span className="selection-choices__times">
+												<FaTimes />
+											</span>
+										</label>
+									</div>
+								</div>
+								<div className="selection-choices__grid">
+									{data.map((item, index) => (
+										<div className="selection-choices__grid--item" key={index}>
+											<>
+												<div className="selection-choices__item --district selection-choices--sm">
+													<input type="checkbox" name="" id={item.district} />
+													<label htmlFor={item.district}>
+														{item.district}
+														<span className="selection-choices__times">
+															<FaTimes />
+														</span>
+													</label>
+												</div>
+												{item.areas.map((area, areaIndex) => (
+													<div className="selection-choices__item selection-choices--sm" key={areaIndex}>
+														<input type="checkbox" name="" id={area} />
+														<label htmlFor={area}>
+															{area}
+															<span className="selection-choices__times">
+																<FaTimes />
+															</span>
+														</label>
+													</div>
+												))}
+											</>
+										</div>
+									))}
 								</div>
 							</SwiperSlide>
 							<SwiperSlide>
-								<h1>The Third</h1>
+								<div className="search-box">
+									<input type="text" id="search-metro" placeholder="Поиск" />
+									<label htmlFor="search-metro">
+										<SearchIcon fill="#200E32" />
+									</label>
+								</div>
+								<MetroMap />
 							</SwiperSlide>
 							<SwiperSlide>
 								<h1>The Fourth</h1>
