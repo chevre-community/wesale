@@ -539,7 +539,7 @@ const DashboardHome = () => {
 };
 
 DashboardHome.getLayout = (page) => {
-	return <DashboardLayout>{page}</DashboardLayout>;
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default DashboardHome;

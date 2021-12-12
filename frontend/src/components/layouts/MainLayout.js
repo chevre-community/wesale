@@ -1,11 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CSSTransition } from "react-transition-group";
+// import { revealNavOnScroll } from "@/lib";
+import React, { useEffect } from "react";
 
-import { FilterFormWrapper, Footer, Navbar } from "@/components";
-
-import { useMain } from "@/context/providers/main-context";
+import { Footer, Navbar } from "@/components";
 
 const MainLayout = ({ children }) => {
+	// useEffect(() => {
+	// 	revealNavOnScroll();
+
+	// 	return () => {
+	// 		window.removeEventListener("scroll", revealNavOnScroll);
+	// 	};
+	// }, []);
 	return (
 		<>
 			<Navbar />

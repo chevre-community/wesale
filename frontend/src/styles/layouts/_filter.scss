@@ -1,3 +1,9 @@
+.scroll-down {
+  .filter-form-wrapper {
+    transform: translate3d(0, -200%, 0);
+  }
+}
+
 .filter-form {
   &-wrapper {
     position: fixed;
@@ -130,6 +136,53 @@
       &::placeholder {
         color: $ntr-dark-02;
       }
+    }
+  }
+
+  &-modal {
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: rem(24);
+
+      @include breakpoint-max(768) {
+        grid-template-columns: repeat(auto-fit, minmax(#{rem(240)}, 1fr));
+      }
+    }
+  }
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  padding: 0 rem(4);
+  background-color: $ntr-light-04;
+  border-radius: rem(8);
+  margin-bottom: rem(12);
+
+  input {
+    flex: 1;
+    width: 100%;
+    @include advancedRem(padding, (8 12));
+    @include font-size(14, 500);
+    line-height: rem(24);
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+    &::placeholder {
+      color: $ntr-light-06;
+    }
+  }
+
+  label {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 0 rem(12);
+    
+    svg {
+      max-width: rem(15);
     }
   }
 }

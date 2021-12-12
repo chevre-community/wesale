@@ -1,3 +1,9 @@
+.scroll-down {
+  .g-nav {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
 .g-nav {
   padding: rem(16) 0;
   position: relative;
@@ -9,6 +15,7 @@
   z-index: 1020;
   top: 0;
   height: rem($nav-height);
+  @include transition();
 
   &__grid {
     @include justify-between();
@@ -54,6 +61,7 @@
     position: relative;
     margin-right: rem(32);
     margin-top: rem(5);
+    flex-shrink: 0;
 
     img {
       max-width: rem(90);

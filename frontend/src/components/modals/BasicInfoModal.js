@@ -24,7 +24,7 @@ const BasicInfoModal = ({ justClose, modal }) => {
 				}
 			}
 		>
-			<h4 className="text-center g-text__lg--semibold">
+			<h4 className="text-center g-text__lg--semibold my-md">
 				Ваша жалоба была отправлена
 			</h4>
 		</Modal>

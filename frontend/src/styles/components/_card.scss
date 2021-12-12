@@ -142,8 +142,12 @@
 }
 
 .custom-cards {
-  @include grid-repeated-cols(_, 20, "fr", 3);
+  // @include grid-repeated-cols(_, 20, "fr", 3);
   margin-bottom: rem(16);
+
+  .swiper-slide {
+    width: max-content;
+  }
 }
 
 .custom-card {
@@ -152,6 +156,10 @@
   background: $white;
   box-shadow: 2px 5px 40px rgba(17, 20, 45, 0.08);
   border-radius: rem(8);
+
+  @include breakpoint-max($screen-ms) {
+    max-width: rem(280);    
+  }
 
   &:hover & {
     &__title {
@@ -183,6 +191,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  &:hover {
+    #{$this}__title {
+      color: $primary-blue;
+    }
+  }
 
   &--md {
     box-shadow: 0px 4px 15px rgba(17, 20, 45, 0.06);
@@ -232,6 +246,7 @@
     color: $black;
     margin-bottom: rem(4);
     flex: 1;
+    @include transition();
   }
 
   &__ads {
@@ -397,6 +412,42 @@
         &.active {
           background-color: transparent;
         }
+      }
+    }
+  }
+}
+
+.guide__card {
+  padding: rem(24);
+  box-shadow: rem(2) rem(5) rem(40) rgba(17, 20, 45, 0.08);
+  background-color: $white;
+  height: max-content;
+  border-radius: rem(24);
+
+  &--icon {
+    svg {
+      width: rem(20);
+    }
+  }
+
+  &--title {
+    @include advancedRem(margin, (24 0 16));
+    @include font-size(15, 600);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+
+  &--list {
+    max-width: rem(220);
+    width: 100%;
+
+    li {
+      @include font-size(14, 400);
+      letter-spacing: 0.02em;
+      color: $secondary-grey-deactive;
+
+      & + li {
+        margin-top: rem(12);
       }
     }
   }

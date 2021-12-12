@@ -1,8 +1,4 @@
 .g-modal {
-  .modal-md {
-    max-width: rem(512);
-  }
-
   .modal {
     &-header,
     &-body,
@@ -11,10 +7,27 @@
       padding: 0;
     }
 
+    &-dialog {
+      margin: 2rem auto;
+      padding: 0 rem(20);
+    }
+
     &-backdrop {
       &.show {
         opacity: 0.3;
       }
+    }
+
+    &-body {
+      position: static;
+    }
+
+    &-md {
+      max-width: rem(512);
+    }
+
+    &-lg {
+      max-width: rem(900);
     }
   }
 
@@ -76,4 +89,63 @@
 
 .provider-apple {
   background-color: #11142d;
+}
+
+.become-agency-modal {
+  padding-bottom: rem(16);
+
+  &__img {
+    max-width: rem(210);
+    width: 100%;
+    margin: 0 auto rem(24);
+
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+.prev-btn-modal {
+  position: absolute;
+  top: rem(18);
+  left: rem(18);
+  padding: rem(6);
+}
+
+.filter-modal {
+  &-wrapper {
+  }
+
+  &-tabs {
+    margin-bottom: rem(12);
+
+    &-content {
+      margin-top: rem(8);
+      width: 100%;
+
+      .swiper {
+        height: 100%;
+        width: 100%;
+
+        &-slide {
+          width: max-content !important;
+        }
+
+        &-wrapper {
+          padding-bottom: rem(12);
+        }
+      }
+    }
+  }
+
+  &-content {
+    .swiper {
+      overflow: visible !important;
+     
+      &-wrapper,
+      &-slide {
+      overflow-y: visible !important;
+      }
+    }
+  }
 }

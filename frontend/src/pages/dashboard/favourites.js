@@ -44,6 +44,7 @@ const DashboardFavourites = () => {
 					rooms={3}
 					images={mainState.images}
 					isFavourite={true}
+					address={"Москва, Красная площадь, д. 1, корпус 1, кв. 1"}
 				/>
 				<ProductCard
 					area={280}
@@ -51,6 +52,7 @@ const DashboardFavourites = () => {
 					rooms={3}
 					images={mainState.images}
 					isFavourite={true}
+					address={"Москва, Красная площадь, д. 1, корпус 1, кв. 1"}
 				/>
 				<ProductCard
 					area={152}
@@ -58,6 +60,7 @@ const DashboardFavourites = () => {
 					rooms={3}
 					images={mainState.images}
 					isFavourite={true}
+					address={"Москва, Красная площадь, д. 1, корпус 1, кв. 1"}
 				/>
 				<ProductCard
 					area={720}
@@ -65,6 +68,7 @@ const DashboardFavourites = () => {
 					rooms={3}
 					images={mainState.images}
 					isFavourite={true}
+					address={"Москва, Красная площадь, д. 1, корпус 1, кв. 1"}
 				/>
 				<ProductCard
 					area={520}
@@ -72,6 +76,7 @@ const DashboardFavourites = () => {
 					rooms={3}
 					images={mainState.images}
 					isFavourite={true}
+					address={"Москва, Красная площадь, д. 1, корпус 1, кв. 1"}
 				/>
 				<ProductCard
 					area={220}
@@ -79,6 +84,7 @@ const DashboardFavourites = () => {
 					rooms={3}
 					images={mainState.images}
 					isFavourite={true}
+					address={"Москва, Красная площадь, д. 1, корпус 1, кв. 1"}
 				/>
 			</div>
 			{/* <div className="no-results-found">

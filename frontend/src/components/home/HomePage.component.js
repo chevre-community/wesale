@@ -65,108 +65,126 @@ const HomePage = () => {
 			</div>
 			<div className="g-section">
 				<div className="custom-cards">
-					<div className="custom-card">
-						<p className="custom-card__title">Аренда без рисков</p>
-						<div className="custom-card__img">
-							<img src="/static/svgs/home/illustration-1.svg" alt="WeSale" />
-						</div>
-					</div>
-					<div className="custom-card">
-						<p className="custom-card__title">Всё честно и прозрачно</p>
-						<div className="custom-card__img">
-							<img src="/static/svgs/home/illustration-2.svg" alt="WeSale" />
-						</div>
-					</div>
-					<div className="custom-card">
-						<p className="custom-card__title">Быстрая аренда</p>
-						<div className="custom-card__img">
-							<img src="/static/svgs/home/illustration-3.svg" alt="WeSale" />
-						</div>
-					</div>
+					<Swiper slidesPerView={"auto"} breakpoints={{
+						992: {
+							spaceBetween: 24,
+							slidesPerView: 3,
+						},
+						768: {
+							slidesPerView: 2
+						}
+					}}
+						spaceBetween={16}
+					>
+						<SwiperSlide>
+							<div className="custom-card">
+								<p className="custom-card__title">Аренда без рисков</p>
+								<div className="custom-card__img">
+									<img src="/static/svgs/home/illustration-1.svg" alt="WeSale" />
+								</div>
+							</div>
+							<div className="quick-links-card">
+								<p className="quick-links__title">Купить квартиру</p>
+								<div className="quick-links__grid">
+									<ul className="quick-links__list">
+										<li>
+											<a href="">1 комнатную</a>
+										</li>
+										<li>
+											<a href="">2 комнатную</a>
+										</li>
+										<li>
+											<a href="">3 комнатную</a>
+										</li>
+										<li>
+											<a href="">4 комнатную</a>
+										</li>
+									</ul>
+									<ul className="quick-links__list">
+										<li>
+											<a href="">Cтудию</a>
+										</li>
+										<li>
+											<a href="">Квартиры в Баку</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</SwiperSlide>
+						<SwiperSlide>
+							<div className="custom-card">
+								<p className="custom-card__title">Всё честно и прозрачно</p>
+								<div className="custom-card__img">
+									<img src="/static/svgs/home/illustration-2.svg" alt="WeSale" />
+								</div>
+							</div>
+							<div className="quick-links-card">
+								<p className="quick-links__title">Купить квартиру</p>
+								<div className="quick-links__grid">
+									<ul className="quick-links__list">
+										<li>
+											<a href="">1 комнатную</a>
+										</li>
+										<li>
+											<a href="">2 комнатную</a>
+										</li>
+										<li>
+											<a href="">3 комнатную</a>
+										</li>
+										<li>
+											<a href="">4 комнатную</a>
+										</li>
+									</ul>
+									<ul className="quick-links__list">
+										<li>
+											<a href="">Cтудию</a>
+										</li>
+										<li>
+											<a href="">Квартиры в Баку</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</SwiperSlide>
+						<SwiperSlide>
+							<div className="custom-card">
+								<p className="custom-card__title">Быстрая аренда</p>
+								<div className="custom-card__img">
+									<img src="/static/svgs/home/illustration-3.svg" alt="WeSale" />
+								</div>
+							</div>
+							<div className="quick-links-card">
+								<p className="quick-links__title">Купить квартиру</p>
+								<div className="quick-links__grid">
+									<ul className="quick-links__list">
+										<li>
+											<a href="">1 комнатную</a>
+										</li>
+										<li>
+											<a href="">2 комнатную</a>
+										</li>
+										<li>
+											<a href="">3 комнатную</a>
+										</li>
+										<li>
+											<a href="">4 комнатную</a>
+										</li>
+									</ul>
+									<ul className="quick-links__list">
+										<li>
+											<a href="">Cтудию</a>
+										</li>
+										<li>
+											<a href="">Квартиры в Баку</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</SwiperSlide>
+					</Swiper>
 				</div>
-				<div className="quick-links">
-					<div className="quick-links-card">
-						<p className="quick-links__title">Купить квартиру</p>
-						<div className="quick-links__grid">
-							<ul className="quick-links__list">
-								<li>
-									<a href="">1 комнатную</a>
-								</li>
-								<li>
-									<a href="">2 комнатную</a>
-								</li>
-								<li>
-									<a href="">3 комнатную</a>
-								</li>
-								<li>
-									<a href="">4 комнатную</a>
-								</li>
-							</ul>
-							<ul className="quick-links__list">
-								<li>
-									<a href="">Cтудию</a>
-								</li>
-								<li>
-									<a href="">Квартиры в Баку</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div className="quick-links-card">
-						<p className="quick-links__title">Купить квартиру</p>
-						<div className="quick-links__grid">
-							<ul className="quick-links__list">
-								<li>
-									<a href="">1 комнатную</a>
-								</li>
-								<li>
-									<a href="">2 комнатную</a>
-								</li>
-								<li>
-									<a href="">3 комнатную</a>
-								</li>
-								<li>
-									<a href="">4 комнатную</a>
-								</li>
-							</ul>
-							<ul className="quick-links__list">
-								<li>
-									<a href="">Cтудию</a>
-								</li>
-								<li>
-									<a href="">Квартиры в Баку</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div className="quick-links-card">
-						<p className="quick-links__title">Купить квартиру</p>
-						<div className="quick-links__grid">
-							<ul className="quick-links__list">
-								<li>
-									<a href="">1 комнатную</a>
-								</li>
-								<li>
-									<a href="">2 комнатную</a>
-								</li>
-								<li>
-									<a href="">3 комнатную</a>
-								</li>
-								<li>
-									<a href="">4 комнатную</a>
-								</li>
-							</ul>
-							<ul className="quick-links__list">
-								<li>
-									<a href="">Cтудию</a>
-								</li>
-								<li>
-									<a href="">Квартиры в Баку</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				{/* <div className="quick-links">
+				</div> */}
 			</div>
 			<div className="g-section">
 				<div className="flex-center-between">

@@ -66,6 +66,10 @@
 
 @import "components/modal";
 
+@import "components/loader";
+
+@import "components/selection-choices";
+
 /* Layouts */
 
 @import "layouts/container";
@@ -103,3 +107,5 @@
 @import "pages/contact";
 
 @import "pages/agency-profile";
+
+@import "pages/announcement-create";

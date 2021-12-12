@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 
 import {
 	BasicInfoModal,
+	Button,
 	ChangeEmailModal,
 	Checkbox,
 	CustomImage,
@@ -13,6 +14,7 @@ import {
 	GSelect,
 	PlusIcon,
 	UploadIcon,
+	WithLoader,
 } from "@/components";
 
 import colors from "@/styles/modules/colors.module.scss";
@@ -87,6 +89,32 @@ const AgencyProfile = () => {
 										data-autoresize
 									/>
 								</FormGroup>
+							</div>
+							<div className="agency-profile__form-item">
+								<div className="g-form-group-wrapper__two-item">
+									<FormGroup label={"Время работы"}>
+										<GInput defaultValue={"9:00-18:00"} />
+									</FormGroup>
+									<FormGroup label={"Рабочие дни"}>
+										<GSelect
+											options={[
+												{
+													label: "Пн - Пт",
+													value: 0,
+												},
+												{
+													label: "Lorem 1",
+													value: 1,
+												},
+												{
+													label: "Lorem 2",
+													value: 2,
+												},
+											]}
+											instanceId={"work-time-range"}
+										/>
+									</FormGroup>
+								</div>
 							</div>
 							<div className="agency-profile__form-item">
 								<FormGroup label={"Адрес"} size="lg">
@@ -202,8 +230,8 @@ const AgencyProfile = () => {
 								</div>
 							</div>
 							<div className="d-flex align-items-center gap-3">
-								<button className="g-btn-secondary">Отменить изменения</button>
-								<button className="g-btn-green">Сохранить</button>
+								<Button variant="secondary">Отменить изменения</Button>
+								<Button variant="green">Сохранить</Button>
 							</div>
 						</div>
 					</form>

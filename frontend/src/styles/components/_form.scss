@@ -143,6 +143,10 @@
     cursor: pointer;
     min-height: rem(22);
     min-width: rem(22);
+    @include font-size(15, 400);
+    line-height: 1.7;
+    color: $ntr-dark-01;
+    letter-spacing: 0.02em;
 
     @include pseudo() {
       left: 0;
@@ -246,6 +250,20 @@
   &__lg {
     max-width: rem(450);
     width: 100%;
+  }
+
+  &-wrapper {
+    &__two-item {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(#{rem(162)}, 1fr));
+      grid-gap: rem(30);
+
+      .g-select-control,
+      .g-input {
+        height: rem(56);
+      }
+
+    }
   }
 
   &.disabled {
@@ -374,7 +392,7 @@
   line-height: 1.7;
   letter-spacing: 0.02em;
   display: grid;
-  grid-template-columns: rem(120) 1fr;
+  grid-template-columns: rem(125) 1fr;
 
   & + #{$this} {
     margin-top: rem(12);
@@ -423,6 +441,50 @@
 
     .g-btn-count {
       margin-top: rem(24);
+    }
+  }
+}
+
+.range-value-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: rem(8);
+  height: rem(48);
+  background-color: $ntr-light-04;
+
+  &__item {
+    display: flex;
+    align-items: stretch;
+
+    &:first-child {
+      border-right: rem(1) solid $ntr-light-02;
+    }
+
+    input,
+    label {
+      height: 100%;
+      background-color: transparent;
+      @include font-size(15, 400);
+      color: $ntr-dark-01;
+      letter-spacing: 0.02em;
+      @include advancedRem(padding, (0 12 0 4))
+    }
+
+    input {
+      width: 100%;
+      @include advancedRem(padding, (4, 16));
+      flex: 1;
+      border: none;
+      outline: none;
+
+      &::placeholder {
+        color: $ntr-dark-03;
+      }
+    }
+
+    label {
+      display: grid;
+      place-items: center;
     }
   }
 }

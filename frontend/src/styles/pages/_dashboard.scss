@@ -1,3 +1,10 @@
+.scroll-down {
+  .dashboard-sidebar {
+    top: 0;
+    height: 100%;
+  }
+}
+
 .dashboard {
   display: grid;
   grid-template-columns: rem(260) 1fr;
@@ -14,6 +21,7 @@
     @include advancedRem(border-radius, (0 16 16 0));
     @include advancedRem(padding, (30 0 16 16));
     color: $white;
+    @include transition();
 
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */

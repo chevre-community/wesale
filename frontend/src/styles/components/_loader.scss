@@ -1,0 +1,43 @@
+.g-loader {
+  position: relative;
+  cursor: not-allowed;
+  pointer-events: none;
+
+  &--center {
+    span {
+      opacity: 0;
+      visibility: hidden;
+      @include transition();
+    }
+  }
+
+  &--primary,
+  &--green, {
+    color: $white;
+  }
+
+  &--secondary {
+    color: $primary-black;
+  }
+
+  &-icon {
+    position: absolute;
+    animation: spin-loader--center 0.7s infinite linear;
+    transform-origin: 0 0;
+
+    svg,path {
+      fill: currentColor;
+    }
+
+    &--center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+    }
+
+    &--right-top {
+      top: rem(16);
+      right: rem(2);
+    }
+  }
+}

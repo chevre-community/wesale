@@ -9,6 +9,8 @@ export { default as autoResize } from "./mixins/auto-resize";
 export { default as seperateWithSpace } from "./utils/seperate-with-space";
 export { default as toggleByScroll } from "./utils/toggle-by-scroll";
 export { default as handleTabs } from "./utils/handle-tabs";
+export { default as htmlToProps } from "./utils/html-to-props";
+export { default as revealNavOnScroll } from "./utils/reveal-nav-on-scroll";
 
 // hooks
 

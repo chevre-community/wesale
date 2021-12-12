@@ -34,3 +34,9 @@
     }
   }
 }
+
+.list-with-gap {
+  li + li {
+    margin-top: rem(24);
+  }
+}

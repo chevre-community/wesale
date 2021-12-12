@@ -106,7 +106,7 @@ $font: (
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__lg--semibold": (
     "size": 18,
@@ -117,7 +117,7 @@ $font: (
     // "mobile": (
     //   "size": 15,
     //   "line-height": 24,
-    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // ),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ),
   "text__md--regular": (
     "size": 15,
@@ -236,6 +236,7 @@ $colors: (
   "secondary-green": #23b957,
   "secondary-blue": #135ac5,
   "secondary-grey": #7c7d89,
+  "secondary-grey-deactive": #808191,
   "ntr-dark-01": #343434,
   "ntr-dark-02": #898f96,
   "ntr-dark-03": #9697af,
@@ -269,6 +270,7 @@ $secondary-error: map-get($colors, "secondary-error");
 $secondary-green: map-get($colors, "secondary-green");
 $secondary-blue: map-get($colors, "secondary-blue");
 $secondary-grey: map-get($colors, "secondary-grey");
+$secondary-grey-deactive: map-get($colors, "secondary-grey-deactive");
 $ntr-dark-01: map-get($colors, "ntr-dark-01");
 $ntr-dark-02: map-get($colors, "ntr-dark-02");
 $ntr-dark-03: map-get($colors, "ntr-dark-03");
@@ -330,20 +332,20 @@ $mobile-width: map-get($break-points, "sm");
 $grid-columns: 12 !default;
 $grid-gutter-width: 12px !default;
 
-$screen-xxs: 320px;
-$screen-xs: 480px;
-$screen-sm: 568px;
-$screen-ms: 640px;
-$screen-md: 768px;
-$screen-def: 1024px;
-$screen-lg: 1280px;
-$screen-xl: 1366px;
-$screen-xxl: 1440px;
-$screen-mg: 1560px;
-$screen-xmg: 1668px;
-$screen-hd: 1920px;
-$screen-2k: 2048px;
-$screen-4k: 3840px;
+$screen-xxs: 320;
+$screen-xs: 480;
+$screen-sm: 568;
+$screen-ms: 640;
+$screen-md: 768;
+$screen-def: 1024;
+$screen-lg: 1280;
+$screen-xl: 1366;
+$screen-xxl: 1440;
+$screen-mg: 1560;
+$screen-xmg: 1668;
+$screen-hd: 1920;
+$screen-2k: 2048;
+$screen-4k: 3840;
 
 $_screens-map: (
   xxs: $screen-xxs,

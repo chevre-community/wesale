@@ -1,13 +1,14 @@
-import { useModal } from "@/lib";
+import { revealNavOnScroll, useModal } from "@/lib";
 
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, withRouter } from "next/router";
 
 import {
+	AdvancedFilterModal,
 	BookmarkIcon,
 	ChevronDown,
 	CustomImage,
@@ -87,11 +88,8 @@ const options = [
 	},
 ];
 
-const Navbar = () => {
-	const router = useRouter();
-
+const Navbar = ({ router }) => {
 	const { mainState, mainDispatch } = useMain();
-	const { toggle } = useModal();
 
 	const handleLocaleChange = (locale) => {
 		router.push(router.asPath, router.asPath, { locale });
@@ -103,6 +101,12 @@ const Navbar = () => {
 		exit: "animate__animated animate__faster",
 		exitActive: "animate__fadeOutUp animate__faster",
 	};
+
+	useEffect(() => {
+		revealNavOnScroll();
+
+		return () => window.removeEventListener("scroll", revealNavOnScroll);
+	}, []);
 
 	return (
 		<>
@@ -172,16 +176,20 @@ const Navbar = () => {
 								onChange={(e) => handleLocaleChange(e.value)}
 							/>
 							<Link href="/dashboard/favourites" passHref>
-								<a className="g-btn g-btn__icon with-gap-16" href="">
+								<a className="g-btn g-btn__icon with-gap-16">
 									<HeartIcon />
 								</a>
 							</Link>
 							<Link href="/dashboard/saved-searches" passHref>
-								<a className="g-btn g-btn__icon with-gap-16" href="">
+								<a className="g-btn g-btn__icon with-gap-16">
 									<BookmarkIcon />
 								</a>
 							</Link>
-							<Link href="?login=true" passHref>
+							<Link
+								href="?login=true"
+								as={`${router.asPath}?login=true`}
+								passHref
+							>
 								<a className="g-btn g-btn__icon with-gap-16">
 									<ProfileIcon />
 								</a>
@@ -189,9 +197,11 @@ const Navbar = () => {
 							{/* <a className="g-btn g-btn__icon with-gap-16" onClick={toggle}>
 								<ProfileIcon />
 							</a> */}
-							<a href="" className="g-btn g-btn-blue with-gap-16">
-								Разместить объявление
-							</a>
+							<Link href="/announcement/create" passHref>
+								<a className="g-btn g-btn-blue with-gap-16">
+									Разместить объявление
+								</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -219,8 +229,10 @@ const Navbar = () => {
 			>
 				<FilterFormWrapper />
 			</CSSTransition>
+
+			<AdvancedFilterModal justClose={true} modal="advancedFilter" />
 		</>
 	);
 };
 
-export default Navbar;
+export default withRouter(Navbar);

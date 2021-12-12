@@ -1,3 +1,5 @@
+import { useModal } from "@/lib";
+
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { CSSTransition } from "react-transition-group";
@@ -5,6 +7,9 @@ import { CSSTransition } from "react-transition-group";
 import Link from "next/link";
 
 import {
+	BecomeAgencyChoiceModal,
+	BecomeAgencyModal,
+	Button,
 	DashboardBookmarkIcon,
 	DashboardHomeIcon,
 	DashboardLikeIcon,
@@ -17,6 +22,7 @@ import {
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(true);
+	const { toggle } = useModal();
 
 	return (
 		<aside className="dashboard-sidebar">
@@ -118,12 +124,22 @@ const Sidebar = () => {
 						<p className="g-caption__md--medium text-white">
 							Смените свой аккаунт на аккаунт Агенства и бла бла бла
 						</p>
-						<Link href="/dashboard" passHref>
-							<a className="g-btn-primary">Стать Агенством</a>
-						</Link>
+						<Button
+							variant="primary"
+							onClick={() =>
+								toggle({
+									value: true,
+									modal: "becomeAgency",
+								})
+							}
+						>
+							Стать Агенством
+						</Button>
 					</div>
 				</div>
 			</CSSTransition>
+			<BecomeAgencyModal justClose={true} modal="becomeAgency" />
+			<BecomeAgencyChoiceModal justClose={true} modal="becomeAgencyChoice" />
 		</aside>
 	);
 };

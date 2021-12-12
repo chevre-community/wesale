@@ -24,7 +24,6 @@ const ProductCard = ({
 		modules: [A11y, Navigation, Pagination],
 		preloadImages: false,
 		slidesPerView: 1,
-		spaceBetween: 20,
 		loop: true,
 		spaceBetween: 30,
 		pagination: {
