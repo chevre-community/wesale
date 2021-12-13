@@ -52,7 +52,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
             }
 
             Core.Entities.User user = new Core.Entities.User
@@ -65,13 +65,13 @@ namespace API.Controllers.v1
 
             if (!result.Succeeded)
             {
-                return BadRequest(new { Errors = result.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = result.SerializeErrors() });
             }
 
             await _notificationService.SendAccountActivationAsync(user, Url, Request);
             string jwtToken = _jwtService.GenerateJwtToken(user);
 
-            return StatusCode((int)HttpStatusCode.Created, new { token = jwtToken });
+            return Ok(new { StatusCode = HttpStatusCode.OK, token = jwtToken });
         }
 
 
@@ -80,7 +80,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByIdAsync(model.UserId);
@@ -88,10 +88,10 @@ namespace API.Controllers.v1
 
             if (!result.Succeeded)
             {
-                return BadRequest(new { Errors = result.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = result.SerializeErrors() });
             }
 
-            return Ok();
+            return Ok(new { StatusCode = HttpStatusCode.BadRequest });
         }
 
         #endregion
@@ -103,14 +103,14 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
             string jwtToken = _jwtService.GenerateJwtToken(user);
 
 
-            return Ok(new { token = jwtToken });
+            return Ok(new { StatusCode = HttpStatusCode.OK, Token = jwtToken });
         }
 
         #endregion
@@ -122,13 +122,13 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+                return BadRequest(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
             await _notificationService.SendRestorePasswordAsync(user, Url, Request);
 
-            return Ok();
+            return Ok(new { StatusCode = HttpStatusCode.BadRequest });
         }
 
         [HttpPost("restorepasswordconfirmation")]
@@ -136,7 +136,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { Errors = ModelState.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
@@ -144,10 +144,10 @@ namespace API.Controllers.v1
 
             if (!resetPasswordResult.Succeeded)
             {
-                return BadRequest(new { Errors = resetPasswordResult.SerializeErrors() });
+                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = resetPasswordResult.SerializeErrors() });
             }
 
-            return Ok();
+            return Ok(new { StatusCode = HttpStatusCode.OK });
         }
 
         #endregion
@@ -161,13 +161,6 @@ namespace API.Controllers.v1
                 new CookieOptions { Expires = DateTimeOffset.Now.AddDays(30) });
 
             return "done";
-        }
-
-        [HttpGet("~/test")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public string Hello()
-        {
-            return "Supper";
         }
     }
 }
