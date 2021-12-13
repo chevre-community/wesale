@@ -3,8 +3,8 @@ WORKDIR /usr/src/app
 COPY . ./
 
 # building the app
-RUN npm i
-RUN npm run build
+RUN yarn
+RUN yarn build
 
 # Running the app
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
