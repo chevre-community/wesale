@@ -16,6 +16,7 @@ const GInput = ({
 	classname,
 	disabled,
 	defaultValue,
+	...rest
 }) => {
 	return (
 		<input
@@ -26,6 +27,7 @@ const GInput = ({
 			id={id}
 			disabled={disabled}
 			defaultValue={defaultValue}
+			{...rest}
 		/>
 	);
 };

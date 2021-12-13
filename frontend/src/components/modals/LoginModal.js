@@ -1,6 +1,9 @@
+import { authLogin, authSelectors } from "@/app/features/auth/authSlice";
 import { useModal } from "@/lib";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -18,6 +21,14 @@ import {
 
 const LoginModal = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
+
+	const [loginData, setLoginData] = useState({
+		email: "",
+		password: "",
+	});
+
+	const { errors } = useSelector(authSelectors);
 
 	const [isPassword, setIsPassword] = useState(true);
 
@@ -42,6 +53,14 @@ const LoginModal = () => {
 		} else {
 			passwordInput.current.type = "text";
 		}
+	};
+
+	const handleLogin = (e) => {
+		e.preventDefault();
+
+		dispatch(authLogin(loginData));
+
+		console.log(errors);
 	};
 
 	return (
@@ -73,18 +92,40 @@ const LoginModal = () => {
 						или войдите, используя
 					</p>
 				</div>
-				<form action="" method="post">
+				<form action="" method="post" onSubmit={handleLogin}>
 					<FormGroup label="Ваша номер или email" id="email">
-						<GInput id="email" placeholder="Text" />
+						<GInput
+							id="email"
+							placeholder="Text"
+							value={loginData.email}
+							onChange={({ target }) =>
+								setLoginData({
+									...loginData,
+									email: target.value,
+								})
+							}
+						/>
 					</FormGroup>
 					<FormGroup label="Password" id="password">
 						<div className="g-password-field">
-							<input className="" type="password" ref={passwordInput} />
+							<input
+								className=""
+								type="password"
+								value={loginData.password}
+								onChange={({ target }) =>
+									setLoginData({
+										...loginData,
+										password: target.value,
+									})
+								}
+								ref={passwordInput}
+							/>
 							<button className="password-toggle" onClick={togglePasswordType}>
 								{!isPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
 							</button>
 						</div>
 					</FormGroup>
+					{errors && JSON.stringify(errors)}
 					<button className="g-btn-primary g-btn--block my-md-24" type="submit">
 						Войти
 					</button>
