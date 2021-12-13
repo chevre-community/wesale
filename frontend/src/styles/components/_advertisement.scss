@@ -43,3 +43,27 @@
     }
   }
 }
+
+.rent-card {
+  border-radius: rem(16);
+  background: $ntr-light-04;
+  @include advancedRem(padding, (0 36 0 16));
+  min-height: rem(120);
+
+  &__img {
+    position: absolute;
+    height: calc(100% + rem(24));
+    width: rem(125);
+    bottom: 0;
+
+    img {
+      object-fit: contain;
+      height: 100%;
+      // max-width: 100%;
+    }
+
+    &-wrapper {
+      position: relative;
+    }
+  }
+}
