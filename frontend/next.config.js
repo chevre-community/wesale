@@ -1,5 +1,6 @@
 module.exports = {
 	reactStrictMode: false,
+	swcMinify: true,
 	images: {
 		domains: ["media.istockphoto.com", "images.unsplash.com"],
 	},
