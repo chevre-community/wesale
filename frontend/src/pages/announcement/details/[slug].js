@@ -1,13 +1,14 @@
-import { Controller, Keyboard, Mousewheel, Navigation, Thumbs } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-
 import React, { useEffect, useRef, useState } from "react";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 
 import Link from "next/link";
 
+import { Controller, Keyboard, Mousewheel, Navigation, Thumbs } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import {
 	Breadcrumb,
+	Button,
 	CameraIcon,
 	ChevronLeft,
 	ChevronRight,
@@ -352,6 +353,31 @@ const DetailsBySlug = ({ slug }) => {
 								<button className="g-btn-secondary" onClick={showMore}>
 									Показать все
 								</button>
+							</div>
+						</div>
+						<div className="details-page__section">
+							<div className="rent-card">
+								<div className="rent-card__img-wrapper">
+									<div className="rent-card__img">
+										<img
+											src="/static/svgs/illustration-2.svg"
+											alt="Rent an apartment"
+										/>
+									</div>
+								</div>
+								<div className="rent-card__content">
+									<div className="flex-center-between">
+										<div>
+											<p className="g-title__sm--bold">
+												Хотите сдать квартиру?
+											</p>
+											<p className="g-caption__lg--regular">
+												Это займет не больше пяти минут!
+											</p>
+										</div>
+										<Button variant="primary">Выставить объявление</Button>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="details-page__section">
