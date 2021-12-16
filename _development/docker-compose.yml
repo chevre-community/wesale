@@ -42,11 +42,11 @@ services:
       dockerfile: Web/Dockerfile
 
     ports:
-      - "5001:5001"
+      - "5002:5002"
     depends_on:
       - "sql-server-db"
     environment:
-      ASPNETCORE_URLS: "http://+:5001"
+      ASPNETCORE_URLS: "http://+:5002"
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"

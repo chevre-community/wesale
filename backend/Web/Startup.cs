@@ -59,7 +59,7 @@ namespace Web
         {
             services.AddControllersWithViews();
 
-            services.AddHttpClient();
+            
 
             #region Localization and Globalization
 
@@ -134,6 +134,9 @@ namespace Web
             #endregion
 
             #region Services
+
+            //HttpClient
+            services.AddHttpClient();
 
             //HttpContext 
             services.AddHttpContextAccessor();
@@ -246,7 +249,7 @@ namespace Web
                 //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
