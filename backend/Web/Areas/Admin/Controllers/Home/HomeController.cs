@@ -17,5 +17,11 @@ namespace Web.Areas.Admin.Controllers.Home
         {
             return View();
         }
+
+        [HttpGet("~/test")]
+        public IActionResult Test()
+        {
+            return View();
+        }
     }
 }
