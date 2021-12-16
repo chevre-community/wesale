@@ -73,7 +73,7 @@ namespace Web.Areas.Admin.Controllers.ComponentManagement
                 await _navbarComponentService.CreateAsync(navbarComponent);
 
                 TempData["Message"] = JsonConvert.SerializeObject(_actionResultMessageService.GetSuccessMessage(
-                        ActionType.Create, "Navbar component " + navbarComponent.Title_AZ, Url.Action("edit", "navbar", new { id = navbarComponent.Id })));
+                        ActionType.Create, navbarComponent.Title_AZ, Url.Action("edit", "navbar", new { id = navbarComponent.Id })));
 
                 return RedirectToAction("list");
             }
@@ -128,7 +128,7 @@ namespace Web.Areas.Admin.Controllers.ComponentManagement
                 await _navbarComponentService.UpdateAsync(navbarComponent);
 
                 TempData["Message"] = JsonConvert.SerializeObject(_actionResultMessageService.GetSuccessMessage(
-                        ActionType.Update, "Navbar component " + navbarComponent.Title_AZ, Url.Action("edit", "navbar", new { id = navbarComponent.Id })));
+                        ActionType.Update, navbarComponent.Title_AZ, Url.Action("edit", "navbar", new { id = navbarComponent.Id })));
 
                 return RedirectToAction("list");
             }
@@ -149,7 +149,7 @@ namespace Web.Areas.Admin.Controllers.ComponentManagement
             await _navbarComponentService.DeleteAsync(navbarComponent);
 
             TempData["Message"] = JsonConvert.SerializeObject(_actionResultMessageService.GetSuccessMessage(
-                        ActionType.Delete, $"Navbar component {navbarComponent.Title_AZ}"));
+                        ActionType.Delete, navbarComponent.Title_AZ));
 
             return RedirectToAction("list");
         }
