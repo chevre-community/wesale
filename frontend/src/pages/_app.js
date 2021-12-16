@@ -1,12 +1,15 @@
 // Redux
+import { setUser } from "@/app/features/auth/authSlice";
+import { endpoints, useGetUserQuery } from "@/app/services/authService";
 import { wrapper } from "@/app/store";
 import { SSRProvider } from "@react-aria/ssr";
+import Cookies from "js-cookie";
 
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 // Next JS
 import App from "next/app";
-import { useRouter } from "next/router";
 
 import { NextSeo } from "next-seo";
 
@@ -28,6 +31,16 @@ import "bootstrap/scss/bootstrap.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const MyApp = ({ Component, ...pageProps }) => {
+	const dispatch = useDispatch();
+	const { isSuccess, data } = useGetUserQuery(Cookies.get("token"));
+
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(setUser(data));
+			console.log("worked", { data });
+		}
+	}, [isSuccess]);
+
 	const getLayout =
 		Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>);
 
@@ -42,12 +55,23 @@ const MyApp = ({ Component, ...pageProps }) => {
 	);
 };
 
-MyApp.getInitialProps = async (appContext) => {
-	// calls page's `getInitialProps` and fills `appProps.pageProps`
-	const appProps = await App.getInitialProps(appContext);
+MyApp.getInitialProps = wrapper.getInitialAppProps(
+	(store) => async (appContext) => {
+		// calls page's `getInitialProps` and fills `appProps.pageProps`
+		const appProps = await App.getInitialProps(appContext);
 
-	return { ...appProps };
-};
+		// console.log(appProps, appContext);
+		// const { token } = appContext.ctx.req.cookies;
+
+		// const getUserInfo = await store.dispatch(endpoints.getUser.initiate(token));
+
+		// // setUser(user);
+
+		// console.log("worked");
+
+		return { ...appProps };
+	}
+);
 
 export default wrapper.withRedux(MyApp, {
 	debug: true,

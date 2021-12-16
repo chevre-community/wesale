@@ -12,6 +12,11 @@ export { default as handleTabs } from "./utils/handle-tabs";
 export { default as htmlToProps } from "./utils/html-to-props";
 export { default as revealNavOnScroll } from "./utils/reveal-nav-on-scroll";
 
+// utils for auth forms
+
+export { default as validateLoginFields } from "./utils/validate-login-fields";
+export { default as getFullname } from "./utils/get-fullname";
+
 // hooks
 
 export { default as useModal } from "./hooks/use-modal";

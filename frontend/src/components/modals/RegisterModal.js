@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import {
 	AppleIcon,
 	Checkbox,
-	FacebookIcon2,
 	FormGroup,
 	GInput,
 	GoogleIcon,
@@ -99,11 +98,7 @@ const RegisterModal = () => {
 						</a>
 						<p className="g-caption__lg--medium mt-md-32 mb-sm">
 							Уже зарегистрированы?
-							<Link
-								href="?login=true"
-								as={`${router.asPath}?login=true`}
-								passHref
-							>
+							<Link href="/home?login=true" shallow passHref>
 								<a className="text-primary-blue hover-primary-blue-hover">
 									Войти
 								</a>

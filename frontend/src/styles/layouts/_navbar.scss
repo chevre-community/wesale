@@ -17,6 +17,36 @@
   height: rem($nav-height);
   @include transition();
 
+  .username {
+    background: #f6f6f9;
+    border-radius: 100px;
+    padding: 0 rem(12);
+    height: rem(40);
+    display: flex;
+    align-items: center;
+    margin-right: rem(16);
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+    /* or 22px */
+
+    letter-spacing: 0.02em;
+
+    /* Black */
+
+    color: #434343;
+
+    span {
+      margin-left: rem(8);
+    }
+
+    svg {
+      max-width: rem(15);
+    }
+  }
+
   &__grid {
     @include justify-between();
 

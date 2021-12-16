@@ -1,6 +1,8 @@
 import { wrapper } from "@/app/store";
+import axios from "axios";
 
 import React from "react";
+import { useEffect } from "react";
 
 import { NextSeo } from "next-seo";
 

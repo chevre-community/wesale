@@ -1,6 +1,8 @@
-import { revealNavOnScroll, useModal } from "@/lib";
+import { authSelectors } from "@/app/features/auth/authSlice";
+import { getFullname, revealNavOnScroll, useModal } from "@/lib";
 
 import React, { forwardRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 
@@ -90,6 +92,8 @@ const options = [
 
 const Navbar = ({ router }) => {
 	const { mainState, mainDispatch } = useMain();
+	const { user } = useSelector(authSelectors);
+	const userData = user?.userData;
 
 	const handleLocaleChange = (locale) => {
 		router.push(router.asPath, router.asPath, { locale });
@@ -185,14 +189,19 @@ const Navbar = ({ router }) => {
 									<BookmarkIcon />
 								</a>
 							</Link>
-							<Link
-								href="?login=true"
-								as={`${router.asPath}?login=true`}
-								passHref
-							>
-								<a className="g-btn g-btn__icon with-gap-16">
-									<ProfileIcon />
-								</a>
+							<Link href="/home?login=true" shallow passHref>
+								{userData ? (
+									<span className="username">
+										<ProfileIcon />
+										<span>
+											{getFullname(userData.firstName, userData.lastName)}
+										</span>
+									</span>
+								) : (
+									<a className="g-btn g-btn__icon with-gap-16">
+										<ProfileIcon />
+									</a>
+								)}
 							</Link>
 							{/* <a className="g-btn g-btn__icon with-gap-16" onClick={toggle}>
 								<ProfileIcon />

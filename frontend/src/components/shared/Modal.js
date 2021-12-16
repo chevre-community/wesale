@@ -25,46 +25,48 @@ const Modal = ({
 
 	return isShowing
 		? createPortal(
-			<BsModal
-				show={isShowing}
-				onHide={() => {
-					if (!justClose) {
-						router.back() || router.push("/home");
-					} else {
-						justClose.toggle({
-							value: false,
-							modal: justClose.modal,
-						});
-					}
-				}}
-				size={size}
-				aria-labelledby="contained-modal-title-vcenter"
-				centered
-				{...(closeableIsBoolean ? { backdrop: "static", keyboard: isCloseable } : { backdrop: true })}
-				onEnter={onOpen}
-				onExit={() => setClassnames("")}
-				className={classNames("g-modal", classnames)}
-			>
-				<BsModal.Header
+				<BsModal
+					show={isShowing}
+					onHide={() => {
+						if (!justClose) {
+							router.push("/home");
+						} else {
+							justClose.toggle({
+								value: false,
+								modal: justClose.modal,
+							});
+						}
+					}}
+					size={size}
+					aria-labelledby="contained-modal-title-vcenter"
+					centered
 					{...(closeableIsBoolean
-						? { closeButton: isCloseable }
-						: { closeButton: true })}
-					className="g-modal-header"
+						? { backdrop: "static", keyboard: isCloseable }
+						: { backdrop: true })}
+					onEnter={onOpen}
+					onExit={() => setClassnames("")}
+					className={classNames("g-modal", classnames)}
 				>
-					{title && (
-						<BsModal.Title
-							className="g-modal-title"
-							id="contained-modal-title-vcenter"
-							as="h5"
-						>
-							{title}
-						</BsModal.Title>
-					)}
-				</BsModal.Header>
-				<BsModal.Body className="g-modal-body">{children}</BsModal.Body>
-			</BsModal>,
-			document.body
-		)
+					<BsModal.Header
+						{...(closeableIsBoolean
+							? { closeButton: isCloseable }
+							: { closeButton: true })}
+						className="g-modal-header"
+					>
+						{title && (
+							<BsModal.Title
+								className="g-modal-title"
+								id="contained-modal-title-vcenter"
+								as="h5"
+							>
+								{title}
+							</BsModal.Title>
+						)}
+					</BsModal.Header>
+					<BsModal.Body className="g-modal-body">{children}</BsModal.Body>
+				</BsModal>,
+				document.body
+		  )
 		: null;
 };
 

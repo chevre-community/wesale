@@ -241,6 +241,7 @@
 
 .g-form-group {
   @include flexbox(column);
+  margin-bottom: rem(12);
 
   &__md {
     max-width: rem(360);
@@ -262,7 +263,6 @@
       .g-input {
         height: rem(56);
       }
-
     }
   }
 
@@ -300,6 +300,7 @@
 
 .g-input {
   @include advancedRem(padding, (15 24));
+  margin-bottom: 0 !important;
   background: $ntr-light-04;
   border-radius: 16px;
   border: none;
@@ -467,7 +468,7 @@
       @include font-size(15, 400);
       color: $ntr-dark-01;
       letter-spacing: 0.02em;
-      @include advancedRem(padding, (0 12 0 4))
+      @include advancedRem(padding, (0 12 0 4));
     }
 
     input {
@@ -499,4 +500,8 @@
     opacity: 1;
     visibility: visible;
   }
+}
+
+.g-error {
+  margin: rem(4);
 }
