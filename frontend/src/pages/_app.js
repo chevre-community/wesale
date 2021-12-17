@@ -1,12 +1,14 @@
 // Redux
 import { setUser } from "@/app/features/auth/authSlice";
-import { endpoints, useGetUserQuery } from "@/app/services/authService";
-import { wrapper } from "@/app/store";
+import { authEndpoints } from "@/app/services/authService";
+import {
+	initializeStore,
+	removeUndefined,
+	useStore, // wrapper,
+} from "@/app/store";
 import { SSRProvider } from "@react-aria/ssr";
-import Cookies from "js-cookie";
 
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 
 // Next JS
 import App from "next/app";
@@ -31,48 +33,36 @@ import "bootstrap/scss/bootstrap.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const MyApp = ({ Component, ...pageProps }) => {
-	const dispatch = useDispatch();
-	const { isSuccess, data } = useGetUserQuery(Cookies.get("token"));
-
-	useEffect(() => {
-		if (isSuccess) {
-			dispatch(setUser(data));
-			console.log("worked", { data });
-		}
-	}, [isSuccess]);
+	const store = useStore(pageProps.initialReduxState);
 
 	const getLayout =
 		Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>);
 
 	return (
 		<SSRProvider>
-			<NextSeo title="Wesale" description="Wesale" />
-			<NProgress />
-			<MainProvider>{getLayout(<Component {...pageProps} />)}</MainProvider>
-			<LoginModal />
-			<RegisterModal />
+			<Provider store={store}>
+				<NextSeo title="Wesale" description="Wesale" />
+				<NProgress />
+				<MainProvider>{getLayout(<Component {...pageProps} />)}</MainProvider>
+				<LoginModal />
+				<RegisterModal />
+			</Provider>
 		</SSRProvider>
 	);
 };
 
-MyApp.getInitialProps = wrapper.getInitialAppProps(
-	(store) => async (appContext) => {
-		// calls page's `getInitialProps` and fills `appProps.pageProps`
-		const appProps = await App.getInitialProps(appContext);
+MyApp.getInitialProps = async (appContext) => {
+	const store = initializeStore();
+	// calls page's `getInitialProps` and fills `appProps.pageProps`
+	const appProps = await App.getInitialProps(appContext);
 
-		// console.log(appProps, appContext);
-		// const { token } = appContext.ctx.req.cookies;
+	console.log(store);
 
-		// const getUserInfo = await store.dispatch(endpoints.getUser.initiate(token));
+	return { ...appProps, initialReduxState: removeUndefined(store.getState()) };
+};
 
-		// // setUser(user);
+export default MyApp;
 
-		// console.log("worked");
-
-		return { ...appProps };
-	}
-);
-
-export default wrapper.withRedux(MyApp, {
-	debug: true,
-});
+// export default wrapper.withRedux(MyApp, {
+// 	debug: true,
+// });

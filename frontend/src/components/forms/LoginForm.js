@@ -1,30 +1,29 @@
-import { setCredentials } from "@/app/features/auth/authSlice";
+import {
+	authSelectors,
+	resetAuthLoginErrors,
+	setCredentials,
+} from "@/app/features/auth/authSlice";
 import { useAuthLoginMutation } from "@/app/services/authService";
 import { validateLoginFields } from "@/lib";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
 import React, { useRef } from "react";
-import { useCallback } from "react";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { AppleIcon, Button, FormGroup, GoogleIcon } from "@/components";
 
 import PasswordInput from "../shared/form/PasswordInput";
 
-const successToast = () => toast.success("Successfully logged in :D");
-const errorToast = () => toast.error("Something went wrong!");
-
 const LoginForm = ({}) => {
 	const passwordInput = useRef();
 	const dispatch = useDispatch();
-	const [login, { isSuccess }] = useAuthLoginMutation();
-
-	const handleToast = useCallback(() => {
-		successToast();
-	}, [isSuccess]);
+	const { errors: authLoginErrors } = useSelector(authSelectors);
+	const router = useRouter();
+	const [login, {}] = useAuthLoginMutation();
 
 	return (
 		<>
@@ -49,24 +48,31 @@ const LoginForm = ({}) => {
 				validate={({ email, password }) => {
 					const errors = {};
 
-					validateLoginFields(email, password, errors);
+					validateLoginFields(email, password, errors, authLoginErrors);
 
 					return errors;
 				}}
-				onSubmit={async ({ email, password }, isSubmitting) => {
+				onSubmit={async ({ email, password }, { validateForm }) => {
 					try {
-						const { token } = await login({ email, password }).unwrap();
+						const token = await login({ email, password }).unwrap();
 
 						dispatch(setCredentials(token));
-						handleToast();
+
+						router.push("/dashboard");
 					} catch (err) {
-						console.log(err);
-						errorToast();
+						validateForm({
+							email,
+							password,
+						});
 					}
 				}}
 			>
 				{({ errors, isSubmitting }) => (
-					<Form name="login" autoComplete="off">
+					<Form
+						name="login"
+						autoComplete="off"
+						onChange={() => dispatch(resetAuthLoginErrors())}
+					>
 						<FormGroup
 							label="Ваша номер или email"
 							id="email"

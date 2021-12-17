@@ -38,16 +38,17 @@ body {
   // color: $dark-blue;
 }
 
-@media screen and (min-width: $screen-hd) {
-  html {
-    font-size: calc(100vw / 1920 * 20);
-  }
-}
-// @media screen and (min-width: $screen-lg) {
+// @media screen and (min-width: $screen-hd) {
 //   html {
 //     font-size: calc(100vw / 1920 * 20);
 //   }
 // }
+
+@media screen and (min-width: ($screen-lg * 1px)) {
+  html {
+    font-size: calc(100vw / 1920 * 20);
+  }
+}
 
 .btn,
 .form-control {

@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authService = createApi({
 	reducerPath: "auth-service",
+	tagTypes: ["User"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: WESALE_API_URL,
 		headers: {
@@ -24,6 +25,8 @@ export const authService = createApi({
 				method: "POST",
 				body: credentials,
 			}),
+			transformResponse: (response, meta, arg) => response.token,
+			// invalidatesTags: ["User"],
 		}),
 		getUser: builder.query({
 			query: (token) => ({
@@ -39,4 +42,4 @@ export const authService = createApi({
 
 export const { useGetUserQuery, useAuthLoginMutation } = authService;
 
-export const endpoints = authService.endpoints;
+export const authEndpoints = authService.endpoints;

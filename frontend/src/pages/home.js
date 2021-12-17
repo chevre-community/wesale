@@ -1,8 +1,6 @@
 import { wrapper } from "@/app/store";
-import axios from "axios";
 
 import React from "react";
-import { useEffect } from "react";
 
 import { NextSeo } from "next-seo";
 
@@ -17,12 +15,12 @@ const Home = () => {
 	);
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-	(store) => async (ctx) => {
-		return {
-			props: {},
-		};
-	}
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+// 	(store) => async (ctx) => {
+// 		return {
+// 			props: {},
+// 		};
+// 	}
+// );
 
 export default Home;
