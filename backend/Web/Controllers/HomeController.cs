@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Web.Models;
@@ -25,16 +26,21 @@ namespace Web.Controllers
         private readonly INotificationService _notificationService;
         private readonly IUserService _userService;
         private readonly ITranslationService _translationService;
+        private readonly HttpClient _httpClient;
 
-        public HomeController(ILogger<HomeController> logger,
+        public HomeController(
+            ILogger<HomeController> logger,
             INotificationService notificationService,
             IUserService userService,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            HttpClient httpClient
+        )
         {
             _logger = logger;
             _notificationService = notificationService;
             _userService = userService;
             _translationService = translationService;
+            _httpClient = httpClient;
         }
 
         public IActionResult Index()
@@ -45,14 +51,19 @@ namespace Web.Controllers
         [Route("~/test")]
         public async Task<IActionResult> MyTest([FromServices] IEmailService emailService)
         {
-            var result2 = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+            //temporary hard coded URI
+            var uri = "http://api:5000/api/v1/test/salamlar";
 
-            //string result = await _translationService.TranslateByKey("NotEmpty");
-            var user = await _userService.FindByEmailAsync("kanan.tapdigli@gmail.com");
-            //await _notificationService.SendAccountActivationAsync(user, Url, Request);
-            await _notificationService.SendRestorePasswordAsync(user, Url, Request);
+            var result = await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
 
-            return Ok();
+            //var result2 = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+
+            ////string result = await _translationService.TranslateByKey("NotEmpty");
+            //var user = await _userService.FindByEmailAsync("kanan.tapdigli@gmail.com");
+            ////await _notificationService.SendAccountActivationAsync(user, Url, Request);
+            //await _notificationService.SendRestorePasswordAsync(user, Url, Request);
+
+            return Ok(await result.Content.ReadAsStringAsync());
         }
 
         [HttpGet("~/change/culture")]

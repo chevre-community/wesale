@@ -34,6 +34,12 @@ namespace API.Controllers.v1
             return Ok();
         }
 
+        [HttpGet("salamlar")]
+        public async Task<IActionResult> Salam()
+        {
+            return Ok("privet");
+        }
+
         [HttpGet("getdistricts")]
         public async Task<IActionResult> GetDistricts()
         {

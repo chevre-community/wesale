@@ -243,6 +243,12 @@ namespace DataAccess.Seeders
                 "<p>Send again in <span data-resend-time-in-sec=\"{RESEND_SEC}\"></span></p>"),
                new Translation("*", "OtpNotCorrect", "OtpNotCorrect", "OtpNotCorrect", "OtpNotCorrect"),
                new Translation("*", "OtpIsExpired", "OtpIsExpired", "OtpIsExpired", "OtpIsExpired"),
+               new Translation("*", "Search", "Search", "Search", "Search"),
+               new Translation("*", "PlaceAdv", "PlaceAdv", "PlaceAdv", "PlaceAdv"),
+               new Translation("*", "FooterInfo", "FooterInfo", "FooterInfo", "FooterInfo"),
+               new Translation("*", "FooterRightsInfo", "FooterRightsInfo", "FooterRightsInfo", "FooterRightsInfo"),
+               new Translation("*", "SubscribeInfo", "SubscribeInfo", "SubscribeInfo", "SubscribeInfo"),
+               new Translation("*", "SubscribePlaceholder", "SubscribePlaceholder", "SubscribePlaceholder", "SubscribePlaceholder"),
            };
 
             foreach (var translation in translations)
