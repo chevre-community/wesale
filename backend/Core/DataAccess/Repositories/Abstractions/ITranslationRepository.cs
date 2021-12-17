@@ -34,6 +34,7 @@ namespace Core.DataAccess.Repositories.Abstractions
         Task<Dictionary<string, string>> TranslationsForPhoneEnterModalAsync();
         Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix);
         Task<Dictionary<string, string>> TranslationsForHeaderAsync();
+        Task<Dictionary<string, string>> TranslationsForFooterAsync();
         Task<Dictionary<int, string>> TranslateMonthsAsync();
         Dictionary<int, string> TranslateGenders();
     }

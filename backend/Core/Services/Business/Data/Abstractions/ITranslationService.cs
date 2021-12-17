@@ -34,6 +34,7 @@ namespace Core.Services.Business.Data.Abstractions
         Task<Dictionary<int, string>> TranslateMonthsAsync();
         Dictionary<int, string> TranslateGenders();
         Task<Dictionary<string, string>> TranslationsForHeaderAsync();
+        Task<Dictionary<string, string>> TranslationsForFooterAsync();
 
         string TranslateBy(object obj, string property, string lang);
         List<string> TranslateListBy(object obj, string property, string lang);

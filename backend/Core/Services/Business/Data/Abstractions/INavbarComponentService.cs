@@ -19,6 +19,7 @@ namespace Core.Services.Business.Data.Abstractions
         Task<List<NavbarComponent>> GetAllAsync();
         Task<List<NavbarViewModelMapper>> GetAllForAdminAsync();
         Task<List<NavElement>> GetAllForClientHeaderAsync();
+        Task<List<NavElement>> GetAllForClientFooterAsync();
         Task<NavbarComponent> GetAsync(int id);
         Task CreateAsync(NavbarComponent navbarComponent);
         Task UpdateAsync(NavbarComponent navbarComponent);

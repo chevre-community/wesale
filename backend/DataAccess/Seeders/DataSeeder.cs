@@ -245,6 +245,10 @@ namespace DataAccess.Seeders
                new Translation("*", "OtpIsExpired", "OtpIsExpired", "OtpIsExpired", "OtpIsExpired"),
                new Translation("*", "Search", "Search", "Search", "Search"),
                new Translation("*", "PlaceAdv", "PlaceAdv", "PlaceAdv", "PlaceAdv"),
+               new Translation("*", "FooterInfo", "FooterInfo", "FooterInfo", "FooterInfo"),
+               new Translation("*", "FooterRightsInfo", "FooterRightsInfo", "FooterRightsInfo", "FooterRightsInfo"),
+               new Translation("*", "SubscribeInfo", "SubscribeInfo", "SubscribeInfo", "SubscribeInfo"),
+               new Translation("*", "SubscribePlaceholder", "SubscribePlaceholder", "SubscribePlaceholder", "SubscribePlaceholder"),
            };
 
             foreach (var translation in translations)

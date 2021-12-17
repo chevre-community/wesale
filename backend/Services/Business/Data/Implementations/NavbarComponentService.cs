@@ -87,5 +87,24 @@ namespace Services.Business.Data.Implementations
             return navbarElements;
         }
 
+        public async Task<List<NavElement>> GetAllForClientFooterAsync()
+        {
+            var footerComponents = await _unitOfWork.NavbarComponents.GetAllForClientFooterAsync();
+            var lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            var navbarElements = new List<NavElement>();
+
+            foreach (var footerComponent in footerComponents)
+            {
+                navbarElements.Add(new NavElement
+                {
+                    Name = _translationService.TranslateBy(footerComponent, "Title", lang),
+                    RequireAuth = footerComponent.RequireAuthorization,
+                    Url = footerComponent.Link
+                });
+            }
+
+            return navbarElements;
+        }
+
     }
 }

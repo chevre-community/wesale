@@ -227,6 +227,19 @@ namespace DataAccess.Repositories.Implementations
                 .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
         }
 
+        public async Task<Dictionary<string, string>> TranslationsForFooterAsync()
+        {
+            string[] footerTranslations =
+            {
+                "FooterInfo", "FooterRightsInfo", "SubscribeInfo", "SubscribePlaceholder"
+            };
+
+            return (await _context.Translations
+                .Where(t => footerTranslations.Contains(t.ContentKey))
+                .ToListAsync())
+                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
+        }
+
         #endregion
     }
 }

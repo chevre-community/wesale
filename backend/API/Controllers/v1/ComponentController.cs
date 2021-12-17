@@ -49,5 +49,22 @@ namespace API.Controllers.v1
 
             return Ok(model);
         }
+
+        [HttpGet("footer")]
+        public async Task<IActionResult> Footer()
+        {
+            var pageSetting = await _pageSettingService.GetSingleton();
+
+            var model = new FooterViewDataApiModel
+            {
+                LogoUrl = _fileService.GetFileUrl(pageSetting.LogoPhotoName, FilePath.LogoPhoto),
+                FacebookUrl = pageSetting.FacebookLink,
+                InstagramUrl = pageSetting.InstagramLink,
+                NavElements = await _navbarComponentService.GetAllForClientHeaderAsync(),
+                Translations = await _translationService.TranslationsForFooterAsync()
+            };
+
+            return Ok(model);
+        }
     }
 }

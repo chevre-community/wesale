@@ -52,5 +52,13 @@ namespace DataAccess.Repositories.Implementations
                .OrderBy(n => n.Order)
                .ToListAsync();
         }
+
+        public async Task<List<NavbarComponent>> GetAllForClientFooterAsync()
+        {
+            return await _context.NavbarComponents
+               .Where(n => n.ShowOnFooter)
+               .OrderBy(n => n.Order)
+               .ToListAsync();
+        }
     }
 }

@@ -90,6 +90,10 @@ namespace Services.Business.Data.Implementations
         {
             return await _unitOfWork.Translations.TranslationsForHeaderAsync();
         }
+        public async Task<Dictionary<string, string>> TranslationsForFooterAsync()
+        {
+            return await _unitOfWork.Translations.TranslationsForFooterAsync();
+        }
 
         public List<string> TranslateListBy(object obj, string property, string lang)
         {

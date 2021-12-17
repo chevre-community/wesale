@@ -18,5 +18,6 @@ namespace Core.DataAccess.Repositories.Abstractions
     {
         Task<List<NavbarViewModelMapper>> GetAllForAdminAsync();
         Task<List<NavbarComponent>> GetAllForClientHeaderAsync();
+        Task<List<NavbarComponent>> GetAllForClientFooterAsync();
     }
 }
