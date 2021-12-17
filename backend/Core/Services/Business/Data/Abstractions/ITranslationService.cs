@@ -31,9 +31,9 @@ namespace Core.Services.Business.Data.Abstractions
         Task<Dictionary<string, string>> TranslationsForProfileSettingAsync();
         Task<Dictionary<string, string>> TranslationsForPhoneEnterModalAsync();
         Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix);
-
         Task<Dictionary<int, string>> TranslateMonthsAsync();
         Dictionary<int, string> TranslateGenders();
+        Task<Dictionary<string, string>> TranslationsForHeaderAsync();
 
         string TranslateBy(object obj, string property, string lang);
         List<string> TranslateListBy(object obj, string property, string lang);

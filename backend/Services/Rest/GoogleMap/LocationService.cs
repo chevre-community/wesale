@@ -101,7 +101,7 @@ namespace Services.Rest.GoogleMap
             new Address
             { Name_AZ = "Binəqədi", Name_RU = "Бинагади", Name_EN = "Binagadi", SubAdresses = new List<SubAdress>
                   {
-                     new SubAdress { Name_AZ = "2-ci Alatava", Name_RU = "2-ая Алатава", Name_EN = "2-nd Alatava" },
+                     //new SubAdress { Name_AZ = "2-ci Alatava", Name_RU = "2-ая Алатава", Name_EN = "2-nd Alatava" }
                      new SubAdress { Name_AZ = "28 May", Name_RU = "28 мая", Name_EN = "28 May" },
                      new SubAdress { Name_AZ = "6-cı mkr", Name_RU = "6-ой мкр", Name_EN = "6-th mkr" },
                      new SubAdress { Name_AZ = "7-ci mkr", Name_RU = "7-ой мкр", Name_EN = "7-th mkr" },

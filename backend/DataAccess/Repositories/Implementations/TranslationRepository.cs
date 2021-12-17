@@ -55,52 +55,6 @@ namespace DataAccess.Repositories.Implementations
             return await _context.Translations.ToListAsync();
         }
 
-        public async Task<Dictionary<string, string>> TranslationsForProfileSettingAsync()
-        {
-            string[] profileTranslations =
-            {
-                "ProfileSettings", "PersonalInformation", "Notifications", "Security",
-                "FirstName","LastName", "Country", "ContactNumber", "YourEmailVisibleOnlyToYou",
-                "ChangeNumber", "Month", "Day", "Year", "Gender", "NotificationsInfo",
-                "NewsNotification", "SmsNotification", "PasswordMinLength", "CapitalLetters", "LowerLetters",
-                "NewPassword", "RepeatNewPassword"
-            };
-
-            return (await _context.Translations
-                .Where(t => profileTranslations.Contains(t.ContentKey))
-                .ToListAsync())
-                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
-        }
-
-        public async Task<Dictionary<string, string>> TranslationsForPhoneEnterModalAsync()
-        {
-            string[] enterPhoneModalTranslations =
-            {
-                "ChangeNumber", "ChangeNumberInfo", "MobileNumber"
-            };
-
-            return (await _context.Translations
-                .Where(t => enterPhoneModalTranslations.Contains(t.ContentKey))
-                .ToListAsync())
-                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
-        }
-
-        public async Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix)
-        {
-            string ChangeNumber = GetTranslationByKey("ChangeNumber");
-            string OTPSendMessage1 = GetTranslationByKey("OTPSendMessage1").Replace("{PHONE_NUMBER}", phoneNumberWithPrefix);
-            string OTPSendMessage2 = GetTranslationByKey("OTPSendMessage2");
-            string OTPSendAgain = GetTranslationByKey("OTPSendAgain");
-
-            return new Dictionary<string, string>()
-            {
-                { nameof(ChangeNumber), ChangeNumber },
-                { nameof(OTPSendMessage1), OTPSendMessage1 },
-                { nameof(OTPSendMessage2), OTPSendMessage2 },
-                {nameof(OTPSendAgain), OTPSendAgain },
-            };
-        }
-
         public List<Translation> GetAll()
         {
             return _context.Translations.ToList();
@@ -191,6 +145,56 @@ namespace DataAccess.Repositories.Implementations
         }
 
 
+
+
+        #region Transltations for client side
+
+        public async Task<Dictionary<string, string>> TranslationsForProfileSettingAsync()
+        {
+            string[] profileTranslations =
+            {
+                "ProfileSettings", "PersonalInformation", "Notifications", "Security",
+                "FirstName","LastName", "Country", "ContactNumber", "YourEmailVisibleOnlyToYou",
+                "ChangeNumber", "Month", "Day", "Year", "Gender", "NotificationsInfo",
+                "NewsNotification", "SmsNotification", "PasswordMinLength", "CapitalLetters", "LowerLetters",
+                "NewPassword", "RepeatNewPassword"
+            };
+
+            return (await _context.Translations
+                .Where(t => profileTranslations.Contains(t.ContentKey))
+                .ToListAsync())
+                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
+        }
+
+        public async Task<Dictionary<string, string>> TranslationsForPhoneEnterModalAsync()
+        {
+            string[] enterPhoneModalTranslations =
+            {
+                "ChangeNumber", "ChangeNumberInfo", "MobileNumber"
+            };
+
+            return (await _context.Translations
+                .Where(t => enterPhoneModalTranslations.Contains(t.ContentKey))
+                .ToListAsync())
+                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
+        }
+
+        public async Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix)
+        {
+            string ChangeNumber = GetTranslationByKey("ChangeNumber");
+            string OTPSendMessage1 = GetTranslationByKey("OTPSendMessage1").Replace("{PHONE_NUMBER}", phoneNumberWithPrefix);
+            string OTPSendMessage2 = GetTranslationByKey("OTPSendMessage2");
+            string OTPSendAgain = GetTranslationByKey("OTPSendAgain");
+
+            return new Dictionary<string, string>()
+            {
+                { nameof(ChangeNumber), ChangeNumber },
+                { nameof(OTPSendMessage1), OTPSendMessage1 },
+                { nameof(OTPSendMessage2), OTPSendMessage2 },
+                {nameof(OTPSendAgain), OTPSendAgain },
+            };
+        }
+
         public async Task<Dictionary<int, string>> TranslateMonthsAsync()
         {
             var monthNames = Enum.GetNames(typeof(Month)).ToArray();
@@ -209,5 +213,20 @@ namespace DataAccess.Repositories.Implementations
                 { (int)Gender.Female , GetTranslationByKey(Gender.Female.ToString()) }
             };
         }
+
+        public async Task<Dictionary<string, string>> TranslationsForHeaderAsync()
+        {
+            string[] headerTranslations =
+            {
+                "Search", "PlaceAdv"
+            };
+
+            return (await _context.Translations
+                .Where(t => headerTranslations.Contains(t.ContentKey))
+                .ToListAsync())
+                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
+        }
+
+        #endregion
     }
 }

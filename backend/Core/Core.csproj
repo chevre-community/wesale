@@ -19,7 +19,6 @@
     <Folder Include="Constants\Language\" />
     <Folder Include="Constants\File\" />
     <Folder Include="Filters\Web\" />
-    <Folder Include="Mappers\API\" />
     <Folder Include="Mappers\Web\Admin\UserManagement\Role\" />
   </ItemGroup>
 

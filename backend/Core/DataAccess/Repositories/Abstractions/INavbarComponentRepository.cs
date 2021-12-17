@@ -17,5 +17,6 @@ namespace Core.DataAccess.Repositories.Abstractions
     public interface INavbarComponentRepository : IRepository<NavbarComponent>
     {
         Task<List<NavbarViewModelMapper>> GetAllForAdminAsync();
+        Task<List<NavbarComponent>> GetAllForClientHeaderAsync();
     }
 }

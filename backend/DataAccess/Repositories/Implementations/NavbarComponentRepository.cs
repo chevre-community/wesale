@@ -44,5 +44,13 @@ namespace DataAccess.Repositories.Implementations
                })
                .ToListAsync();
         }
+
+        public async Task<List<NavbarComponent>> GetAllForClientHeaderAsync()
+        {
+            return await _context.NavbarComponents
+               .Where(n => n.ShowOnHeader)
+               .OrderBy(n => n.Order)
+               .ToListAsync();
+        }
     }
 }

@@ -213,6 +213,8 @@ namespace API
             services.AddTransient<IPhonePrefixService, PhonePrefixService>();
             services.AddTransient<IPhoneNumberActivationService, PhoneNumberActivationService>();
             services.AddTransient<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<INavbarComponentService, NavbarComponentService>();
+            services.AddTransient<IPageSettingService, PageSettingService>();
 
             services.AddTransient<IAnnouncementService, AnnouncementService>();
             services.AddTransient<IAnnouncementPhotoService, AnnouncementPhotoService>();

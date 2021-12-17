@@ -70,25 +70,25 @@ namespace Services.Business.Data.Implementations
         {
             return await _unitOfWork.Translations.TranslationsForProfileSettingAsync();
         }
-
         public async Task<Dictionary<string, string>> TranslationsForPhoneEnterModalAsync()
         {
             return await _unitOfWork.Translations.TranslationsForPhoneEnterModalAsync();
         }
-
         public async Task<Dictionary<string, string>> TranslationsForEnterOTPModalAsync(string phoneNumberWithPrefix)
         {
             return await _unitOfWork.Translations.TranslationsForEnterOTPModalAsync(phoneNumberWithPrefix);
         }
-
         public async Task<Dictionary<int, string>> TranslateMonthsAsync()
         {
             return await _unitOfWork.Translations.TranslateMonthsAsync();
         }
-
         public Dictionary<int, string> TranslateGenders()
         {
             return _unitOfWork.Translations.TranslateGenders();
+        }
+        public async Task<Dictionary<string, string>> TranslationsForHeaderAsync()
+        {
+            return await _unitOfWork.Translations.TranslationsForHeaderAsync();
         }
 
         public List<string> TranslateListBy(object obj, string property, string lang)
