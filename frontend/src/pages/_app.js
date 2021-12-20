@@ -32,7 +32,7 @@ import "animate.css";
 import "bootstrap/scss/bootstrap.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-const MyApp = ({ Component, ...pageProps }) => {
+const MyApp = ({ Component, pageProps }) => {
 	const store = useStore(pageProps.initialReduxState);
 
 	const getLayout =
@@ -56,9 +56,21 @@ MyApp.getInitialProps = async (appContext) => {
 	// calls page's `getInitialProps` and fills `appProps.pageProps`
 	const appProps = await App.getInitialProps(appContext);
 
-	console.log(store);
+	// console.log(appContext);
+	// const ctx = appContext?.ctx;
+	// const { token } = ctx?.req?.cookies;
 
-	return { ...appProps, initialReduxState: removeUndefined(store.getState()) };
+	// if (token) {
+	// 	try {
+	// 		await store.dispatch(authEndpoints.getUserByToken.initiate(token));
+
+	// 		// const authState = authEndpoints.getUserByToken.select()(store.getState());
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// }
+
+	return { ...appProps };
 };
 
 export default MyApp;

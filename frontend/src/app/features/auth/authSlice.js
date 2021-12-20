@@ -55,6 +55,13 @@ const authSlice = createSlice({
 				});
 			}
 		);
+		builder.addMatcher(
+			authService.endpoints.getUserByToken.matchFulfilled,
+			(state, { payload }) => {
+				// console.log(payload);
+				state.user = payload;
+			}
+		);
 	},
 });
 

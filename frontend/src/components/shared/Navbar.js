@@ -189,20 +189,53 @@ const Navbar = ({ router }) => {
 									<BookmarkIcon />
 								</a>
 							</Link>
-							<Link href="/home?login=true" shallow passHref>
-								{userData ? (
-									<span className="username">
+							{userData ? (
+								<div class="g-dropdown g-dropdown--user">
+									<button
+										class="g-dropdown--user-btn"
+										type="button"
+										id="triggerId"
+										data-bs-toggle="dropdown"
+										aria-haspopup="true"
+										aria-expanded="false"
+									>
 										<ProfileIcon />
 										<span>
 											{getFullname(userData.firstName, userData.lastName)}
 										</span>
-									</span>
-								) : (
+									</button>
+									<div class="dropdown-menu" aria-labelledby="triggerId">
+										<ul>
+											<li>
+												<Link href="/dashboard" passHref>
+													<a>Главная</a>
+												</Link>
+											</li>
+											<li>
+												<Link href="/dashboard" passHref>
+													<a>Сохранненый поиск</a>
+												</Link>
+											</li>
+											<li>
+												<Link href="/dashboard" passHref>
+													<a>Настройки профиля</a>
+												</Link>
+											</li>
+											<li>
+												<Link href="/dashboard" passHref>
+													<a>Выход</a>
+												</Link>
+											</li>
+										</ul>
+									</div>
+								</div>
+							) : (
+								<Link href="/home?login=true" shallow passHref>
 									<a className="g-btn g-btn__icon with-gap-16">
 										<ProfileIcon />
 									</a>
-								)}
-							</Link>
+								</Link>
+							)}
 							{/* <a className="g-btn g-btn__icon with-gap-16" onClick={toggle}>
 								<ProfileIcon />
 							</a> */}

@@ -1,5 +1,6 @@
 import { WESALE_API_URL } from "@/config/base";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 
 export const authService = createApi({
 	reducerPath: "auth-service",
@@ -10,7 +11,8 @@ export const authService = createApi({
 			"Access-Control-Allow-Origin": "https://api.wesale.az",
 		},
 		prepareHeaders: (headers, { getState }) => {
-			const token = getState().auth.token;
+			const token = getState().auth.token || Cookies.get("token");
+			console.log(token);
 
 			if (token) {
 				headers.set("authorization", `Bearer ${token}`);
@@ -28,7 +30,7 @@ export const authService = createApi({
 			transformResponse: (response, meta, arg) => response.token,
 			// invalidatesTags: ["User"],
 		}),
-		getUser: builder.query({
+		getUserByToken: builder.mutation({
 			query: (token) => ({
 				url: "/user/update",
 				method: "GET",
@@ -40,6 +42,6 @@ export const authService = createApi({
 	}),
 });
 
-export const { useGetUserQuery, useAuthLoginMutation } = authService;
+export const { useGetUserByTokenQuery, useAuthLoginMutation } = authService;
 
 export const authEndpoints = authService.endpoints;
