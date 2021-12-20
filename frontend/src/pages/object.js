@@ -1,5 +1,4 @@
-import { wrapper } from "@/app/store";
-
+// import { wrapper } from "@/app/store";
 import React from "react";
 
 import { NextSeo } from "next-seo";
@@ -15,12 +14,12 @@ const ObjectsPage = () => {
 	);
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-	(store) => async (ctx) => {
-		return {
-			props: {},
-		};
-	}
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+// 	(store) => async (ctx) => {
+// 		return {
+// 			props: {},
+// 		};
+// 	}
+// );
 
 export default ObjectsPage;

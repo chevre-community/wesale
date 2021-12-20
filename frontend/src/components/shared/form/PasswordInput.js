@@ -35,4 +35,6 @@ const PasswordInput = forwardRef(({ ...rest }, ref) => {
 	);
 });
 
+PasswordInput.displayName = "PasswordInput";
+
 export default memo(PasswordInput);
