@@ -1,5 +1,4 @@
 // import { wrapper } from "@/app/store";
-
 import React from "react";
 
 import { NextSeo } from "next-seo";

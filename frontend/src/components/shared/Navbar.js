@@ -190,9 +190,9 @@ const Navbar = ({ router }) => {
 								</a>
 							</Link>
 							{userData ? (
-								<div class="g-dropdown g-dropdown--user">
+								<div className="g-dropdown g-dropdown--user">
 									<button
-										class="g-dropdown--user-btn"
+										className="g-dropdown--user-btn"
 										type="button"
 										id="triggerId"
 										data-bs-toggle="dropdown"
@@ -204,7 +204,7 @@ const Navbar = ({ router }) => {
 											{getFullname(userData.firstName, userData.lastName)}
 										</span>
 									</button>
-									<div class="dropdown-menu" aria-labelledby="triggerId">
+									<div className="dropdown-menu" aria-labelledby="triggerId">
 										<ul>
 											<li>
 												<Link href="/dashboard" passHref>
