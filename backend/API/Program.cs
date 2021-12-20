@@ -24,7 +24,7 @@ namespace API
             {
                 var services = scope.ServiceProvider;
                 var context = scope.ServiceProvider.GetService<WeSaleContext>();
-                context.Database.Migrate();
+                //context.Database.Migrate();
 
                 var userService = scope.ServiceProvider.GetService<IUserService>();
                 var roleService = scope.ServiceProvider.GetService<IRoleService>();
