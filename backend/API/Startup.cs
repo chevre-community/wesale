@@ -281,7 +281,7 @@ namespace API
                .AllowAnyHeader());
 
             app.UseRouting();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
 
