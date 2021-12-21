@@ -1,8 +1,10 @@
-import { authSelectors } from "@/app/features/auth/authSlice";
+import { authSelectors, removeCredentials, removeUser } from "@/app/features/auth/authSlice";
 import { getFullname, revealNavOnScroll, useModal } from "@/lib";
+import Cookies from "js-cookie";
 
 import React, { forwardRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 
@@ -91,9 +93,9 @@ const options = [
 ];
 
 const Navbar = ({ router }) => {
+	const dispatch = useDispatch();
 	const { mainState, mainDispatch } = useMain();
-	const { user } = useSelector(authSelectors);
-	const userData = user?.userData;
+	const { user, token } = useSelector(authSelectors);
 
 	const handleLocaleChange = (locale) => {
 		router.push(router.asPath, router.asPath, { locale });
@@ -104,6 +106,14 @@ const Navbar = ({ router }) => {
 		enterActive: "animate__fadeInDown animate__faster",
 		exit: "animate__animated animate__faster",
 		exitActive: "animate__fadeOutUp animate__faster",
+	};
+
+	const logout = () => {
+		Cookies.remove("token");
+		dispatch(removeCredentials());
+		dispatch(removeUser());
+
+		router.push("/home");
 	};
 
 	useEffect(() => {
@@ -189,45 +199,34 @@ const Navbar = ({ router }) => {
 									<BookmarkIcon />
 								</a>
 							</Link>
-							{userData ? (
+							{(token && user) ? (
 								<div className="g-dropdown g-dropdown--user">
-									<button
-										className="g-dropdown--user-btn"
-										type="button"
-										id="triggerId"
-										data-bs-toggle="dropdown"
-										aria-haspopup="true"
-										aria-expanded="false"
-									>
-										<ProfileIcon />
-										<span>
-											{getFullname(userData.firstName, userData.lastName)}
-										</span>
-									</button>
-									<div className="dropdown-menu" aria-labelledby="triggerId">
-										<ul>
-											<li>
+									<Dropdown>
+										<Dropdown.Toggle>
+											<ProfileIcon />
+											<span>{getFullname(user.firstName, user.lastName)}</span>
+										</Dropdown.Toggle>
+										<Dropdown.Menu>
+											<Dropdown.Item as="li">
 												<Link href="/dashboard" passHref>
 													<a>Главная</a>
 												</Link>
-											</li>
-											<li>
+											</Dropdown.Item>
+											<Dropdown.Item as="li">
 												<Link href="/dashboard" passHref>
 													<a>Сохранненый поиск</a>
 												</Link>
-											</li>
-											<li>
+											</Dropdown.Item>
+											<Dropdown.Item as="li">
 												<Link href="/dashboard" passHref>
 													<a>Настройки профиля</a>
 												</Link>
-											</li>
-											<li>
-												<Link href="/dashboard" passHref>
-													<a>Выход</a>
-												</Link>
-											</li>
-										</ul>
-									</div>
+											</Dropdown.Item>
+											<Dropdown.Item as="li">
+												<a onClick={logout}>Выход</a>
+											</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
 								</div>
 							) : (
 								<Link href="/home?login=true" shallow passHref>

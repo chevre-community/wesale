@@ -99,7 +99,7 @@ const DashboardHome = () => {
 						<p className="g-text__sm--semibold text-primary-grey announcement-card__title">
 							Продается 3-комнатная старинная постро
 						</p>
-						<Dropdown className="announcement-card__dropdown">
+						<Dropdown className="announcement-card__dropdown g-dropdown">
 							<Dropdown.Toggle variant="" id="dropdown-basic">
 								<FaEllipsisH color={colors["ntr-dark-03"]} />
 							</Dropdown.Toggle>
@@ -185,7 +185,34 @@ const DashboardHome = () => {
 						<p className="g-text__sm--semibold text-primary-grey announcement-card__title">
 							Продается 3-комнатная старинная постро
 						</p>
-						<FaEllipsisH color={colors["ntr-dark-03"]} />
+						<Dropdown className="announcement-card__dropdown g-dropdown">
+							<Dropdown.Toggle variant="">
+								<FaEllipsisH color={colors["ntr-dark-03"]} />
+							</Dropdown.Toggle>
+							<Dropdown.Menu>
+								<Dropdown.Item as="li">
+									<Link
+										href="/announcement/edit/Продается 3-комнатная старинная постро"
+										passHref
+									>
+										<a>Edit</a>
+									</Link>
+								</Dropdown.Item>
+								<Dropdown.Item as="li">
+									<Link href="/announcement/" passHref>
+										<a>Delete</a>
+									</Link>
+								</Dropdown.Item>
+								<Dropdown.Item as="li">
+									<Link
+										href="/announcement/details/Продается 3-комнатная старинная постро"
+										passHref
+									>
+										<a>Details</a>
+									</Link>
+								</Dropdown.Item>
+							</Dropdown.Menu>
+						</Dropdown>
 					</div>
 					<div className="announcement-card__body">
 						<div className="announcement-card__img">
@@ -539,7 +566,7 @@ const DashboardHome = () => {
 };
 
 DashboardHome.getLayout = (page) => {
-  return <DashboardLayout>{page}</DashboardLayout>;
+	return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default DashboardHome;
