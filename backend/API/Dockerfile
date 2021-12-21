@@ -2,8 +2,8 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5000
+EXPOSE 442
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
@@ -20,8 +20,6 @@ FROM build AS publish
 RUN dotnet publish "API.csproj" -c Release -o /app/publish
 
 FROM base AS final
-
-ENV CONNECTION_STRING_NAME=Staging
 
 # Change timezone to local time
 ENV TZ=Asia/Baku
