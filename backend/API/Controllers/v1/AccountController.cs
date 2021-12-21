@@ -1,4 +1,5 @@
 ﻿using API.ApiModels.v1.Account.Account;
+using API.ApiModels.v1.User.User;
 using AutoMapper;
 using Core.Constants.Notification;
 using Core.Entities;

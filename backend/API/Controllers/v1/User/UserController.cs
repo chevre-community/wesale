@@ -33,6 +33,24 @@ namespace API.Controllers.v1.User
             _notificationService = notificationService;
         }
 
+        #region User info
+
+        [HttpGet("info")]
+        public async Task<IActionResult> Info()
+        {
+            var user = await _userService.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var userInfo = new UserInfoApiModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+
+            return Ok(userInfo);
+        }
+
+        #endregion
 
         #region Update view data
 
