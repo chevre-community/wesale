@@ -31,16 +31,18 @@ services:
       context: ./backend
       dockerfile: API/Dockerfile
     ports:
-      - "5000:80"
+      - "5000:5000"
     depends_on:
       - "sql-server-db"
     environment:
+      ASPNETCORE_URLS: "http://+:5000"
       ASPNETCORE_ENVIRONMENT: "Production"
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
       SQL_PASSWORD: "FTmLjmC2RvhXZmhv"
       VIRTUAL_HOST: "api.wesale.az"
+      VIRTUAL_PORT : "5000" 
 
   web-admin:
     container_name: "web-admin"
