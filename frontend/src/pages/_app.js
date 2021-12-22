@@ -1,14 +1,11 @@
 // Redux
 import { getUserByToken, setUser } from "@/app/features/auth/authSlice";
-import { authEndpoints } from "@/app/services/authService";
-import { initializeStore, useStore, wrapper } from "@/app/store";
+import { wrapper } from "@/app/store";
 import { SSRProvider } from "@react-aria/ssr";
-import Cookies from "js-cookie";
-
-import { useEffect } from "react";
 
 // Next JS
 import App from "next/app";
+import Router from "next/router";
 
 import { NextSeo } from "next-seo";
 
@@ -54,11 +51,32 @@ const MyApp = ({ Component, pageProps }) => {
 MyApp.getInitialProps = wrapper.getInitialAppProps(
 	(store) => async (appContext) => {
 		// calls page's `getInitialProps` and fills `appProps.pageProps`
+		// const ctx = appContext.ctx || null;
+		// const res = ctx.res || null;
 		const appProps = await App.getInitialProps(appContext);
-		const token = store.getState().auth.token || appContext.ctx.req?.cookies || null;
-		
+		const token =
+			store.getState().auth.token || appContext.ctx.req?.cookies.token || null;
+
 		if (token) {
-			await store.dispatch(getUserByToken({ token }));
+			const getUserFn = await store.dispatch(getUserByToken({ token }));
+
+			console.log(getUserFn.payload.error);
+			if (getUserFn.payload.error || getUserFn.error) {
+				if (res) {
+					if (ctx.pathname === "/dashboard") {
+						res.writeHead(302, {
+							Location: "/home",
+						});
+
+						res.end();
+					}
+				}
+				// else {
+				// 	console.log("res not existed");
+				// 	alert("helloo");
+				// 	Router.push("/home");
+				// }
+			}
 		}
 
 		return {

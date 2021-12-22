@@ -16,58 +16,51 @@ import { useRouter } from "next/router";
 
 import { AppleIcon, Button, FormGroup, GoogleIcon } from "@/components";
 
+import classNames from "classnames";
+
 import PasswordInput from "../shared/form/PasswordInput";
 
 const LoginForm = ({}) => {
 	const passwordInput = useRef();
 	const dispatch = useDispatch();
-	const { errors: authLoginErrors } = useSelector(authSelectors);
+	const { errors } = useSelector(authSelectors);
+	const authLoginErrors = errors.login;
 	const router = useRouter();
 	const [login, {}] = useAuthLoginMutation();
 
 	return (
 		<>
-			<div className="auth-providers">
-				<button className="g-btn-auth-provider provider-google">
-					<GoogleIcon />
-				</button>
-				<button className="g-btn-auth-provider provider-apple">
-					<AppleIcon />
-				</button>
-			</div>
-			<div className="text-center mb-md-24">
-				<p className="g-caption__lg--medium text-ntr-dark-02">
-					или войдите, используя
-				</p>
-			</div>
 			<Formik
 				initialValues={{
 					email: "",
 					password: "",
 				}}
-				validate={({ email, password }) => {
+				validate={(values) => {
 					const errors = {};
 
-					validateLoginFields(email, password, errors, authLoginErrors);
+					validateLoginFields({
+						...values,
+						errors,
+						authErrors: authLoginErrors,
+					});
 
 					return errors;
 				}}
-				onSubmit={async ({ email, password }, { validateForm }) => {
+				onSubmit={async (values, { validateForm }) => {
 					try {
-						const token = await login({ email, password }).unwrap();
+						const token = await login({ ...values }).unwrap();
 
 						dispatch(setCredentials(token));
 
 						router.push("/dashboard");
 					} catch (err) {
 						validateForm({
-							email,
-							password,
+							...values,
 						});
 					}
 				}}
 			>
-				{({ errors, isSubmitting }) => (
+				{({ errors, isSubmitting, isValid }) => (
 					<Form
 						name="login"
 						autoComplete="off"
@@ -85,6 +78,7 @@ const LoginForm = ({}) => {
 								className="g-input"
 								type="text"
 								name="email"
+								id="email"
 								autoComplete="off"
 							/>
 						</FormGroup>
@@ -101,6 +95,7 @@ const LoginForm = ({}) => {
 									<PasswordInput
 										ref={passwordInput}
 										value={value}
+										id="password"
 										name="password"
 										onChange={({ target }) =>
 											setFieldValue("password", target.value)
@@ -111,7 +106,9 @@ const LoginForm = ({}) => {
 						</FormGroup>
 						<Button
 							variant="primary"
-							className="g-btn--block my-md-24"
+							className={classNames("g-btn--block my-md-24", {
+								disabled: !isValid,
+							})}
 							type="submit"
 							loader={{
 								isLoading: isSubmitting,

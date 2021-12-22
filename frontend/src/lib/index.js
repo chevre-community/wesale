@@ -15,6 +15,7 @@ export { default as revealNavOnScroll } from "./utils/reveal-nav-on-scroll";
 // utils for auth forms
 
 export { default as validateLoginFields } from "./utils/validate-login-fields";
+export { default as validateSignupFields } from "./utils/validate-signup-fields";
 export { default as getFullname } from "./utils/get-fullname";
 
 // hooks

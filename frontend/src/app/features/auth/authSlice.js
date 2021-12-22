@@ -7,8 +7,11 @@ import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
 	user: null,
-	token: null,
-	errors: {},
+	token: null || Cookies.get("token"),
+	errors: {
+		login: {},
+		signup: {},
+	},
 	response: null,
 };
 
@@ -24,13 +27,19 @@ export const getUserByToken = createAsyncThunk(
 				},
 			});
 
-			// dispatch(setResponse(res.data));
-			// dispatch(setResponse(res.data))
-
+			// if (res.data) {
+			// 	return res.data;
+			// }
+			// rejectWithValue(res);
 			return res.data;
 		} catch (err) {
-			if (!err.response) throw err;
-			rejectWithValue(err.response);
+			rejectWithValue(err?.response);
+			return {
+				error: {
+					status: err.response.status,
+					message: err.response.statusText,
+				},
+			};
 		}
 	}
 );
@@ -39,30 +48,38 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
+		// Signup and Login
 		setCredentials: (state, { payload }) => {
 			state.token = payload;
 			Cookies.set("token", state.token);
 		},
+		// Log out
 		removeCredentials: (state) => {
 			state.token = null;
 		},
+		// Login
 		setUser: (state, { payload }) => {
 			console.log(payload, "payload");
 			state.user = payload;
 			console.log({ user: state.user });
 		},
+		// Log out
 		removeUser: (state) => {
 			state.user = null;
 		},
+		// Login
 		setAuthLoginErrors: (state, { payload }) => {
-			state.errors[payload.key] = payload.error;
+			state.errors.login[payload.key] = payload.error;
 		},
 		resetAuthLoginErrors: (state) => {
-			state.errors = {};
+			state.errors.login = {};
 		},
-		setResponse: (state, { payload }) => {
-			console.log(response);
-			state.response = payload;
+		// Sign up
+		setAuthSignupErros: (state, { payload }) => {
+			state.errors.signup[payload.key] = payload.error;
+		},
+		resetAuthSignupErrors: (state) => {
+			state.errors.signup = {};
 		},
 	},
 	extraReducers: (builder) => {
@@ -73,18 +90,21 @@ const authSlice = createSlice({
 				...payload.auth,
 			};
 		});
+		// Get User Token
 		builder.addCase(getUserByToken.rejected, (state, { payload }) => {
-			state.response = payload;
+			state.response = payload.error;
 		});
 		builder.addCase(getUserByToken.fulfilled, (state, { payload }) => {
+			console.log(payload);
 			state.user = payload;
 		});
+		// Login
 		builder.addMatcher(
 			authService.endpoints.authLogin.matchFulfilled,
 			(state, { payload }) => {
-				// console.log({ state, payload });
+				console.log({ state, payload });
 				state.token = payload.token;
-				state.errors = {};
+				state.errors.login = {};
 			}
 		);
 		builder.addMatcher(
@@ -93,8 +113,27 @@ const authSlice = createSlice({
 				const { errors } = payload.data;
 				console.log({ errors });
 				Object.keys(errors).forEach((key) => {
-					state.errors[key] = errors[key];
+					state.errors.login[key] = errors[key];
 				});
+			}
+		);
+		// Signup
+		builder.addMatcher(
+			authService.endpoints.authSignup.matchRejected,
+			(state, { payload }) => {
+				const { errors } = payload.data;
+				Object.keys(errors).forEach((key) => {
+					state.errors.signup[key] = errors[key];
+				});
+			}
+		);
+		builder.addMatcher(
+			authService.endpoints.authSignup.matchFulfilled,
+			(state, { payload }) => {
+				console.log(payload, "at add matcher");
+				// console.log({ state, payload });
+				state.token = payload.token;
+				state.errors.signup = {};
 			}
 		);
 		// builder.addMatcher(
@@ -112,11 +151,12 @@ export const authSelectors = (state) => state.auth;
 export const {
 	setCredentials,
 	setUser,
-	setResponse,
 	setAuthLoginErrors,
+	setAuthSignupErros,
 	removeCredentials,
 	removeUser,
 	resetAuthLoginErrors,
+	resetAuthSignupErrors,
 } = authSlice.actions;
 
 export default authSlice.reducer;

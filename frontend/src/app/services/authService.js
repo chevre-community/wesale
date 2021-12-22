@@ -27,6 +27,14 @@ export const authService = createApi({
 			transformResponse: (response, meta, arg) => response.token,
 			// invalidatesTags: ["User"],
 		}),
+		authSignup: builder.mutation({
+			query: (credentials) => ({
+				url: "/account/register",
+				method: "POST",
+				body: credentials,
+				transformResponse: (response, meta, arg) => response.token,
+			}),
+		}),
 		// getUserByToken: builder.mutation({
 		// 	query: (token) => ({
 		// 		url: "/user/update",
@@ -39,6 +47,6 @@ export const authService = createApi({
 	}),
 });
 
-export const { useAuthLoginMutation } = authService;
+export const { useAuthLoginMutation, useAuthSignupMutation } = authService;
 
 export const authEndpoints = authService.endpoints;

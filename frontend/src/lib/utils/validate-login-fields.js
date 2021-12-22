@@ -1,11 +1,11 @@
 import validator from "validator";
 
-export default function validateLoginFields(
+export default function validateLoginFields({
 	email,
 	password,
 	errors,
-	authErrors
-) {
+	authErrors,
+}) {
 	if (validator.isEmpty(email)) {
 		errors.email = "Email is required!";
 	} else if (!validator.isEmail(email)) {

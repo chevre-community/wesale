@@ -22,6 +22,7 @@ export { default as Sidebar } from "@/components/dashboard/Sidebar";
 // Form Components
 
 export { default as LoginForm } from "@/components/forms/LoginForm";
+export { default as SignupForm } from "@/components/forms/SignupForm";
 
 // Shared Components
 
