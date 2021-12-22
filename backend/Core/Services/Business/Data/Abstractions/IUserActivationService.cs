@@ -29,6 +29,6 @@ namespace Core.Services.Business.Data.Abstractions
 
         Task<UserActivation> GetByUserAsync(User user);
 
-        Task<string> GenerateConfirmationLinkAsync(User user, IUrlHelper urlHelper, HttpRequest request);
+        Task<string> GenerateConfirmationLinkAsync(User user);
     }
 }

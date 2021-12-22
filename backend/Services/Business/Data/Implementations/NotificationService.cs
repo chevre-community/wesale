@@ -269,9 +269,10 @@ namespace Services.Business.Data.Implementations
         public async Task SendAccountActivationAsync(User user, IUrlHelper urlHelper, HttpRequest request)
         {
             var userActivation = await _userActivationService.GetByUserAsync(user);
+
             if (userActivation == null)
             {
-                var confirmationLink = await _userActivationService.GenerateConfirmationLinkAsync(user, urlHelper, request);
+                var confirmationLink = await _userActivationService.GenerateConfirmationLinkAsync(user);
                 userActivation = await _userActivationService.CreateAsync(user, confirmationLink);
             }
 

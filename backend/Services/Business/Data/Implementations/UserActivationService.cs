@@ -5,6 +5,7 @@ using Core.Mappers.Web.Admin.UserManagement.UserActivation;
 using Core.Services.Business.Data.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,12 +77,35 @@ namespace Services.Business.Data.Implementations
             return await _unitOfWork.UserActivations.GetByUserAsync(user);
         }
 
-        public async Task<string> GenerateConfirmationLinkAsync(User user, IUrlHelper urlHelper, HttpRequest request)
+        private string GetCurrenEnvironment()
         {
+            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"); 
+        }
+
+        public async Task<string> GenerateConfirmationLinkAsync(User user)
+        {
+            var currentEnvironment = GetCurrenEnvironment();
             string token = await _userService.GenerateEmailConfirmationTokenAsync(user);
 
-            return urlHelper.Action("confirmemail", "account",
-                new { userId = user.Id, token = token }, request.Scheme);
+            var confirmEmailUri = new UriBuilder();
+            confirmEmailUri.Scheme = "http"; //Will be updated to https when SSL enabled
+            confirmEmailUri.Path = "api/v1/account/confirmemail";
+            confirmEmailUri.Query = $"userId={user.Id}&token={token}";
+
+            if (currentEnvironment == Environments.Staging)
+            {
+                confirmEmailUri.Host = "dev.wesale.az";
+            }
+            else if (currentEnvironment == Environments.Production)
+            {
+                confirmEmailUri.Host = "wesale.az";
+            }
+            else if (currentEnvironment == Environments.Development)
+            {
+                confirmEmailUri.Host = "localdomain";
+            }
+
+            return confirmEmailUri.ToString();
         }
     }
 }
