@@ -14,7 +14,9 @@ namespace Web.Areas.Admin.Controllers.UserManagement
     {
         private readonly IUserActivationService _userActivationService;
 
-        public UserActivationController(IUserActivationService userActivationService)
+        public UserActivationController(
+            IUserActivationService userActivationService
+            )
         {
             _userActivationService = userActivationService;
         }
@@ -31,13 +33,13 @@ namespace Web.Areas.Admin.Controllers.UserManagement
 
         public async Task<IActionResult> Details(int id)
         {
-            var userActivation = await _userActivationService.GetAsync(id);
+            var userActivation = await _userActivationService.GetWithUserAsync(id);
             if (userActivation == null) return NotFound();
 
             var model = new UserActivationDetailsViewModel
             {
-                UserFullName = $"{userActivation.User.FirstName} {userActivation.User.LastName}",
-                UserEmail = userActivation.User.Email,
+                UserFullName = $"{userActivation.User?.FirstName} {userActivation.User?.LastName}",
+                UserEmail = userActivation.User?.Email,
                 ActivationLink = userActivation.ActivationLink,
                 MailSent = userActivation.MailSent,
                 CreatedAt = userActivation.CreatedAt,

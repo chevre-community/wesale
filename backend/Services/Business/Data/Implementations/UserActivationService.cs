@@ -19,8 +19,10 @@ namespace Services.Business.Data.Implementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
 
-        public UserActivationService(IUnitOfWork unitOfWork,
-            IUserService userService)
+        public UserActivationService(
+            IUnitOfWork unitOfWork,
+            IUserService userService
+            )
         {
             _unitOfWork = unitOfWork;
             _userService = userService;
@@ -39,6 +41,11 @@ namespace Services.Business.Data.Implementations
         public async Task<UserActivation> GetAsync(int id)
         {
             return await _unitOfWork.UserActivations.GetAsync(id);
+        }
+
+        public async Task<UserActivation> GetWithUserAsync(int id)
+        {
+            return await _unitOfWork.UserActivations.GetWithUserAsync(id);
         }
 
         public async Task CreateAsync(UserActivation userActivation)
