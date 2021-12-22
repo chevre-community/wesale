@@ -266,7 +266,7 @@ namespace Services.Business.Data.Implementations
 
         #region Account activation
 
-        public async Task SendAccountActivationAsync(User user, IUrlHelper urlHelper, HttpRequest request)
+        public async Task SendAccountActivationAsync(User user)
         {
             var userActivation = await _userActivationService.GetByUserAsync(user);
 
@@ -280,7 +280,30 @@ namespace Services.Business.Data.Implementations
             var sendResult = await SendByIdAsync(notification.Id);
 
             userActivation.MailSent = sendResult.EmailSent;
+
             await _unitOfWork.CommitAsync();
+        }
+
+        public void SendAccountActivationInBackground(User user)
+        {
+            _backgroundTaskQueue.EnqueueTask(async (serviceScopeFactory, cancellationToken) =>
+            {
+                // Get services
+                using var scope = serviceScopeFactory.CreateScope();
+                var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<NotificationService>>();
+
+                try
+                {
+                    await notificationService.SendAccountActivationAsync(user);
+
+                    logger.LogInformation($"[BT] [NotificationService] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send account activation notification completed successfully.");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, $"[BT] [NotificationService] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send account activation notification completed unsuccessfully, exception occurred.");
+                }
+            });
         }
 
         #endregion

@@ -74,7 +74,7 @@ namespace API.Controllers.v1
                 return BadRequest(new { Errors = result.SerializeErrors() });
             }
 
-            await _notificationService.SendAccountActivationAsync(user, Url, Request);
+            _notificationService.SendAccountActivationInBackground(user);
 
             return Ok(new { Messages = await _translationService.TranslationsForAfterRegisterAsync() });
         }

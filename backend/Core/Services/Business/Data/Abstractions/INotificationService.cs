@@ -34,7 +34,8 @@ namespace Core.Services.Business.Data.Abstractions
         Task<bool> SendSMSAsync(Entities.Notification notification);
 
 
-        Task SendAccountActivationAsync(User user, IUrlHelper urlHelper, HttpRequest request);
+        Task SendAccountActivationAsync(User user);
+        void SendAccountActivationInBackground(User user);
 
         Task SendRestorePasswordAsync(User user, IUrlHelper urlHelper, HttpRequest request);
 
