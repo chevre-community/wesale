@@ -59,7 +59,7 @@ namespace Services.Business.Data.Implementations
         {
             var userActivation = new UserActivation
             {
-                User = user,
+                UserId = user.Id,
                 ActivationLink = activationLink
             };
 
