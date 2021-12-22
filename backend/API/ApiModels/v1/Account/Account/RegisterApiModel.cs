@@ -12,7 +12,8 @@ namespace API.ApiModels.v1.Account.Account
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
     }
 
@@ -98,9 +99,9 @@ namespace API.ApiModels.v1.Account.Account
 
             #endregion
 
-            #region FullName
+            #region FirsName
 
-            RuleFor(user => user.FullName)
+            RuleFor(user => user.FirstName)
                 .Cascade(CascadeMode.Stop)
 
                 .NotNull()
@@ -109,8 +110,27 @@ namespace API.ApiModels.v1.Account.Account
                 .NotEmpty()
                 .WithMessage(NOT_EMPTY_MESSAGE)
 
-                .MaximumLength(255)
-                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "255"))
+                .MaximumLength(35)
+                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "35"))
+
+                .MinimumLength(2)
+                .WithMessage(MIN_LENGTH_WITH_SUBS.Replace("{}", "2"));
+
+            #endregion 
+
+            #region LastName
+
+            RuleFor(user => user.LastName)
+                .Cascade(CascadeMode.Stop)
+
+                .NotNull()
+                .WithMessage(NOT_NULL_MESSAGE)
+
+                .NotEmpty()
+                .WithMessage(NOT_EMPTY_MESSAGE)
+
+                .MaximumLength(35)
+                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "35"))
 
                 .MinimumLength(2)
                 .WithMessage(MIN_LENGTH_WITH_SUBS.Replace("{}", "2"));

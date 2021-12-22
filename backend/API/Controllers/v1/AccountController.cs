@@ -53,26 +53,28 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
 
             Core.Entities.User user = new Core.Entities.User
             {
                 Email = model.Email,
                 UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
             };
 
             var result = await _userService.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = result.SerializeErrors() });
+                return BadRequest(new { Errors = result.SerializeErrors() });
             }
 
             await _notificationService.SendAccountActivationAsync(user, Url, Request);
             string jwtToken = _jwtService.GenerateJwtToken(user);
 
-            return Ok(new { StatusCode = HttpStatusCode.OK, token = jwtToken });
+            return Ok(new { token = jwtToken });
         }
 
 
@@ -81,7 +83,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByIdAsync(model.UserId);
@@ -89,10 +91,10 @@ namespace API.Controllers.v1
 
             if (!result.Succeeded)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = result.SerializeErrors() });
+                return BadRequest(new { Errors = result.SerializeErrors() });
             }
 
-            return Ok(new { StatusCode = HttpStatusCode.BadRequest });
+            return Ok();
         }
 
         #endregion
@@ -104,14 +106,13 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
             string jwtToken = _jwtService.GenerateJwtToken(user);
 
-
-            return Ok(new { StatusCode = HttpStatusCode.OK, Token = jwtToken });
+            return Ok(new { Token = jwtToken });
         }
 
         #endregion
@@ -123,13 +124,13 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
             await _notificationService.SendRestorePasswordAsync(user, Url, Request);
 
-            return Ok(new { StatusCode = HttpStatusCode.BadRequest });
+            return Ok();
         }
 
         [HttpPost("restorepasswordconfirmation")]
@@ -137,7 +138,7 @@ namespace API.Controllers.v1
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = ModelState.SerializeErrors() });
+                return BadRequest(new { Errors = ModelState.SerializeErrors() });
             }
 
             var user = await _userService.FindByEmailAsync(model.Email);
@@ -145,10 +146,10 @@ namespace API.Controllers.v1
 
             if (!resetPasswordResult.Succeeded)
             {
-                return Ok(new { StatusCode = HttpStatusCode.BadRequest, Errors = resetPasswordResult.SerializeErrors() });
+                return BadRequest(new { Errors = resetPasswordResult.SerializeErrors() });
             }
 
-            return Ok(new { StatusCode = HttpStatusCode.OK });
+            return Ok();
         }
 
         #endregion
