@@ -240,6 +240,19 @@ namespace DataAccess.Repositories.Implementations
                 .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
         }
 
+        public async Task<Dictionary<string, string>> TranslationsForAfterRegisterAsync()
+        {
+            string[] afterRegisterTranslations =
+            {
+                "SuccessRegisterInfo"
+            };
+
+            return (await _context.Translations
+                .Where(t => afterRegisterTranslations.Contains(t.ContentKey))
+                .ToListAsync())
+                .ToDictionary(pt => pt.ContentKey, pt => GetTranslationByKey(pt.ContentKey));
+        }
+
         #endregion
     }
 }

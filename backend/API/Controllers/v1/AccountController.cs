@@ -31,19 +31,22 @@ namespace API.Controllers.v1
         private readonly INotificationService _notificationService;
         private readonly SignInManager<Core.Entities.User> _signInManager;
         private readonly IJwtService _jwtService;
+        private readonly ITranslationService _translationService;
 
         public AccountController(
             IUserService userService,
             INotificationService notificationService,
             IMapper mapper,
             SignInManager<Core.Entities.User> signInManager,
-            IJwtService jwtService)
+            IJwtService jwtService,
+            ITranslationService translationService)
         {
             _userService = userService;
             _notificationService = notificationService;
             _mapper = mapper;
             _signInManager = signInManager;
             _jwtService = jwtService;
+            _translationService = translationService;
         }
 
         #region Register
@@ -73,7 +76,7 @@ namespace API.Controllers.v1
 
             await _notificationService.SendAccountActivationAsync(user, Url, Request);
 
-            return Ok();
+            return Ok(new { Messages = await _translationService.TranslationsForProfileSettingAsync() });
         }
 
 

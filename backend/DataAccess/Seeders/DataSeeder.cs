@@ -249,6 +249,7 @@ namespace DataAccess.Seeders
                new Translation("*", "FooterRightsInfo", "FooterRightsInfo", "FooterRightsInfo", "FooterRightsInfo"),
                new Translation("*", "SubscribeInfo", "SubscribeInfo", "SubscribeInfo", "SubscribeInfo"),
                new Translation("*", "SubscribePlaceholder", "SubscribePlaceholder", "SubscribePlaceholder", "SubscribePlaceholder"),
+               new Translation("*", "SuccessRegisterInfo", "SuccessRegisterInfo", "SuccessRegisterInfo", "SuccessRegisterInfo"),
            };
 
             foreach (var translation in translations)
