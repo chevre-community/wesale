@@ -53,17 +53,17 @@ namespace Services.Notification.Email.Implementation.SMTP
 
                     if (smsResult)
                     {
-                        logger.LogInformation($"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed successfully.");
+                        logger.LogInformation($"[BT][SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed successfully.");
                     }
                     else
                     {
-                        logger.LogError($"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully.");
+                        logger.LogError($"[BT][SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully.");
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, $"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
+                    logger.LogError(ex, $"[BT][SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
                 }
             });
 
@@ -95,7 +95,7 @@ namespace Services.Notification.Email.Implementation.SMTP
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, $"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
+                    _logger.LogError(ex, $"[SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
 
                     return false;
                 }

@@ -18,11 +18,16 @@ namespace Services.Notification.Email.Implementation.SendGrid
     {
         private readonly SendGridConfiguration _sendGridConfiguration;
         private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+        private readonly ILogger<SendGridService> _logger;
 
-        public SendGridService(SendGridConfiguration sendGridConfiguration, IBackgroundTaskQueue backgroundTaskQueue)
+        public SendGridService(
+            SendGridConfiguration sendGridConfiguration, 
+            IBackgroundTaskQueue backgroundTaskQueue,
+            ILogger<SendGridService> logger)
         {
             _sendGridConfiguration = sendGridConfiguration;
             _backgroundTaskQueue = backgroundTaskQueue;
+            _logger = logger;
         }
 
         public async Task<bool> SendEmail(Message message)
@@ -35,7 +40,19 @@ namespace Services.Notification.Email.Implementation.SendGrid
             var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, "", body);
             var response = await client.SendEmailAsync(msg);
 
+            if (!response.IsSuccessStatusCode)
+            {
+                LogErrorResult(await response.Body.ReadAsStringAsync());
+            }
+
             return response.IsSuccessStatusCode;
+
+        }
+
+        private void LogErrorResult(string text)
+        {
+            var sendGridException = new Exception(text);
+            _logger.LogError(sendGridException, $"[SendGrid] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, problem occurred.");
         }
 
         public Task SendEmailInBackground(Message message)
@@ -53,17 +70,17 @@ namespace Services.Notification.Email.Implementation.SendGrid
 
                     if (smsResult)
                     {
-                        logger.LogInformation($"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed successfully.");
+                        logger.LogInformation($"[BT][SendGrid] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed successfully.");
                     }
                     else
                     {
-                        logger.LogError($"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully.");
+                        logger.LogError($"[BT][SendGrid] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully.");
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, $"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfullyCould, exception occurred.");
+                    logger.LogError(ex, $"[BT][SendGrid] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
                 }
             });
 
