@@ -1,20 +1,19 @@
 import { authSelectors, removeCredentials, removeUser } from "@/app/features/auth/authSlice";
-import { getFullname, revealNavOnScroll, useModal } from "@/lib";
+import { getFullname, revealNavOnScroll } from "@/lib";
 import Cookies from "js-cookie";
 
-import React, { forwardRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 
 import Link from "next/link";
-import { useRouter, withRouter } from "next/router";
+import { withRouter } from "next/router";
 
 import {
 	AdvancedFilterModal,
 	BookmarkIcon,
-	ChevronDown,
 	CustomImage,
 	FilterFormWrapper,
 	HeartIcon,
