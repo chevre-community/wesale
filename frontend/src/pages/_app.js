@@ -1,11 +1,10 @@
 // Redux
-import { getUserByToken, setUser } from "@/app/features/auth/authSlice";
+import { getUserByToken } from "@/app/features/auth/authSlice";
 import { wrapper } from "@/app/store";
 import { SSRProvider } from "@react-aria/ssr";
 
 // Next JS
 import App from "next/app";
-import Router from "next/router";
 
 import { NextSeo } from "next-seo";
 
@@ -62,13 +61,13 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
 
 			console.log(getUserFn.payload.error);
 			if (getUserFn.payload.error || getUserFn.error) {
-				if (res) {
-					if (ctx.pathname === "/dashboard") {
-						res.writeHead(302, {
+				if (appContext.ctx.res) {
+					if (appContext.ctx.pathname === "/dashboard") {
+						appContext.ctx.res.writeHead(302, {
 							Location: "/home",
 						});
 
-						res.end();
+						appContext.ctx.res.end();
 					}
 				}
 				// else {

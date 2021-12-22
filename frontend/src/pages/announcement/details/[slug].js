@@ -1,3 +1,5 @@
+import { wrapper } from "@/app/store";
+
 import React, { useEffect, useRef, useState } from "react";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 
@@ -515,28 +517,38 @@ const DetailsBySlug = ({ slug }) => {
 	);
 };
 
-export const getStaticPaths = (ctx) => {
-	return {
-		paths: [
-			{
-				params: {
-					slug: "23",
-				},
+export const getServerSideProps = wrapper.getServerSideProps(
+	(store) => async (ctx) => {
+		return {
+			props: {
+				slug: ctx?.params?.slug,
 			},
-		],
-		fallback: "blocking",
-	};
-};
+		};
+	}
+);
 
-export const getStaticProps = (ctx) => {
-	const { slug } = ctx.params;
+// export const getStaticPaths = (ctx) => {
+// 	return {
+// 		paths: [
+// 			{
+// 				params: {
+// 					slug: "23",
+// 				},
+// 			},
+// 		],
+// 		fallback: "blocking",
+// 	};
+// };
 
-	return {
-		props: {
-			slug,
-		},
-		revalidate: 20,
-	};
-};
+// export const getStaticProps = (ctx) => {
+// 	const { slug } = ctx.params;
+
+// 	return {
+// 		props: {
+// 			slug,
+// 		},
+// 		revalidate: 20,
+// 	};
+// };
 
 export default DetailsBySlug;
