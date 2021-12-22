@@ -72,9 +72,8 @@ namespace API.Controllers.v1
             }
 
             await _notificationService.SendAccountActivationAsync(user, Url, Request);
-            string jwtToken = _jwtService.GenerateJwtToken(user);
 
-            return Ok(new { token = jwtToken });
+            return Ok();
         }
 
 

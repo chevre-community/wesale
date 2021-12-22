@@ -22,23 +22,23 @@ namespace API
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
-                var context = scope.ServiceProvider.GetService<WeSaleContext>();
+                //var services = scope.ServiceProvider;
+                //var context = scope.ServiceProvider.GetService<WeSaleContext>();
                 //context.Database.Migrate();
 
-                var userService = scope.ServiceProvider.GetService<IUserService>();
-                var roleService = scope.ServiceProvider.GetService<IRoleService>();
-                var permissionService = scope.ServiceProvider.GetService<IPermissionService>();
-                var translationService = scope.ServiceProvider.GetService<ITranslationService>();
-                var locationService = scope.ServiceProvider.GetService<ILocationService>();
+                //var userService = scope.ServiceProvider.GetService<IUserService>();
+                //var roleService = scope.ServiceProvider.GetService<IRoleService>();
+                //var permissionService = scope.ServiceProvider.GetService<IPermissionService>();
+                //var translationService = scope.ServiceProvider.GetService<ITranslationService>();
+                //var locationService = scope.ServiceProvider.GetService<ILocationService>();
 
-                DataSeeder.SeedNotifyEvents(context);
-                DataSeeder.SeedRoles(roleService);
-                DataSeeder.SeedSuperAdminPermissions(roleService, permissionService);
-                DataSeeder.SeedSuperAdminUser(userService);
-                DataSeeder.SeedTranslations(translationService);
-                DataSeeder.SeedPageSetting(context);
-                await DataSeeder.SeedDistrictsWithSubsAsync(context, locationService);
+                //DataSeeder.SeedNotifyEvents(context);
+                //DataSeeder.SeedRoles(roleService);
+                //DataSeeder.SeedSuperAdminPermissions(roleService, permissionService);
+                //DataSeeder.SeedSuperAdminUser(userService);
+                //DataSeeder.SeedTranslations(translationService);
+                //DataSeeder.SeedPageSetting(context);
+                //await DataSeeder.SeedDistrictsWithSubsAsync(context, locationService);
             }
 
             host.Run();
