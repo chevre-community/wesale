@@ -76,7 +76,7 @@ namespace API.Controllers.v1
 
             await _notificationService.SendAccountActivationAsync(user, Url, Request);
 
-            return Ok(new { Messages = await _translationService.TranslationsForProfileSettingAsync() });
+            return Ok(new { Messages = await _translationService.TranslationsForAfterRegisterAsync() });
         }
 
 
