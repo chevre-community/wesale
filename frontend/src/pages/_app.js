@@ -1,14 +1,11 @@
 // Redux
-import { setUser } from "@/app/features/auth/authSlice";
+import { getUserByToken, setUser } from "@/app/features/auth/authSlice";
 import { authEndpoints } from "@/app/services/authService";
-import {
-	initializeStore,
-	removeUndefined,
-	useStore, // wrapper,
-} from "@/app/store";
+import { initializeStore, useStore, wrapper } from "@/app/store";
 import { SSRProvider } from "@react-aria/ssr";
+import Cookies from "js-cookie";
 
-import { Provider, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 // Next JS
 import App from "next/app";
@@ -32,49 +29,73 @@ import "animate.css";
 import "bootstrap/scss/bootstrap.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+// const token =
+// 	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMmFiYmFlNC1mODM4LTRmYjUtOTM5Ny1iMmEyOGEzMTI0NWUiLCJ1bmlxdWVfbmFtZSI6Indlc2FsZV9tYW5hZ2VyQGdtYWlsLmNvbSIsImVtYWlsIjpbIndlc2FsZV9tYW5hZ2VyQGdtYWlsLmNvbSIsIndlc2FsZV9tYW5hZ2VyQGdtYWlsLmNvbSJdLCJzdWIiOiJ3ZXNhbGVfbWFuYWdlckBnbWFpbC5jb20iLCJqdGkiOiI1MGI1N2FjMy1jYzlmLTQzMmItYThhMy04YWE5NTllOGYwY2MiLCJuYmYiOjE2NDAwODg4NDgsImV4cCI6MTY0MTM4NDg0OCwiaWF0IjoxNjQwMDg4ODQ4fQ.bj01XusBRoMaAVF-BJ7lWy1E3HmlhK_a8QwxbM3ur3o";
+
 const MyApp = ({ Component, pageProps }) => {
-	const store = useStore(pageProps.initialReduxState);
+	// const store = useStore(pageProps.initialReduxState);
 
 	const getLayout =
 		Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>);
 
 	return (
 		<SSRProvider>
-			<Provider store={store}>
-				<NextSeo title="Wesale" description="Wesale" />
-				<NProgress />
-				<MainProvider>{getLayout(<Component {...pageProps} />)}</MainProvider>
-				<LoginModal />
-				<RegisterModal />
-			</Provider>
+			{/* <Provider store={store}> */}
+			<NextSeo title="Wesale" description="Wesale" />
+			<NProgress />
+			<MainProvider>{getLayout(<Component {...pageProps} />)}</MainProvider>
+			<LoginModal />
+			<RegisterModal />
+			{/* </Provider> */}
 		</SSRProvider>
 	);
 };
 
-MyApp.getInitialProps = async (appContext) => {
-	const store = initializeStore();
-	// calls page's `getInitialProps` and fills `appProps.pageProps`
-	const appProps = await App.getInitialProps(appContext);
+MyApp.getInitialProps = wrapper.getInitialAppProps(
+	(store) => async (appContext) => {
+		// calls page's `getInitialProps` and fills `appProps.pageProps`
+		const appProps = await App.getInitialProps(appContext);
+		const token = store.getState().auth.token || appContext.ctx.req?.cookies || null;
+		
+		if (token) {
+			await store.dispatch(getUserByToken({ token }));
+		}
 
-	// console.log(appContext);
-	// const ctx = appContext?.ctx;
-	// const { token } = ctx?.req?.cookies;
+		return {
+			...appProps,
+		};
+	}
+);
 
-	// if (token) {
-	// 	try {
-	// 		await store.dispatch(authEndpoints.getUserByToken.initiate(token));
+export default wrapper.withRedux(MyApp, {
+	debug: true,
+});
 
-	// 		// const authState = authEndpoints.getUserByToken.select()(store.getState());
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// }
+// MyApp.getInitialProps = async (appContext) => {
+// 	const store = initializeStore();
+// 	// calls page's `getInitialProps` and fills `appProps.pageProps`
+// 	const appProps = await App.getInitialProps(appContext);
+// 	const getUser = await store.dispatch(getUserByToken({ token }));
 
-	return { ...appProps };
-};
+// 	console.log(getUser);
 
-export default MyApp;
+// 	console.log(appContext);
+// 	const ctx = appContext?.ctx;
+// 	const { token } = ctx?.req?.cookies;
 
-// export default wrapper.withRedux(MyApp, {
-// 	debug: true,
-// });
+// 	if (token) {
+// 		try {
+// 			await store.dispatch(authEndpoints.getUserByToken.initiate(token));
+
+// 			// const authState = authEndpoints.getUserByToken.select()(store.getState());
+// 		} catch (err) {
+// 			console.log(err);
+// 		}
+// 	}
+
+// 	return {
+// 		...appProps,
+// 	};
+// };
+
+// export default MyApp;

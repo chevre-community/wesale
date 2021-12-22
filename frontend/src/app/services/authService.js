@@ -7,9 +7,6 @@ export const authService = createApi({
 	tagTypes: ["User"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: WESALE_API_URL,
-		headers: {
-			"Access-Control-Allow-Origin": "https://api.wesale.az",
-		},
 		prepareHeaders: (headers, { getState }) => {
 			const token = getState().auth.token || Cookies.get("token");
 			console.log(token);
@@ -30,18 +27,18 @@ export const authService = createApi({
 			transformResponse: (response, meta, arg) => response.token,
 			// invalidatesTags: ["User"],
 		}),
-		getUserByToken: builder.mutation({
-			query: (token) => ({
-				url: "/user/update",
-				method: "GET",
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}),
-		}),
+		// getUserByToken: builder.mutation({
+		// 	query: (token) => ({
+		// 		url: "/user/update",
+		// 		method: "GET",
+		// 		headers: {
+		// 			Authorization: `Bearer ${token}`,
+		// 		},
+		// 	}),
+		// }),
 	}),
 });
 
-export const { useGetUserByTokenQuery, useAuthLoginMutation } = authService;
+export const { useAuthLoginMutation } = authService;
 
 export const authEndpoints = authService.endpoints;

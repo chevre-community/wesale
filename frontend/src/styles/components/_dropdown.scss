@@ -1,8 +1,76 @@
 .g-dropdown {
+  $dropdown-btn-height: 40;
   position: relative;
 
   .dropdown-menu {
-    // background-color: $white;
+    top: calc(100% + #{rem(6)}) !important;
+    right: calc(100% - #{rem(24)}) !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    border: none;
+    border-radius: rem(8);
+    box-shadow: 0px 5px 40px rgba(17, 20, 45, 0.08);
+
+    .dropdown-item {
+      padding: 0;
+      background-color: transparent;
+
+      &:active,
+      &.active {
+        background-color: transparent;
+      }
+
+      a {
+        @include advancedRem(padding, (4 12));
+        display: block;
+        @include font-size(14, 400);
+        line-height: rem(24);
+        color: $primary-black;
+        @include transition();
+        cursor: pointer;
+  
+        &:hover,
+        &:focus,
+        &:active {
+          color: $primary-blue;
+          background-color: transparentize($primary-blue, $amount: 0.98);
+        }
+      }
+    }
+  }
+
+  &--user {
+    margin-right: rem(16);
+
+    .btn {
+      background: #f6f6f9 !important;
+      border-radius: 100px;
+      padding: 0 rem(12);
+      height: rem($dropdown-btn-height);
+      @include flex-center();
+      @include font-size(14, 500);
+      line-height: 1.6;
+      line-height: 160%;
+      border: none;
+      letter-spacing: 0.02em;
+      color: $primary-grey !important;
+      box-shadow: none !important;
+
+      span {
+        margin-left: rem(8);
+      }
+
+      svg {
+        max-width: rem(15);
+      }
+    }
+
+    .dropdown-menu {
+      min-width: rem(190);
+      right: auto !important;
+      left: rem(-24) !important;
+    }
   }
 }
 
@@ -25,7 +93,4 @@
   to {
     opacity: 1;
   }
-}
-
-.user-dropdown {
 }
