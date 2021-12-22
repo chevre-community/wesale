@@ -60,6 +60,8 @@ namespace API.Controllers.v1
             {
                 Email = model.Email,
                 UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
             };
 
             var result = await _userService.CreateAsync(user, model.Password);

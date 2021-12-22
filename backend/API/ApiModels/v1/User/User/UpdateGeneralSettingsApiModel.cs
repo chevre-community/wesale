@@ -94,27 +94,32 @@ namespace API.ApiModels.v1.User.User
                 .NotNull()
                 .WithMessage(NOT_NULL_MESSAGE)
 
-                //Check whether email field empty or not 
                 .NotEmpty()
                 .WithMessage(NOT_EMPTY_MESSAGE)
 
                 .MaximumLength(35)
-                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "35"));
+                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "35"))
 
+                .MinimumLength(2)
+                .WithMessage(MIN_LENGTH_WITH_SUBS.Replace("{}", "2"));
             #endregion
 
             #region LastName
 
             RuleFor(model => model.LastName)
+                .Cascade(CascadeMode.Stop)
+
                 .NotNull()
                 .WithMessage(NOT_NULL_MESSAGE)
 
-                //Check whether email field empty or not 
                 .NotEmpty()
                 .WithMessage(NOT_EMPTY_MESSAGE)
 
                 .MaximumLength(35)
-                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "35"));
+                .WithMessage(MAX_LENGTH_WITH_SUBS.Replace("{}", "35"))
+
+                .MinimumLength(2)
+                .WithMessage(MIN_LENGTH_WITH_SUBS.Replace("{}", "2"));
 
             #endregion
 
