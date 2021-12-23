@@ -1,4 +1,8 @@
-import { authSelectors, removeCredentials, removeUser } from "@/app/features/auth/authSlice";
+import {
+	authSelectors,
+	removeCredentials,
+	removeUser,
+} from "@/app/features/auth/authSlice";
 import { getFullname, revealNavOnScroll } from "@/lib";
 import Cookies from "js-cookie";
 
@@ -198,7 +202,7 @@ const Navbar = ({ router }) => {
 									<BookmarkIcon />
 								</a>
 							</Link>
-							{(token && user) ? (
+							{token && user ? (
 								<div className="g-dropdown g-dropdown--user">
 									<Dropdown>
 										<Dropdown.Toggle>

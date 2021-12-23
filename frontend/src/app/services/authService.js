@@ -9,7 +9,7 @@ export const authService = createApi({
 		baseUrl: WESALE_API_URL,
 		prepareHeaders: (headers, { getState }) => {
 			const token = getState().auth.token || Cookies.get("token");
-			console.log(token);
+			// console.log(token);
 
 			if (token) {
 				headers.set("authorization", `Bearer ${token}`);
@@ -32,7 +32,7 @@ export const authService = createApi({
 				url: "/account/register",
 				method: "POST",
 				body: credentials,
-				transformResponse: (response, meta, arg) => response.token,
+				transformResponse: (response, meta, arg) => response.messages,
 			}),
 		}),
 		// getUserByToken: builder.mutation({
