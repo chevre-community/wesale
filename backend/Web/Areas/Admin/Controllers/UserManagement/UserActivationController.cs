@@ -14,12 +14,13 @@ namespace Web.Areas.Admin.Controllers.UserManagement
     {
         private readonly IUserActivationService _userActivationService;
 
-        public UserActivationController(IUserActivationService userActivationService)
+        public UserActivationController(
+            IUserActivationService userActivationService
+            )
         {
             _userActivationService = userActivationService;
         }
 
-        [HttpGet]
         public async Task<IActionResult> List()
         {
             var model = new UserActivationListViewModel
@@ -30,15 +31,15 @@ namespace Web.Areas.Admin.Controllers.UserManagement
             return View(model);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var userActivation = await _userActivationService.GetAsync(id);
+            var userActivation = await _userActivationService.GetWithUserAsync(id);
             if (userActivation == null) return NotFound();
 
             var model = new UserActivationDetailsViewModel
             {
-                User = userActivation.User,
+                UserFullName = $"{userActivation.User?.FirstName} {userActivation.User?.LastName}",
+                UserEmail = userActivation.User?.Email,
                 ActivationLink = userActivation.ActivationLink,
                 MailSent = userActivation.MailSent,
                 CreatedAt = userActivation.CreatedAt,

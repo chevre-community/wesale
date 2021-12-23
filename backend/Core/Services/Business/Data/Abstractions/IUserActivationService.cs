@@ -19,6 +19,8 @@ namespace Core.Services.Business.Data.Abstractions
 
         Task<UserActivation> GetAsync(int id);
 
+        Task<UserActivation> GetWithUserAsync(int id);
+
         Task CreateAsync(UserActivation userActivation);
 
         Task<UserActivation> CreateAsync(User user, string activationLink);
@@ -27,6 +29,6 @@ namespace Core.Services.Business.Data.Abstractions
 
         Task<UserActivation> GetByUserAsync(User user);
 
-        Task<string> GenerateConfirmationLinkAsync(User user, IUrlHelper urlHelper, HttpRequest request);
+        Task<string> GenerateConfirmationLinkAsync(User user);
     }
 }

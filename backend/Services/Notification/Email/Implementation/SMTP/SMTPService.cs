@@ -20,11 +20,16 @@ namespace Services.Notification.Email.Implementation.SMTP
     {
         private readonly SMTPConfiguration _smtpConfiguration;
         private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+        private readonly ILogger<SMTPService> _logger;
 
-        public SMTPService(SMTPConfiguration smtpConfiguration, IBackgroundTaskQueue backgroundTaskQueue)
+        public SMTPService(
+            SMTPConfiguration smtpConfiguration, 
+            IBackgroundTaskQueue backgroundTaskQueue,
+            ILogger<SMTPService> logger)
         {
             _smtpConfiguration = smtpConfiguration;
             _backgroundTaskQueue = backgroundTaskQueue;
+            _logger = logger;
         }
 
         public async Task<bool> SendEmail(Message message)
@@ -48,17 +53,17 @@ namespace Services.Notification.Email.Implementation.SMTP
 
                     if (smsResult)
                     {
-                        logger.LogInformation($"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed successfully.");
+                        logger.LogInformation($"[BT][SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed successfully.");
                     }
                     else
                     {
-                        logger.LogError($"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully.");
+                        logger.LogError($"[BT][SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully.");
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, $"[BT] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfullyCould, exception occurred.");
+                    logger.LogError(ex, $"[BT][SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
                 }
             });
 
@@ -88,8 +93,10 @@ namespace Services.Notification.Email.Implementation.SMTP
                     client.Send(mailMessage);
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
+                    _logger.LogError(ex, $"[SMTP] [{DateTime.UtcNow.ToString("dd/MM/yyy HH:mm:ss")}] Send email completed unsuccessfully, exception occurred.");
+
                     return false;
                 }
                 finally

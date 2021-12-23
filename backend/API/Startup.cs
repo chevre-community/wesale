@@ -222,14 +222,14 @@ namespace API
             //Email
 
             //SMTP
-            var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();
-            services.AddSingleton(smtpConfiguration);
-            services.AddTransient<IEmailService, SMTPService>();
+            //var smtpConfiguration = Configuration.GetSection("SMTPConfiguration").Get<SMTPConfiguration>();
+            //services.AddSingleton(smtpConfiguration);
+            //services.AddTransient<IEmailService, SMTPService>();
 
             ////SendGrid
-            //var sendGridConfiguration = Configuration.GetSection("SendGridConfiguration").Get<SendGridConfiguration>();
-            //services.AddSingleton(sendGridConfiguration);
-            //services.AddTransient<IEmailService, SendGridService>();
+            var sendGridConfiguration = Configuration.GetSection("SendGridConfiguration").Get<SendGridConfiguration>();
+            services.AddSingleton(sendGridConfiguration);
+            services.AddTransient<IEmailService, SendGridService>();
 
             //SMS
             var atlSmsConfiguration = Configuration.GetSection("AtlSmsConfiguration").Get<AtlSmsConfiguration>();

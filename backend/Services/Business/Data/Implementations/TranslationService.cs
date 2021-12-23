@@ -94,6 +94,11 @@ namespace Services.Business.Data.Implementations
         {
             return await _unitOfWork.Translations.TranslationsForFooterAsync();
         }
+        public async Task<Dictionary<string, string>> TranslationsForAfterRegisterAsync()
+        {
+            return await _unitOfWork.Translations.TranslationsForAfterRegisterAsync();
+        }
+
 
         public List<string> TranslateListBy(object obj, string property, string lang)
         {

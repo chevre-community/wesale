@@ -51,6 +51,11 @@ namespace DataAccess.Repositories.Implementations
             return await _context.UserActivations.FindAsync(id);
         }
 
+        public async Task<UserActivation> GetWithUserAsync(int id)
+        {
+            return await _context.UserActivations.Where(ua => ua.Id == id).Include(ua => ua.User).FirstOrDefaultAsync();
+        }
+
         public async Task CreateAsync(UserActivation userActivation)
         {
             await _context.UserActivations.AddAsync(userActivation);

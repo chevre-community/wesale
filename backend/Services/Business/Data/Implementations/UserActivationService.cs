@@ -5,6 +5,7 @@ using Core.Mappers.Web.Admin.UserManagement.UserActivation;
 using Core.Services.Business.Data.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,10 @@ namespace Services.Business.Data.Implementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
 
-        public UserActivationService(IUnitOfWork unitOfWork,
-            IUserService userService)
+        public UserActivationService(
+            IUnitOfWork unitOfWork,
+            IUserService userService
+            )
         {
             _unitOfWork = unitOfWork;
             _userService = userService;
@@ -41,6 +44,11 @@ namespace Services.Business.Data.Implementations
             return await _unitOfWork.UserActivations.GetAsync(id);
         }
 
+        public async Task<UserActivation> GetWithUserAsync(int id)
+        {
+            return await _unitOfWork.UserActivations.GetWithUserAsync(id);
+        }
+
         public async Task CreateAsync(UserActivation userActivation)
         {
             await _unitOfWork.UserActivations.CreateAsync(userActivation);
@@ -51,7 +59,7 @@ namespace Services.Business.Data.Implementations
         {
             var userActivation = new UserActivation
             {
-                User = user,
+                UserId = user.Id,
                 ActivationLink = activationLink
             };
 
@@ -69,12 +77,35 @@ namespace Services.Business.Data.Implementations
             return await _unitOfWork.UserActivations.GetByUserAsync(user);
         }
 
-        public async Task<string> GenerateConfirmationLinkAsync(User user, IUrlHelper urlHelper, HttpRequest request)
+        private string GetCurrenEnvironment()
         {
+            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"); 
+        }
+
+        public async Task<string> GenerateConfirmationLinkAsync(User user)
+        {
+            var currentEnvironment = GetCurrenEnvironment();
             string token = await _userService.GenerateEmailConfirmationTokenAsync(user);
 
-            return urlHelper.Action("confirmemail", "account",
-                new { userId = user.Id, token = token }, request.Scheme);
+            var confirmEmailUri = new UriBuilder();
+            confirmEmailUri.Scheme = "http"; //Will be updated to https when SSL enabled
+            confirmEmailUri.Path = "api/v1/account/confirmemail";
+            confirmEmailUri.Query = $"userId={user.Id}&token={token}";
+
+            if (currentEnvironment == Environments.Staging)
+            {
+                confirmEmailUri.Host = "dev.wesale.az";
+            }
+            else if (currentEnvironment == Environments.Production)
+            {
+                confirmEmailUri.Host = "wesale.az";
+            }
+            else if (currentEnvironment == Environments.Development)
+            {
+                confirmEmailUri.Host = "localdomain";
+            }
+
+            return confirmEmailUri.ToString();
         }
     }
 }

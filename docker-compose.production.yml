@@ -90,6 +90,9 @@ services:
       - ./portainer-data:/data
     ports:
       - 9000:9000
+    environment:
+      VIRTUAL_HOST: "portal.wesale.az"
+      VIRTUAL_PORT : "9000" 
 
 networks:
   default:

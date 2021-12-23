@@ -17,6 +17,8 @@ namespace Core.DataAccess.Repositories.Abstractions
 
         Task<UserActivation> GetAsync(int id);
 
+        Task<UserActivation> GetWithUserAsync(int id);
+
         Task CreateAsync(UserActivation userActivation);
 
         Task UpdateAsync(UserActivation userActivation);
