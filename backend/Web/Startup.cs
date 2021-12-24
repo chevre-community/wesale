@@ -249,7 +249,7 @@ namespace Web
                 //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection(); NOTE : Https redirection will be handlend by NGINX
             app.UseStaticFiles();
 
             app.UseRouting();

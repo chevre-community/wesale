@@ -281,7 +281,7 @@ namespace API
                .AllowAnyHeader());
 
             app.UseRouting();
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();  NOTE : Https redirection will be handlend by NGINX
             app.UseAuthentication();
             app.UseAuthorization();
 
