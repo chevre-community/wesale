@@ -10,6 +10,7 @@ services:
     image: jwilder/nginx-proxy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
@@ -54,20 +55,17 @@ services:
       dockerfile: Web/Dockerfile
     ports:
       - "5002:5002"
-      - "5003:5003"
     depends_on:
       - "sql-server-db"
     environment:
-      ASPNETCORE_URLS: "http://+:5002;https://+:5003"
+      ASPNETCORE_URLS: "http://+:5002"
       ASPNETCORE_ENVIRONMENT: "Production"
-      ASPNETCORE_HTTPS_PORT: "5003" 
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
       SQL_PASSWORD: "FTmLjmC2RvhXZmhv"
       VIRTUAL_HOST: "cevmin.wesale.az"
-      VIRTUAL_PORT : "5003" 
-      VIRTUAL_PROTO: https
+      VIRTUAL_PORT : "5002" 
 
   web-client:
     container_name: "web-client"
