@@ -54,11 +54,13 @@ services:
       dockerfile: Web/Dockerfile
     ports:
       - "5002:5002"
+      - "5003:5003"
     depends_on:
       - "sql-server-db"
     environment:
-      ASPNETCORE_URLS: "http://+:5002"
+      ASPNETCORE_URLS: "http://+:5002;https://+:5003"
       ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_HTTPS_PORT: "5003" 
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
