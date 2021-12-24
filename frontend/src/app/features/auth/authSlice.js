@@ -12,6 +12,10 @@ const initialState = {
 		login: {},
 		signup: {},
 	},
+	messages: {
+		login: {},
+		signup: {},
+	},
 	response: null,
 };
 
@@ -81,6 +85,13 @@ const authSlice = createSlice({
 		resetAuthSignupErrors: (state) => {
 			state.errors.signup = {};
 		},
+		setAuthMessages: (state, { payload }) => {
+			const { messages, auth } = payload;
+			console.log(messages, auth);
+			Object.keys(messages).forEach((key) => {
+				state.messages[auth][key] = messages[key];
+			});
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(HYDRATE, (state, { payload }) => {
@@ -130,9 +141,11 @@ const authSlice = createSlice({
 		builder.addMatcher(
 			authService.endpoints.authSignup.matchFulfilled,
 			(state, { payload }) => {
-				console.log(payload, "at add matcher");
-				// console.log({ state, payload });
-				state.token = payload.token;
+				authSlice.caseReducers.setAuthMessages({
+					messages: payload,
+					auth: "signup",
+				});
+
 				state.errors.signup = {};
 			}
 		);
@@ -153,6 +166,7 @@ export const {
 	setUser,
 	setAuthLoginErrors,
 	setAuthSignupErros,
+	setAuthMessages,
 	removeCredentials,
 	removeUser,
 	resetAuthLoginErrors,

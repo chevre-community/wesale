@@ -1,6 +1,7 @@
 import {
 	authSelectors,
 	resetAuthSignupErrors,
+	setAuthSignupMessages,
 	setCredentials,
 } from "@/app/features/auth/authSlice";
 import { useAuthSignupMutation } from "@/app/services/authService";
@@ -54,11 +55,7 @@ const SignupForm = () => {
 				}}
 				onSubmit={async (values, { validateForm }) => {
 					try {
-						const { token } = await signup({ ...values }).unwrap();
-
-						dispatch(setCredentials(token));
-
-						router.push("/dashboard");
+						await signup({ ...values }).unwrap();
 					} catch (err) {
 						validateForm({
 							...values,
@@ -69,7 +66,7 @@ const SignupForm = () => {
 				{({ errors, touched, isSubmitting, isValid }) => (
 					<Form
 						name="signup"
-						autoComplete="off"
+						// autoComplete="off"
 						onChange={() => dispatch(resetAuthSignupErrors())}
 					>
 						<FormGroup
