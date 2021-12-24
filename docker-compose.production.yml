@@ -64,7 +64,7 @@ services:
       SQL_USER: "sa"
       SQL_PASSWORD: "FTmLjmC2RvhXZmhv"
       VIRTUAL_HOST: "cevmin.wesale.az"
-      VIRTUAL_PORT : "5002" 
+      VIRTUAL_PORT : "5003" 
       VIRTUAL_PROTO: https
 
   web-client:
