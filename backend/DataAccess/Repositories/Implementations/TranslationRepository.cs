@@ -244,7 +244,7 @@ namespace DataAccess.Repositories.Implementations
         {
             string[] afterRegisterTranslations =
             {
-                "SuccessRegisterInfo"
+                "SuccessRegisterTitle", "SuccessRegisterContent"
             };
 
             return (await _context.Translations
