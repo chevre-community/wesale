@@ -38,7 +38,7 @@ services:
     environment:
       ASPNETCORE_URLS: "http://+:5000"
       # ASPNETCORE_HTTPS_PORT: "https://+:442"
-      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_ENVIRONMENT: "Staging"
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
@@ -59,7 +59,7 @@ services:
       - "sql-server-db"
     environment:
       ASPNETCORE_URLS: "http://+:5002"
-      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_ENVIRONMENT: "Staging"
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
