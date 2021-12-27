@@ -10,6 +10,7 @@ services:
     image: jwilder/nginx-proxy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
@@ -36,12 +37,14 @@ services:
       - "sql-server-db"
     environment:
       ASPNETCORE_URLS: "http://+:5000"
-      ASPNETCORE_ENVIRONMENT: "Staging"
+      # ASPNETCORE_HTTPS_PORT: "https://+:442"
+      ASPNETCORE_ENVIRONMENT: "Production"
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
       SQL_PASSWORD: "FTmLjmC2RvhXZmhv"
       VIRTUAL_HOST: "devapi.wesale.az"
+      VIRTUAL_PORT : "5000" 
 
   web-admin:
     container_name: "web-admin"
@@ -56,12 +59,13 @@ services:
       - "sql-server-db"
     environment:
       ASPNETCORE_URLS: "http://+:5002"
-      ASPNETCORE_ENVIRONMENT: "Staging"
+      ASPNETCORE_ENVIRONMENT: "Production"
       SQL_SERVER_NAME: "sql-server-db"
       SQL_DATABASE: "master"
       SQL_USER: "sa"
       SQL_PASSWORD: "FTmLjmC2RvhXZmhv"
       VIRTUAL_HOST: "devcevmin.wesale.az"
+      VIRTUAL_PORT : "5002" 
 
   web-client:
     container_name: "web-client"
@@ -87,6 +91,9 @@ services:
       - ./portainer-data:/data
     ports:
       - 9000:9000
+    environment:
+      VIRTUAL_HOST: "devportal.wesale.az"
+      VIRTUAL_PORT : "9000" 
 
 networks:
   default:
